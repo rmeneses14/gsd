@@ -1,0 +1,1557 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GSD Monitor — Inversiones a su medida</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,400;1,700&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300;1,400&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════════
+   ROYAL BLUE PALETTE
+   Primary:   Royal Blue   #1a3a8f
+   Deep:      Navy         #0d2060
+   Mid:       Cobalt       #2952b3
+   Light:     Sky          #4a7fd4
+   Pale:      Ice          #dce8f8
+   Accent 1:  Gold/Amber   #d4a017  (contrast + warmth)
+   Accent 2:  Silver/Steel #c8d4e8  (secondary text bg)
+   Paper:     Off-white    #f4f7fd  (blue-tinted cream)
+   Ink:       Deep Navy    #080f2e
+═══════════════════════════════════════════ */
+:root {
+  /* Core blues */
+  --royal:      #1a3a8f;
+  --royal-dk:   #0d2060;
+  --royal-dkk:  #08173d;
+  --cobalt:     #2952b3;
+  --cobalt-lt:  #3d68cc;
+  --sky:        #4a7fd4;
+  --sky-lt:     #6b9ce0;
+  --ice:        #dce8f8;
+  --ice-lt:     #eef4fd;
+  --ink:        #080f2e;
+
+  /* Accents */
+  --gold:       #c89a10;
+  --gold-lt:    #e0b420;
+  --gold-pale:  #fdf3d0;
+  --silver:     #8fa8cc;
+  --silver-lt:  #c8d8f0;
+
+  /* Neutrals */
+  --paper:      #f4f7fd;
+  --cream:      #f8faff;
+  --rule:       #ccd8ee;
+  --muted:      #5a6e9a;
+
+  /* Semantic */
+  --up-color:   #0e8a4a;
+  --dn-color:   #b02828;
+  --nt-color:   #6b7fa8;
+
+  /* Spacing */
+  --r-sm: clamp(14px, 3vw, 20px);
+  --r-md: clamp(20px, 4vw, 40px);
+  --max-w: 1280px;
+}
+
+/* ═══════════════════════════════════════════
+   RESET & BASE
+═══════════════════════════════════════════ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Source Serif 4', Georgia, serif;
+  background: var(--cream);
+  color: var(--ink);
+  font-size: 15px;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+a { color: inherit; text-decoration: none; }
+
+/* ═══════════════════════════════════════════
+   TICKER TAPE
+═══════════════════════════════════════════ */
+.ticker {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--royal-dkk);
+  height: 30px;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  border-bottom: 1px solid rgba(74,127,212,0.25);
+}
+.ticker__label {
+  flex-shrink: 0;
+  background: var(--gold);
+  color: var(--ink);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  padding: 0 14px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+}
+.ticker__track {
+  display: flex;
+  animation: roll 44s linear infinite;
+  white-space: nowrap;
+}
+.ticker__item {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: rgba(200,216,240,0.7);
+  padding: 0 22px;
+  border-right: 1px solid rgba(74,127,212,0.15);
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  height: 30px;
+}
+.ticker__item .sym { color: #dce8f8; font-weight: 500; font-size: 10.5px; }
+.ticker__item .up  { color: #3ecf82; }
+.ticker__item .dn  { color: #f07070; }
+.ticker__item .nt  { color: rgba(200,216,240,.4); }
+@keyframes roll { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+
+/* ═══════════════════════════════════════════
+   MASTHEAD
+═══════════════════════════════════════════ */
+.masthead {
+  background: var(--royal);
+  border-bottom: 3px solid var(--gold);
+  padding: 0 var(--r-md);
+  position: relative;
+  overflow: hidden;
+}
+/* Subtle diagonal stripe texture */
+.masthead::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    -55deg,
+    transparent,
+    transparent 28px,
+    rgba(255,255,255,.025) 28px,
+    rgba(255,255,255,.025) 29px
+  );
+  pointer-events: none;
+}
+.masthead__inner {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  padding: clamp(16px, 3vw, 26px) 0 clamp(12px, 2vw, 20px);
+  gap: 20px;
+  position: relative;
+}
+.masthead__meta {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: rgba(220,232,248,.55);
+  letter-spacing: .06em;
+  line-height: 1.9;
+  text-transform: uppercase;
+}
+.masthead__brand { text-align: center; }
+.masthead__eyebrow {
+  display: block;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  letter-spacing: .24em;
+  text-transform: uppercase;
+  color: var(--gold-lt);
+  margin-bottom: 6px;
+  opacity: .85;
+}
+.masthead__title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(30px, 5vw, 54px);
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: -.025em;
+  color: #fff;
+  white-space: nowrap;
+}
+.masthead__title em {
+  color: var(--gold-lt);
+  font-style: normal;
+}
+.masthead__tagline {
+  display: block;
+  font-size: 11px;
+  color: rgba(220,232,248,.5);
+  font-style: italic;
+  margin-top: 6px;
+}
+.masthead__actions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+}
+.btn--gold {
+  display: inline-flex;
+  align-items: center;
+  background: var(--gold);
+  color: var(--ink);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  padding: 9px 18px;
+  border: none;
+  cursor: pointer;
+  transition: background .2s;
+}
+.btn--gold:hover { background: var(--gold-lt); }
+.masthead__contact {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  color: rgba(220,232,248,.4);
+  text-align: right;
+  line-height: 1.8;
+}
+@media (max-width: 640px) {
+  .masthead__inner { grid-template-columns: 1fr; justify-items: center; text-align: center; padding: 14px 0 12px; }
+  .masthead__meta, .masthead__actions { display: none; }
+}
+
+/* ═══════════════════════════════════════════
+   NAV
+═══════════════════════════════════════════ */
+.nav {
+  background: var(--royal-dk);
+  border-bottom: 1px solid rgba(74,127,212,0.3);
+  position: relative;
+  z-index: 90;
+}
+.nav__inner {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 0 var(--r-md);
+  display: flex;
+  align-items: stretch;
+  min-height: 40px;
+}
+.nav__links {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  flex: 1;
+}
+.nav__links::-webkit-scrollbar { display: none; }
+.nav__link {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10.5px;
+  font-weight: 500;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: rgba(200,216,240,.6);
+  padding: 0 14px;
+  display: flex;
+  align-items: center;
+  border-right: 1px solid rgba(74,127,212,.2);
+  white-space: nowrap;
+  transition: color .2s, background .2s;
+  border-bottom: 2px solid transparent;
+}
+.nav__link:first-child { border-left: 1px solid rgba(74,127,212,.2); }
+.nav__link:hover { color: #fff; background: rgba(74,127,212,.15); }
+.nav__link.is-active { color: var(--gold-lt); border-bottom-color: var(--gold); }
+.nav__rate {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10.5px;
+  color: rgba(200,216,240,.4);
+  padding: 0 0 0 16px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+.nav__rate span { color: var(--gold-lt); font-weight: 600; }
+.nav__toggle {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0 var(--r-md) 0 0;
+  color: rgba(200,216,240,.7);
+  font-size: 18px;
+  align-items: center;
+}
+@media (max-width: 768px) {
+  .nav__toggle { display: flex; }
+  .nav__links {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0; right: 0;
+    background: var(--royal-dkk);
+    flex-direction: column;
+    z-index: 99;
+    border-top: 1px solid rgba(74,127,212,.25);
+  }
+  .nav__links.is-open { display: flex; }
+  .nav__link {
+    border-right: none; border-left: none;
+    border-bottom: 1px solid rgba(74,127,212,.15);
+    padding: 13px var(--r-md);
+    font-size: 12px;
+  }
+  .nav__link:first-child { border-left: none; }
+  .nav__rate { display: none; }
+}
+
+/* ═══════════════════════════════════════════
+   BREAKING BANNER
+═══════════════════════════════════════════ */
+.breaking {
+  background: var(--cobalt);
+  border-bottom: 1px solid rgba(74,127,212,.4);
+  padding: 8px var(--r-md);
+}
+.breaking__inner {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.breaking__badge {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  background: var(--gold);
+  color: var(--ink);
+  padding: 3px 9px;
+  flex-shrink: 0;
+}
+.breaking__dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--gold-lt);
+  animation: blink 1.4s infinite;
+  flex-shrink: 0;
+}
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:.15} }
+.breaking__text {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  font-weight: 500;
+  color: rgba(220,232,248,.9);
+  letter-spacing: .02em;
+}
+
+/* ═══════════════════════════════════════════
+   HERO
+═══════════════════════════════════════════ */
+.hero {
+  background: var(--paper);
+  border-bottom: 2px solid var(--royal);
+  padding: 0 var(--r-md);
+}
+.hero__inner {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  gap: 0;
+  padding: clamp(24px,4vw,44px) 0 0;
+}
+.hero__main {
+  padding-right: clamp(20px,3vw,40px);
+  border-right: 1px solid var(--rule);
+  padding-bottom: clamp(20px,3vw,36px);
+}
+.hero__kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--royal);
+  background: var(--ice);
+  border-left: 3px solid var(--royal);
+  padding: 4px 12px;
+  margin-bottom: 16px;
+}
+.hero__headline {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(22px, 4vw, 38px);
+  font-weight: 900;
+  line-height: 1.15;
+  letter-spacing: -.02em;
+  color: var(--ink);
+  margin-bottom: 16px;
+}
+.hero__deck {
+  font-size: clamp(14px, 2vw, 15.5px);
+  color: var(--muted);
+  line-height: 1.75;
+  border-left: 3px solid var(--gold);
+  padding-left: 16px;
+  margin-bottom: 22px;
+}
+.hero__meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  padding-top: 16px;
+  border-top: 1px solid var(--rule);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10.5px;
+  color: var(--muted);
+}
+.hero__meta strong { color: var(--ink); }
+.hero__read {
+  margin-left: auto;
+  color: var(--royal);
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  border-bottom: 1px solid transparent;
+  transition: border-color .2s;
+}
+.hero__read:hover { border-bottom-color: var(--royal); }
+.hero__sidebar {
+  padding-left: clamp(16px,2.5vw,32px);
+  padding-bottom: 24px;
+}
+.sidebar__hd {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--muted);
+  padding-bottom: 10px;
+  border-bottom: 2px solid var(--royal);
+  margin-bottom: 2px;
+}
+.mkt-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 9px 0;
+  border-bottom: 1px solid var(--rule);
+  gap: 8px;
+}
+.mkt-row:last-child { border-bottom: none; }
+.mkt__name { font-weight: 600; font-size: 13px; line-height: 1.2; }
+.mkt__sub  { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; color: var(--muted); margin-top: 2px; }
+.mkt__val  { text-align: right; flex-shrink: 0; }
+.mkt__price {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13.5px; font-weight: 500;
+}
+.mkt__chg {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px; font-weight: 600; margin-top: 1px;
+}
+.mkt__chg.up { color: var(--up-color); }
+.mkt__chg.dn { color: var(--dn-color); }
+.mkt__chg.nt { color: var(--nt-color); }
+@media (max-width: 900px) {
+  .hero__inner { grid-template-columns: 1fr; }
+  .hero__main { border-right: none; padding-right: 0; }
+  .hero__sidebar { display: none; }
+}
+
+/* ═══════════════════════════════════════════
+   MARKETS RIBBON (mobile)
+═══════════════════════════════════════════ */
+.mkt-ribbon {
+  display: none;
+  background: var(--royal-dk);
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  border-bottom: 1px solid rgba(74,127,212,.25);
+}
+.mkt-ribbon::-webkit-scrollbar { display: none; }
+.mkt-ribbon__inner { display: flex; width: max-content; min-width: 100%; }
+.mkt-ribbon__item {
+  padding: 12px 20px;
+  border-right: 1px solid rgba(74,127,212,.2);
+  flex-shrink: 0;
+}
+.mkt-ribbon__sym {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9.5px;
+  color: rgba(200,216,240,.45);
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  margin-bottom: 2px;
+}
+.mkt-ribbon__price {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 14px;
+  font-weight: 500;
+  color: #fff;
+}
+.mkt-ribbon__chg {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10.5px;
+  font-weight: 600;
+}
+.mkt-ribbon__chg.up { color: #3ecf82; }
+.mkt-ribbon__chg.dn { color: #f07070; }
+.mkt-ribbon__chg.nt { color: rgba(200,216,240,.4); }
+@media (max-width: 900px) { .mkt-ribbon { display: block; } }
+
+/* ═══════════════════════════════════════════
+   SIGNALS PANEL (CRMG)
+   Dark royal blue background — premium feel
+═══════════════════════════════════════════ */
+.signals {
+  background: linear-gradient(160deg, var(--royal-dkk) 0%, var(--royal-dk) 100%);
+  padding: clamp(24px,4vw,40px) var(--r-md);
+  border-top: 3px solid var(--cobalt);
+}
+.signals__inner { max-width: var(--max-w); margin: 0 auto; }
+.signals__hd {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 12px 20px;
+  margin-bottom: 22px;
+}
+.signals__title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(18px,3vw,26px);
+  font-weight: 700;
+  font-style: italic;
+  color: var(--gold-lt);
+}
+.signals__subtitle {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: rgba(200,216,240,.35);
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+.signals__scroll {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  border: 1px solid rgba(74,127,212,.2);
+  border-radius: 2px;
+}
+.signals__table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12.5px;
+  min-width: 600px;
+}
+.signals__table thead th {
+  text-align: left;
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: rgba(200,216,240,.3);
+  padding: 10px 16px;
+  border-bottom: 1px solid rgba(74,127,212,.25);
+  white-space: nowrap;
+  background: rgba(13,32,96,.4);
+}
+.signals__table tbody tr {
+  border-bottom: 1px solid rgba(74,127,212,.1);
+  transition: background .15s;
+}
+.signals__table tbody tr:hover { background: rgba(74,127,212,.08); }
+.signals__table td {
+  padding: 12px 16px;
+  color: rgba(200,216,240,.75);
+  white-space: nowrap;
+}
+.signals__table td.t-name {
+  font-weight: 600;
+  color: #fff;
+  font-size: 13.5px;
+}
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 9px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  border-radius: 2px;
+}
+.badge--alta   { background: rgba(212,160,23,.18); color: var(--gold-lt);       border: 1px solid rgba(212,160,23,.4); }
+.badge--activa { background: rgba(14,138,74,.15);  color: #3ecf82;              border: 1px solid rgba(14,138,74,.35); }
+.badge--compra { background: rgba(74,127,212,.15);  color: rgba(200,216,240,.7); border: 1px solid rgba(74,127,212,.3); }
+.spread-pill { display: flex; align-items: center; gap: 8px; }
+.spread-track {
+  flex: 1; height: 3px;
+  background: rgba(74,127,212,.2);
+  border-radius: 2px; overflow: hidden;
+  max-width: 72px;
+}
+.spread-fill        { height: 100%; border-radius: 2px; background: var(--gold); }
+.spread-fill.blue   { background: var(--sky-lt); }
+
+/* Mobile cards */
+@media (max-width: 500px) { .signals__scroll{display:none} .signals__cards{display:flex;flex-direction:column;gap:10px} }
+@media (min-width:501px)  { .signals__cards{display:none} }
+.sig-card {
+  background: rgba(74,127,212,.08);
+  border: 1px solid rgba(74,127,212,.2);
+  border-radius: 3px;
+  padding: 14px 16px;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 8px;
+}
+.sig-card__name { font-family:'JetBrains Mono',monospace; font-size:14px; font-weight:600; color:#fff; }
+.sig-card__row  { display:flex; gap:14px; flex-wrap:wrap; margin-top:6px; }
+.sig-card__kv   { font-family:'JetBrains Mono',monospace; font-size:10px; color:rgba(200,216,240,.4); }
+.sig-card__kv span { color:rgba(200,216,240,.85); font-weight:500; }
+.sig-card__badge { grid-column:2; grid-row:1/3; align-self:start; }
+
+/* ═══════════════════════════════════════════
+   MONEX STRIP
+═══════════════════════════════════════════ */
+.monex {
+  background: var(--royal);
+  padding: clamp(16px,3vw,24px) var(--r-md);
+  border-top: 1px solid rgba(74,127,212,.3);
+  border-bottom: 1px solid rgba(74,127,212,.3);
+  position: relative;
+  overflow: hidden;
+}
+.monex::after {
+  content: '';
+  position: absolute;
+  right: 0; top: 0; bottom: 0;
+  width: 40%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,.02));
+  pointer-events: none;
+}
+.monex__inner {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: auto repeat(5,1fr);
+  gap: clamp(16px,3vw,40px);
+  align-items: center;
+  position: relative;
+}
+.monex__label {
+  font-family: 'Playfair Display', serif;
+  font-size: 13px;
+  font-weight: 700;
+  font-style: italic;
+  color: rgba(220,232,248,.3);
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  border-right: 1px solid rgba(74,127,212,.25);
+  padding-right: clamp(16px,3vw,32px);
+}
+.monex__stat-lbl {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  color: rgba(220,232,248,.35);
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  margin-bottom: 3px;
+}
+.monex__stat-val {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: clamp(14px,2.5vw,17px);
+  font-weight: 500;
+  color: #fff;
+  line-height: 1.1;
+}
+.monex__stat-note { font-family:'JetBrains Mono',monospace; font-size:9.5px; margin-top:2px; }
+.monex__stat-note.g { color:#3ecf82; }
+.monex__stat-note.r { color:#f07070; }
+.monex__stat-note.m { color:rgba(220,232,248,.4); }
+@media (max-width:900px) { .monex__inner{grid-template-columns:repeat(3,1fr)} .monex__label{display:none} }
+@media (max-width:500px) { .monex__inner{grid-template-columns:repeat(2,1fr)} }
+
+/* ═══════════════════════════════════════════
+   SECTION HEADER
+═══════════════════════════════════════════ */
+.section-hd {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 0 var(--r-md);
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  height: 46px;
+}
+.section-hd__rule { flex:1; height:1px; background:var(--rule); }
+.section-hd__title {
+  font-family: 'Playfair Display', serif;
+  font-size: 14px;
+  font-weight: 700;
+  font-style: italic;
+  color: var(--royal);
+  white-space: nowrap;
+}
+.section-hd__more {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  white-space: nowrap;
+}
+.section-hd__more:hover { color: var(--royal); }
+
+/* ═══════════════════════════════════════════
+   CONTENT & CARDS
+═══════════════════════════════════════════ */
+.content { padding: 0 var(--r-md) clamp(24px,4vw,48px); }
+.content__inner { max-width: var(--max-w); margin: 0 auto; }
+
+.layout-feature {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 1px;
+  background: var(--rule);
+  border: 1px solid var(--rule);
+  margin-bottom: 1px;
+}
+@media (max-width:768px) { .layout-feature{grid-template-columns:1fr} }
+
+.card-feat {
+  background: var(--cream);
+  padding: clamp(20px,3vw,32px);
+  transition: background .2s;
+}
+.card-feat:hover { background: var(--paper); }
+
+.card__kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--royal);
+  margin-bottom: 12px;
+}
+.card__kicker.flash { color: var(--gold); }
+.card__kicker.recap { color: var(--cobalt); }
+
+.card-feat__headline {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(19px,3vw,27px);
+  font-weight: 800;
+  line-height: 1.2;
+  letter-spacing: -.01em;
+  color: var(--ink);
+  margin-bottom: 12px;
+}
+.card-feat__headline a:hover { color: var(--royal); }
+.card-feat__body {
+  font-size: clamp(13px,1.5vw,15px);
+  color: var(--muted);
+  line-height: 1.75;
+  margin-bottom: 16px;
+}
+.card-feat__foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding-top: 14px;
+  border-top: 1px solid var(--rule);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: var(--muted);
+}
+.card-feat__foot a { color: var(--royal); font-weight: 600; text-transform: uppercase; letter-spacing: .08em; }
+.card-feat__foot a:hover { color: var(--cobalt); }
+
+/* ASIDE LIST */
+.aside-list { background: var(--cream); display: flex; flex-direction: column; }
+.aside-item {
+  padding: clamp(14px,2vw,20px);
+  border-bottom: 1px solid var(--rule);
+  transition: background .2s;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.aside-item:last-child { border-bottom: none; }
+.aside-item:hover { background: var(--ice-lt); }
+.aside-item__kicker { font-family:'JetBrains Mono',monospace; font-size:9px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:var(--gold); }
+.aside-item__hed { font-family:'Playfair Display',serif; font-size:clamp(13px,2vw,15.5px); font-weight:700; line-height:1.3; color:var(--ink); }
+.aside-item__hed a:hover { color: var(--royal); }
+.aside-item__date { font-family:'JetBrains Mono',monospace; font-size:9.5px; color:var(--muted); margin-top:auto; }
+
+/* 3-COL GRID */
+.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  gap: 1px;
+  background: var(--rule);
+  border: 1px solid var(--rule);
+  margin-bottom: 1px;
+}
+@media (max-width:768px) { .grid-3{grid-template-columns:1fr} }
+@media (min-width:500px) and (max-width:768px) { .grid-3{grid-template-columns:repeat(2,1fr)} }
+
+.card-sm {
+  background: var(--cream);
+  padding: clamp(16px,2.5vw,24px);
+  transition: background .2s;
+}
+.card-sm:hover { background: var(--paper); }
+.card-sm__hed {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(15px,2vw,19px);
+  font-weight: 700;
+  line-height: 1.3;
+  color: var(--ink);
+  margin: 10px 0 8px;
+}
+.card-sm__hed a:hover { color: var(--royal); }
+.card-sm__text {
+  font-size: clamp(12px,1.4vw,13.5px);
+  color: var(--muted);
+  line-height: 1.65;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  margin-bottom: 12px;
+}
+.card-sm__foot {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9.5px;
+  color: var(--muted);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 10px;
+  border-top: 1px solid var(--rule);
+}
+.card-sm__foot a { color: var(--royal); font-weight: 600; text-transform: uppercase; letter-spacing: .08em; }
+
+/* POPULAR BOX */
+.popular {
+  background: var(--ice);
+  border: 1px solid var(--silver-lt);
+  padding: clamp(16px,2.5vw,24px);
+}
+.popular__hd {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--royal);
+  padding-bottom: 12px;
+  border-bottom: 2px solid var(--royal);
+  margin-bottom: 4px;
+}
+.popular__item {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--silver-lt);
+}
+.popular__item:last-child { border-bottom: none; }
+.popular__num {
+  font-family: 'Playfair Display', serif;
+  font-size: 24px;
+  font-weight: 900;
+  color: var(--silver-lt);
+  line-height: 1;
+  flex-shrink: 0;
+  width: 28px;
+}
+.popular__text { font-size: 13px; font-weight: 600; color: var(--ink); line-height: 1.35; }
+.popular__text a:hover { color: var(--royal); }
+.popular__sub { font-family:'JetBrains Mono',monospace; font-size:9.5px; color:var(--muted); margin-top:3px; }
+
+/* BOTTOM LAYOUT */
+.layout-bottom {
+  display: grid;
+  grid-template-columns: 3fr 2fr;
+  gap: 1px;
+  background: var(--rule);
+  border: 1px solid var(--rule);
+  margin-top: 1px;
+}
+@media (max-width:640px) { .layout-bottom{grid-template-columns:1fr} }
+
+/* ═══════════════════════════════════════════
+   STATS BAND — between content & subscribe
+═══════════════════════════════════════════ */
+.stats-band {
+  background: var(--ice);
+  border-top: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+  padding: clamp(18px,3vw,28px) var(--r-md);
+}
+.stats-band__inner {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(4,1fr);
+  gap: 1px;
+  background: var(--rule);
+  border: 1px solid var(--rule);
+}
+.stat-item {
+  background: var(--ice-lt);
+  padding: clamp(16px,2.5vw,24px);
+  text-align: center;
+}
+.stat-item__val {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(26px,4vw,42px);
+  font-weight: 900;
+  color: var(--royal);
+  line-height: 1;
+  margin-bottom: 6px;
+}
+.stat-item__val em { font-style:normal; color:var(--gold); }
+.stat-item__lbl {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+@media (max-width:640px) { .stats-band__inner{grid-template-columns:repeat(2,1fr)} }
+
+/* ═══════════════════════════════════════════
+   SUBSCRIBE CTA
+═══════════════════════════════════════════ */
+.subscribe {
+  background: linear-gradient(135deg, var(--royal-dk) 0%, var(--royal) 50%, var(--cobalt) 100%);
+  padding: clamp(36px,6vw,64px) var(--r-md);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.subscribe::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  pointer-events: none;
+}
+.subscribe__inner { max-width: 560px; margin: 0 auto; position: relative; }
+.subscribe__eyebrow {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: rgba(220,232,248,.45);
+  margin-bottom: 12px;
+}
+.subscribe__title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(22px,4vw,36px);
+  font-weight: 900;
+  color: #fff;
+  margin-bottom: 12px;
+  line-height: 1.2;
+}
+.subscribe__body {
+  font-size: 14px;
+  color: rgba(220,232,248,.65);
+  line-height: 1.75;
+  margin-bottom: 28px;
+}
+.subscribe__form {
+  display: flex;
+  gap: 0;
+  max-width: 440px;
+  margin: 0 auto;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.subscribe__input {
+  flex: 1;
+  min-width: 200px;
+  padding: 13px 16px;
+  border: 1px solid rgba(74,127,212,.4);
+  background: rgba(255,255,255,.08);
+  color: #fff;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  outline: none;
+  transition: border-color .2s, background .2s;
+}
+.subscribe__input::placeholder { color: rgba(220,232,248,.35); }
+.subscribe__input:focus { border-color: var(--gold-lt); background: rgba(255,255,255,.12); }
+.subscribe__btn {
+  background: var(--gold);
+  color: var(--ink);
+  border: none;
+  padding: 13px 24px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background .2s;
+}
+.subscribe__btn:hover { background: var(--gold-lt); }
+
+/* ═══════════════════════════════════════════
+   FOOTER
+═══════════════════════════════════════════ */
+footer {
+  background: var(--royal-dkk);
+  border-top: 3px solid var(--gold);
+  padding: clamp(32px,5vw,52px) var(--r-md) clamp(20px,3vw,32px);
+}
+.footer__grid {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 2fr repeat(3,1fr);
+  gap: clamp(24px,4vw,48px);
+}
+@media (max-width:768px) { .footer__grid{grid-template-columns:1fr 1fr} }
+@media (max-width:420px) { .footer__grid{grid-template-columns:1fr} }
+
+.footer__brand h4 {
+  font-family: 'Playfair Display', serif;
+  font-size: 24px;
+  font-weight: 900;
+  color: #fff;
+  margin-bottom: 10px;
+}
+.footer__brand h4 em { font-style:normal; color:var(--gold-lt); }
+.footer__brand p { font-size:12.5px; color:rgba(200,216,240,.4); line-height:1.75; }
+.footer__brand .contact {
+  margin-top: 16px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: rgba(200,216,240,.3);
+  line-height: 1.85;
+}
+.footer__col-title {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--gold-lt);
+  margin-bottom: 14px;
+}
+.footer__links { list-style: none; }
+.footer__links li { margin-bottom: 8px; }
+.footer__links a { font-size:12.5px; color:rgba(200,216,240,.4); transition:color .2s; }
+.footer__links a:hover { color:var(--gold-lt); }
+
+.footer__bottom {
+  max-width: var(--max-w);
+  margin: clamp(20px,3vw,32px) auto 0;
+  padding-top: 18px;
+  border-top: 1px solid rgba(74,127,212,.15);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 8px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9.5px;
+  color: rgba(200,216,240,.2);
+}
+.footer__bottom a { color:rgba(200,216,240,.3); }
+.footer__disclaimer {
+  font-size: 9px;
+  color: rgba(200,216,240,.16);
+  margin-top: 14px;
+  line-height: 1.6;
+  max-width: var(--max-w);
+  margin-left: auto;
+  margin-right: auto;
+}
+</style>
+</head>
+<body>
+
+<!-- ▸ TICKER -->
+<div class="ticker" role="marquee" aria-label="Cotizaciones en tiempo real">
+  <div class="ticker__label">▶ LIVE</div>
+  <div style="overflow:hidden;flex:1;display:flex;align-items:center;">
+    <div class="ticker__track">
+      <div class="ticker__item"><span class="sym">S&P 500</span><span>7,365.12</span><span class="up">▲ 1.46%</span></div>
+      <div class="ticker__item"><span class="sym">NASDAQ</span><span>25,838.94</span><span class="up">▲ 2.02%</span></div>
+      <div class="ticker__item"><span class="sym">DOW</span><span>49,910.59</span><span class="up">▲ 1.24%</span></div>
+      <div class="ticker__item"><span class="sym">WTI</span><span>95.69</span><span class="up">▲ 0.64%</span></div>
+      <div class="ticker__item"><span class="sym">GOLD / GLD</span><span>430.96</span><span class="up">▲ 3.03%</span></div>
+      <div class="ticker__item"><span class="sym">VIX</span><span>17.39</span><span class="nt">→ 0.06%</span></div>
+      <div class="ticker__item"><span class="sym">EUR/USD</span><span>1.1750</span><span class="up">▲ 0.03%</span></div>
+      <div class="ticker__item"><span class="sym">₡/USD MONEX</span><span>456.73</span><span class="dn">▼ 5.37% a/a</span></div>
+      <div class="ticker__item"><span class="sym">BNV HOY</span><span>USD 104 MM</span><span class="up">241 ops</span></div>
+      <div class="ticker__item"><span class="sym">CRMG$210531</span><span>★★ 12.03 pb</span><span class="up">Alta Convicción</span></div>
+      <!-- duplicate -->
+      <div class="ticker__item"><span class="sym">S&P 500</span><span>7,365.12</span><span class="up">▲ 1.46%</span></div>
+      <div class="ticker__item"><span class="sym">NASDAQ</span><span>25,838.94</span><span class="up">▲ 2.02%</span></div>
+      <div class="ticker__item"><span class="sym">DOW</span><span>49,910.59</span><span class="up">▲ 1.24%</span></div>
+      <div class="ticker__item"><span class="sym">WTI</span><span>95.69</span><span class="up">▲ 0.64%</span></div>
+      <div class="ticker__item"><span class="sym">GOLD / GLD</span><span>430.96</span><span class="up">▲ 3.03%</span></div>
+      <div class="ticker__item"><span class="sym">VIX</span><span>17.39</span><span class="nt">→ 0.06%</span></div>
+      <div class="ticker__item"><span class="sym">EUR/USD</span><span>1.1750</span><span class="up">▲ 0.03%</span></div>
+      <div class="ticker__item"><span class="sym">₡/USD MONEX</span><span>456.73</span><span class="dn">▼ 5.37% a/a</span></div>
+      <div class="ticker__item"><span class="sym">BNV HOY</span><span>USD 104 MM</span><span class="up">241 ops</span></div>
+      <div class="ticker__item"><span class="sym">CRMG$210531</span><span>★★ 12.03 pb</span><span class="up">Alta Convicción</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ▸ MASTHEAD -->
+<header class="masthead">
+  <div class="masthead__inner">
+    <div class="masthead__meta">
+      GSD IS &amp; Cía.<br>
+      Jueves, 7 Mayo 2026<br>
+      Edición Diaria · CR
+    </div>
+    <div class="masthead__brand">
+      <span class="masthead__eyebrow">Inversiones a su medida</span>
+      <div class="masthead__title">GSD <em>Monitor</em></div>
+      <span class="masthead__tagline">Análisis bursátil · Costa Rica · Mercados globales</span>
+    </div>
+    <div class="masthead__actions">
+      <a href="#" class="btn--gold">Suscribirse</a>
+      <div class="masthead__contact">gsdmar@gmail.com<br>8938-9046</div>
+    </div>
+  </div>
+</header>
+
+<!-- ▸ NAV -->
+<nav class="nav">
+  <div class="nav__inner">
+    <button class="nav__toggle" id="navToggle" aria-expanded="false" aria-label="Abrir menú">☰</button>
+    <div class="nav__links" id="navLinks">
+      <a href="#" class="nav__link is-active">Inicio</a>
+      <a href="#" class="nav__link">Economía · Finanzas</a>
+      <a href="#" class="nav__link">Mercado Bursátil</a>
+      <a href="#" class="nav__link">MONEX · Divisas</a>
+      <a href="#" class="nav__link">Deuda Soberana</a>
+      <a href="#" class="nav__link">WST Monitor</a>
+      <a href="#" class="nav__link">BNV</a>
+      <a href="#" class="nav__link">BCCR</a>
+    </div>
+    <div class="nav__rate">₡/USD <span>456.73</span></div>
+  </div>
+</nav>
+
+<!-- ▸ BREAKING -->
+<div class="breaking">
+  <div class="breaking__inner">
+    <div class="breaking__badge">Alerta</div>
+    <div class="breaking__dot"></div>
+    <div class="breaking__text">EE.UU. e Irán negocian acuerdo marco — apertura del Estrecho de Ormuz en 30 días · Combustibles suben ₡151/litro desde hoy en Costa Rica</div>
+  </div>
+</div>
+
+<!-- ▸ HERO -->
+<section class="hero">
+  <div class="hero__inner">
+    <div class="hero__main">
+      <div class="hero__kicker">⚡ Flash Informativo · 7 Mayo 2026</div>
+      <h1 class="hero__headline">S&amp;P 500 y Nasdaq en máximos históricos: AMD detonó la frenética de semiconductores e Irán negocia la paz</h1>
+      <p class="hero__deck">S&amp;P 500 cierra en 7,365 y Nasdaq en 25,839, ambos en nuevos récords impulsados por el trimestre estelar de AMD y el ciclo de inversión en IA. EE.UU. e Irán a un paso de un acuerdo marco. El oro avanza +3.03% (GLD 430.96). Localmente, combustibles +₡151/litro y nueva presidenta el viernes.</p>
+      <div class="hero__meta">
+        <span>Por <strong>Geovanny Ant. Sandí Delgado</strong></span>
+        <span>·</span>
+        <span>7:30 AM · Costa Rica</span>
+        <a href="#" class="hero__read">Leer crónica completa →</a>
+      </div>
+    </div>
+    <div class="hero__sidebar">
+      <div class="sidebar__hd">Mercados — Cierre 6 Mayo</div>
+      <div class="mkt-row">
+        <div><div class="mkt__name">S&amp;P 500</div><div class="mkt__sub">Índice EE.UU.</div></div>
+        <div class="mkt__val"><div class="mkt__price">7,365.12</div><div class="mkt__chg up">▲ +1.46%</div></div>
+      </div>
+      <div class="mkt-row">
+        <div><div class="mkt__name">Nasdaq</div><div class="mkt__sub">Compuesto</div></div>
+        <div class="mkt__val"><div class="mkt__price">25,838.94</div><div class="mkt__chg up">▲ +2.02%</div></div>
+      </div>
+      <div class="mkt-row">
+        <div><div class="mkt__name">Dow Jones</div><div class="mkt__sub">Industrial</div></div>
+        <div class="mkt__val"><div class="mkt__price">49,910.59</div><div class="mkt__chg up">▲ +1.24%</div></div>
+      </div>
+      <div class="mkt-row">
+        <div><div class="mkt__name">Oro / GLD</div><div class="mkt__sub">ETF SPDR</div></div>
+        <div class="mkt__val"><div class="mkt__price">430.96</div><div class="mkt__chg up">▲ +3.03%</div></div>
+      </div>
+      <div class="mkt-row">
+        <div><div class="mkt__name">WTI Crudo</div><div class="mkt__sub">USD/bbl</div></div>
+        <div class="mkt__val"><div class="mkt__price">95.69</div><div class="mkt__chg up">▲ +0.64%</div></div>
+      </div>
+      <div class="mkt-row">
+        <div><div class="mkt__name">VIX</div><div class="mkt__sub">Volatilidad CBOE</div></div>
+        <div class="mkt__val"><div class="mkt__price">17.39</div><div class="mkt__chg nt">→ +0.06%</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ▸ MARKETS RIBBON (mobile) -->
+<div class="mkt-ribbon" role="region" aria-label="Resumen de mercados">
+  <div class="mkt-ribbon__inner">
+    <div class="mkt-ribbon__item"><div class="mkt-ribbon__sym">S&amp;P 500</div><div class="mkt-ribbon__price">7,365.12</div><div class="mkt-ribbon__chg up">▲ 1.46%</div></div>
+    <div class="mkt-ribbon__item"><div class="mkt-ribbon__sym">Nasdaq</div><div class="mkt-ribbon__price">25,838.94</div><div class="mkt-ribbon__chg up">▲ 2.02%</div></div>
+    <div class="mkt-ribbon__item"><div class="mkt-ribbon__sym">Dow</div><div class="mkt-ribbon__price">49,910.59</div><div class="mkt-ribbon__chg up">▲ 1.24%</div></div>
+    <div class="mkt-ribbon__item"><div class="mkt-ribbon__sym">WTI</div><div class="mkt-ribbon__price">95.69</div><div class="mkt-ribbon__chg up">▲ 0.64%</div></div>
+    <div class="mkt-ribbon__item"><div class="mkt-ribbon__sym">GLD</div><div class="mkt-ribbon__price">430.96</div><div class="mkt-ribbon__chg up">▲ 3.03%</div></div>
+    <div class="mkt-ribbon__item"><div class="mkt-ribbon__sym">VIX</div><div class="mkt-ribbon__price">17.39</div><div class="mkt-ribbon__chg nt">→</div></div>
+    <div class="mkt-ribbon__item"><div class="mkt-ribbon__sym">₡/USD</div><div class="mkt-ribbon__price">456.73</div><div class="mkt-ribbon__chg dn">▼ 5.37%</div></div>
+  </div>
+</div>
+
+<!-- ▸ SIGNALS CRMG -->
+<section class="signals">
+  <div class="signals__inner">
+    <div class="signals__hd">
+      <h2 class="signals__title">Señales CRMG</h2>
+      <p class="signals__subtitle">Modelo creadores de mercado BNV · Cierre 6 Mayo 2026</p>
+    </div>
+    <div class="signals__scroll">
+      <table class="signals__table">
+        <thead>
+          <tr><th>Serie</th><th>Moneda</th><th>Vencimiento</th><th>YTM</th><th>YTMaj</th><th>I-Spread</th><th>Precio</th><th>Señal</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="t-name">CRMG$210531</td><td>USD $</td><td>21 May 2031</td><td>5.594%</td><td>5.474%</td>
+            <td><div class="spread-pill">+12.03 pb<div class="spread-track"><div class="spread-fill" style="width:82%"></div></div></div></td>
+            <td>99.3300</td><td><span class="badge badge--alta">★★ Alta Convicción</span></td>
+          </tr>
+          <tr>
+            <td class="t-name">CRMG260734</td><td>CRC ₡</td><td>26 Jul 2034</td><td>6.537%</td><td>6.456%</td>
+            <td><div class="spread-pill">+8.14 pb<div class="spread-track"><div class="spread-fill blue" style="width:56%"></div></div></div></td>
+            <td>99.1325</td><td><span class="badge badge--activa">★ Señal Activa</span></td>
+          </tr>
+          <tr>
+            <td class="t-name">CRMG180429</td><td>CRC ₡</td><td>18 Abr 2029</td><td>5.637%</td><td>5.584%</td>
+            <td><div class="spread-pill">+5.33 pb<div class="spread-track"><div class="spread-fill blue" style="width:37%"></div></div></div></td>
+            <td>99.0107</td><td><span class="badge badge--activa">★ Señal Activa</span></td>
+          </tr>
+          <tr>
+            <td class="t-name">CRMG$180533</td><td>USD $</td><td>18 May 2033</td><td>5.714%</td><td>5.685%</td>
+            <td><div class="spread-pill">+2.91 pb<div class="spread-track"><div class="spread-fill" style="width:20%;background:rgba(74,127,212,.5)"></div></div></div></td>
+            <td>99.4000</td><td><span class="badge badge--compra">Compra</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <!-- Mobile cards -->
+    <div class="signals__cards">
+      <div class="sig-card">
+        <div class="sig-card__name">CRMG$210531</div>
+        <span class="sig-card__badge"><span class="badge badge--alta">★★ Alta</span></span>
+        <div class="sig-card__row">
+          <div class="sig-card__kv">YTM <span>5.594%</span></div>
+          <div class="sig-card__kv">I-Spread <span>+12.03 pb</span></div>
+          <div class="sig-card__kv">Precio <span>99.33</span></div>
+          <div class="sig-card__kv">Venc. <span>May 2031</span></div>
+        </div>
+      </div>
+      <div class="sig-card">
+        <div class="sig-card__name">CRMG260734</div>
+        <span class="sig-card__badge"><span class="badge badge--activa">★ Activa</span></span>
+        <div class="sig-card__row">
+          <div class="sig-card__kv">YTM <span>6.537%</span></div>
+          <div class="sig-card__kv">I-Spread <span>+8.14 pb</span></div>
+          <div class="sig-card__kv">Precio <span>99.13</span></div>
+          <div class="sig-card__kv">Venc. <span>Jul 2034</span></div>
+        </div>
+      </div>
+      <div class="sig-card">
+        <div class="sig-card__name">CRMG180429</div>
+        <span class="sig-card__badge"><span class="badge badge--activa">★ Activa</span></span>
+        <div class="sig-card__row">
+          <div class="sig-card__kv">YTM <span>5.637%</span></div>
+          <div class="sig-card__kv">I-Spread <span>+5.33 pb</span></div>
+          <div class="sig-card__kv">Precio <span>99.01</span></div>
+          <div class="sig-card__kv">Venc. <span>Abr 2029</span></div>
+        </div>
+      </div>
+      <div class="sig-card">
+        <div class="sig-card__name">CRMG$180533</div>
+        <span class="sig-card__badge"><span class="badge badge--compra">Compra</span></span>
+        <div class="sig-card__row">
+          <div class="sig-card__kv">YTM <span>5.714%</span></div>
+          <div class="sig-card__kv">I-Spread <span>+2.91 pb</span></div>
+          <div class="sig-card__kv">Precio <span>99.40</span></div>
+          <div class="sig-card__kv">Venc. <span>May 2033</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ▸ MONEX STRIP -->
+<div class="monex">
+  <div class="monex__inner">
+    <div class="monex__label">MONEX</div>
+    <div><div class="monex__stat-lbl">TC Promedio 5 días</div><div class="monex__stat-val">₡458.97</div><div class="monex__stat-note m">por dólar</div></div>
+    <div><div class="monex__stat-lbl">Apreciación a/a</div><div class="monex__stat-val">−5.37%</div><div class="monex__stat-note g">Colón más fuerte</div></div>
+    <div><div class="monex__stat-lbl">Cierre sesión</div><div class="monex__stat-val">₡456.73</div><div class="monex__stat-note m">6 Mayo 2026</div></div>
+    <div><div class="monex__stat-lbl">Volumen 5 días</div><div class="monex__stat-val">USD 181.77M</div><div class="monex__stat-note m">1,066 operaciones</div></div>
+    <div><div class="monex__stat-lbl">Rango semanal</div><div class="monex__stat-val">₡452–464</div><div class="monex__stat-note r">Prom. 2025: ₡506.42</div></div>
+  </div>
+</div>
+
+<!-- ▸ STATS BAND -->
+<div class="stats-band">
+  <div class="stats-band__inner">
+    <div class="stat-item">
+      <div class="stat-item__val">241<em>+</em></div>
+      <div class="stat-item__lbl">Operaciones BNV hoy</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-item__val"><em>★★</em> 4</div>
+      <div class="stat-item__lbl">Señales CRMG activas</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-item__val">5.37<em>%</em></div>
+      <div class="stat-item__lbl">Apreciación colón a/a</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-item__val">25<em>k+</em></div>
+      <div class="stat-item__lbl">Nasdaq — máximo histórico</div>
+    </div>
+  </div>
+</div>
+
+<!-- ▸ SECTION HEADER -->
+<div class="section-hd">
+  <div class="section-hd__rule"></div>
+  <span class="section-hd__title">Últimas publicaciones</span>
+  <div class="section-hd__rule"></div>
+  <a href="#" class="section-hd__more">Archivo completo →</a>
+</div>
+
+<!-- ▸ CONTENT -->
+<div class="content">
+  <div class="content__inner">
+
+    <div class="layout-feature">
+      <div class="card-feat">
+        <div class="card__kicker flash">⚡ Flash Informativo</div>
+        <h2 class="card-feat__headline"><a href="#">S&amp;P 500 y Nasdaq en máximos históricos: AMD detonó la frenética de semiconductores, Irán negocia la paz</a></h2>
+        <p class="card-feat__body">S&amp;P 500 cierra en 7,365 y Nasdaq en 25,839, ambos en nuevos récords. EE.UU. e Irán a un paso de un acuerdo marco que presiona los futuros del petróleo a la baja. El oro avanza +3.03% (GLD 430.96). Localmente, combustibles subieron hasta ₡151/litro desde hoy y mañana Costa Rica estrena nueva presidenta. ROP recupera valor en abril.</p>
+        <div class="card-feat__foot">
+          <span>7 Mayo 2026 · 7:30 AM · GSD IS &amp; Cía.</span>
+          <a href="#">Leer completo →</a>
+        </div>
+      </div>
+      <div class="aside-list">
+        <div class="aside-item">
+          <div class="aside-item__kicker">📊 Crónica Bursátil</div>
+          <h3 class="aside-item__hed"><a href="#">Crónica Bursátil GSD – 6 de mayo, 2026</a></h3>
+          <div class="aside-item__date">7 Mayo 2026</div>
+        </div>
+        <div class="aside-item">
+          <div class="aside-item__kicker">⚡ Flash Matutino</div>
+          <h3 class="aside-item__hed"><a href="#">Flash Matutino GSD – 6 de mayo 2026</a></h3>
+          <div class="aside-item__date">6 Mayo 2026 · 7:30 AM</div>
+        </div>
+        <div class="aside-item">
+          <div class="aside-item__kicker">📊 Crónica Bursátil</div>
+          <h3 class="aside-item__hed"><a href="#">Crónica Bursátil GSD – 5 de mayo 2026</a></h3>
+          <div class="aside-item__date">6 Mayo 2026</div>
+        </div>
+        <div class="aside-item">
+          <div class="aside-item__kicker">📋 Market Recap</div>
+          <h3 class="aside-item__hed"><a href="#">Costa Rica market recap: semana 18, 2026</a></h3>
+          <div class="aside-item__date">4 Mayo 2026</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid-3">
+      <div class="card-sm">
+        <div class="card__kicker">📊 Crónica Bursátil</div>
+        <h3 class="card-sm__hed"><a href="#">Crónica Bursátil GSD – 4 de mayo 2026</a></h3>
+        <p class="card-sm__text">Mercados bajo presión: Ormuz define el tono. El Dow Jones cedió 1.13% y el S&amp;P 500 retrocedió 0.41%, mientras el VIX saltó 7.65% ante la escalada en el Estrecho de Ormuz.</p>
+        <div class="card-sm__foot"><span>5 Mayo 2026</span><a href="#">Leer →</a></div>
+      </div>
+      <div class="card-sm">
+        <div class="card__kicker flash">⚡ Flash Matutino</div>
+        <h3 class="card-sm__hed"><a href="#">Flash Matutino, 4 de mayo 2026</a></h3>
+        <p class="card-sm__text">NASDAQ resiste mientras DOW cede 260 puntos. 5 señales CRMG apuntan a compra. CRMG$180533 lidera con +14.49 pb — mayor I-spread de la semana.</p>
+        <div class="card-sm__foot"><span>4 Mayo 2026</span><a href="#">Leer →</a></div>
+      </div>
+      <div class="card-sm">
+        <div class="card__kicker">💱 MONEX · Divisas</div>
+        <h3 class="card-sm__hed"><a href="#">Colón se aprecia 5.37% interanual — análisis MONEX semanal</a></h3>
+        <p class="card-sm__text">El tipo de cambio promedio ponderado en MONEX se ubica en ₡458.97/USD. El colón acumula una apreciación interanual sostenida frente al promedio de 2025 de ₡506.42.</p>
+        <div class="card-sm__foot"><span>Mayo 2026</span><a href="#">Leer →</a></div>
+      </div>
+    </div>
+
+    <div class="layout-bottom">
+      <div class="card-feat">
+        <div class="card__kicker recap">📋 Análisis Semanal</div>
+        <h2 class="card-feat__headline"><a href="#">Semana 18: Geopolítica, resiliencia de mercados y reconfiguración política en Costa Rica</a></h2>
+        <p class="card-feat__body">La semana 18 de 2026 combinó tres fuerzas con incidencia directa sobre la valoración de activos costarricenses: un entorno geopolítico internacional más tenso con el conflicto EE.UU.–Irán, un mercado global todavía resiliente con ganancias corporativas récord (+27.1% en Q1 S&amp;P 500), y una reconfiguración política interna que altera la lectura de gobernabilidad y riesgo regulatorio. El modelo CRMG registró 5 señales activas de compra con los mayores I-spreads del año.</p>
+        <div class="card-feat__foot">
+          <span>4 Mayo 2026 · Informe Estratégico</span>
+          <a href="#">Leer análisis →</a>
+        </div>
+      </div>
+      <div class="popular">
+        <div class="popular__hd">📌 Más leídas esta semana</div>
+        <div class="popular__item">
+          <div class="popular__num">01</div>
+          <div>
+            <div class="popular__text"><a href="#">Flash Informativo — 7 Mayo 2026</a></div>
+            <div class="popular__sub">Flash · 7 Mayo 2026</div>
+          </div>
+        </div>
+        <div class="popular__item">
+          <div class="popular__num">02</div>
+          <div>
+            <div class="popular__text"><a href="#">Market Recap semana 18, 2026</a></div>
+            <div class="popular__sub">Análisis · 4 Mayo 2026</div>
+          </div>
+        </div>
+        <div class="popular__item">
+          <div class="popular__num">03</div>
+          <div>
+            <div class="popular__text"><a href="#">CRMG$210531 — Alta Convicción ★★ 12.03 pb</a></div>
+            <div class="popular__sub">BNV · 6 Mayo 2026</div>
+          </div>
+        </div>
+        <div class="popular__item">
+          <div class="popular__num">04</div>
+          <div>
+            <div class="popular__text"><a href="#">Curva CRC vs USD: análisis de spreads soberanos</a></div>
+            <div class="popular__sub">Deuda soberana · Mayo 2026</div>
+          </div>
+        </div>
+        <div class="popular__item">
+          <div class="popular__num">05</div>
+          <div>
+            <div class="popular__text"><a href="#">WTI cede −6.87% por acuerdo nuclear EE.UU.–Irán</a></div>
+            <div class="popular__sub">Geopolítica · 6 Mayo 2026</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ▸ SUBSCRIBE -->
+<section class="subscribe">
+  <div class="subscribe__inner">
+    <div class="subscribe__eyebrow">Newsletter diario</div>
+    <h2 class="subscribe__title">Reciba la crónica bursátil cada mañana</h2>
+    <p class="subscribe__body">Análisis diario de mercados, señales CRMG, tipo de cambio MONEX y panorama internacional — directo a su correo antes de la apertura del NYSE.</p>
+    <div class="subscribe__form">
+      <input class="subscribe__input" type="email" placeholder="correo@empresa.com" autocomplete="email">
+      <button class="subscribe__btn">Suscribirse →</button>
+    </div>
+  </div>
+</section>
+
+<!-- ▸ FOOTER -->
+<footer>
+  <div class="footer__grid">
+    <div class="footer__brand">
+      <h4>GSD <em>Monitor</em></h4>
+      <p>Análisis bursátil diario para inversores costarricenses. Señales CRMG, mercado BNV, divisas MONEX y panorama internacional desde Costa Rica.</p>
+      <div class="contact">GSD IS &amp; Cía · gsdmar@gmail.com<br>Tel. 8938-9046 · gsandel.com</div>
+    </div>
+    <div>
+      <div class="footer__col-title">Secciones</div>
+      <ul class="footer__links">
+        <li><a href="#">Economía · Finanzas</a></li>
+        <li><a href="#">Mercado Bursátil</a></li>
+        <li><a href="#">MONEX · Divisas</a></li>
+        <li><a href="#">Deuda Soberana</a></li>
+        <li><a href="#">WST Monitor</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer__col-title">Recursos</div>
+      <ul class="footer__links">
+        <li><a href="#">BCCR</a></li>
+        <li><a href="#">Bolsa Nacional de Valores</a></li>
+        <li><a href="#">Mercados Financieros Int.</a></li>
+        <li><a href="#">Bloomberg</a></li>
+        <li><a href="#">Archivo completo</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer__col-title">Publicaciones</div>
+      <ul class="footer__links">
+        <li><a href="#">Crónica Bursátil</a></li>
+        <li><a href="#">Flash Matutino</a></li>
+        <li><a href="#">Flash Informativo</a></li>
+        <li><a href="#">Market Recap</a></li>
+        <li><a href="#">Señales CRMG</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer__bottom">
+    <span>© 2026 GSD IS &amp; Cía · Geovanny Ant. Sandí Delgado · <a href="https://gsandel.com">gsandel.com</a></span>
+    <span>Inversiones a su medida · Costa Rica · Datos: Bloomberg · BCCR · BNV</span>
+  </div>
+  <p class="footer__disclaimer">
+    Las crónicas publicadas en este sitio son preparadas con información pública del mercado local e internacional. No constituyen recomendación directa de compra o venta de valores; únicamente señales técnicas de referencia. GSD IS &amp; Cía no está sujeta a supervisión de SUGEVAL. El inversionista es responsable de sus propias decisiones de inversión. Fuentes: BCCR / MONEX, Bolsa Nacional de Valores, Bloomberg Terminal, Reuters, Morningstar.
+  </p>
+</footer>
+
+<script>
+  const toggle = document.getElementById('navToggle');
+  const links  = document.getElementById('navLinks');
+  toggle.addEventListener('click', () => {
+    const open = links.classList.toggle('is-open');
+    toggle.setAttribute('aria-expanded', String(open));
+  });
+  links.querySelectorAll('a').forEach(a =>
+    a.addEventListener('click', () => {
+      links.classList.remove('is-open');
+      toggle.setAttribute('aria-expanded','false');
+    })
+  );
+</script>
+</body>
+</html>
