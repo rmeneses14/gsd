@@ -7,20 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,400;1,700&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300;1,400&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-/* ═══════════════════════════════════════════
-   ROYAL BLUE PALETTE
-   Primary:   Royal Blue   #1a3a8f
-   Deep:      Navy         #0d2060
-   Mid:       Cobalt       #2952b3
-   Light:     Sky          #4a7fd4
-   Pale:      Ice          #dce8f8
-   Accent 1:  Gold/Amber   #d4a017  (contrast + warmth)
-   Accent 2:  Silver/Steel #c8d4e8  (secondary text bg)
-   Paper:     Off-white    #f4f7fd  (blue-tinted cream)
-   Ink:       Deep Navy    #080f2e
-═══════════════════════════════════════════ */
 :root {
-  /* Core blues */
   --royal:      #1a3a8f;
   --royal-dk:   #0d2060;
   --royal-dkk:  #08173d;
@@ -32,25 +19,21 @@
   --ice-lt:     #eef4fd;
   --ink:        #080f2e;
 
-  /* Accents */
   --gold:       #c89a10;
   --gold-lt:    #e0b420;
   --gold-pale:  #fdf3d0;
   --silver:     #8fa8cc;
   --silver-lt:  #c8d8f0;
 
-  /* Neutrals */
   --paper:      #f4f7fd;
   --cream:      #f8faff;
   --rule:       #ccd8ee;
   --muted:      #5a6e9a;
 
-  /* Semantic */
   --up-color:   #0e8a4a;
   --dn-color:   #b02828;
   --nt-color:   #6b7fa8;
 
-  /* Spacing */
   --r-sm: clamp(14px, 3vw, 20px);
   --r-md: clamp(20px, 4vw, 40px);
   --max-w: 1280px;
@@ -70,11 +53,13 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 a { color: inherit; text-decoration: none; }
+img { max-width: 100%; height: auto; display: block; }
+ul { list-style: none; }
 
 /* ═══════════════════════════════════════════
    TICKER TAPE
 ═══════════════════════════════════════════ */
-.ticker {
+.gsd-ticker {
   position: sticky;
   top: 0;
   z-index: 100;
@@ -85,7 +70,7 @@ a { color: inherit; text-decoration: none; }
   overflow: hidden;
   border-bottom: 1px solid rgba(74,127,212,0.25);
 }
-.ticker__label {
+.gsd-ticker__label {
   flex-shrink: 0;
   background: var(--gold);
   color: var(--ink);
@@ -100,12 +85,13 @@ a { color: inherit; text-decoration: none; }
   align-items: center;
   white-space: nowrap;
 }
-.ticker__track {
+.gsd-ticker__overflow { overflow: hidden; flex: 1; display: flex; align-items: center; }
+.gsd-ticker__track {
   display: flex;
-  animation: roll 44s linear infinite;
+  animation: gsd-roll 44s linear infinite;
   white-space: nowrap;
 }
-.ticker__item {
+.gsd-ticker__item {
   font-family: 'JetBrains Mono', monospace;
   font-size: 11px;
   color: rgba(200,216,240,0.7);
@@ -116,47 +102,40 @@ a { color: inherit; text-decoration: none; }
   gap: 7px;
   height: 30px;
 }
-.ticker__item .sym { color: #dce8f8; font-weight: 500; font-size: 10.5px; }
-.ticker__item .up  { color: #3ecf82; }
-.ticker__item .dn  { color: #f07070; }
-.ticker__item .nt  { color: rgba(200,216,240,.4); }
-@keyframes roll { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+.gsd-ticker__item .sym { color: #dce8f8; font-weight: 500; font-size: 10.5px; }
+.gsd-ticker__item .up  { color: #3ecf82; }
+.gsd-ticker__item .dn  { color: #f07070; }
+.gsd-ticker__item .nt  { color: rgba(200,216,240,.4); }
+@keyframes gsd-roll { from{transform:translateX(0)} to{transform:translateX(-50%)} }
 
 /* ═══════════════════════════════════════════
    MASTHEAD
 ═══════════════════════════════════════════ */
-.masthead {
+.gsd-masthead {
   background: var(--royal);
   border-bottom: 3px solid var(--gold);
   padding: 0 var(--r-md);
   position: relative;
   overflow: hidden;
 }
-/* Subtle diagonal stripe texture */
-.masthead::before {
+.gsd-masthead::before {
   content: '';
   position: absolute;
   inset: 0;
-  background: repeating-linear-gradient(
-    -55deg,
-    transparent,
-    transparent 28px,
-    rgba(255,255,255,.025) 28px,
-    rgba(255,255,255,.025) 29px
-  );
+  background: repeating-linear-gradient(-55deg, transparent, transparent 28px, rgba(255,255,255,.025) 28px, rgba(255,255,255,.025) 29px);
   pointer-events: none;
 }
-.masthead__inner {
+.gsd-masthead__inner {
   max-width: var(--max-w);
   margin: 0 auto;
   display: grid;
   grid-template-columns: 1fr auto 1fr;
   align-items: center;
-  padding: clamp(16px, 3vw, 26px) 0 clamp(12px, 2vw, 20px);
+  padding: clamp(16px,3vw,26px) 0 clamp(12px,2vw,20px);
   gap: 20px;
   position: relative;
 }
-.masthead__meta {
+.gsd-masthead__meta {
   font-family: 'JetBrains Mono', monospace;
   font-size: 10px;
   color: rgba(220,232,248,.55);
@@ -164,8 +143,8 @@ a { color: inherit; text-decoration: none; }
   line-height: 1.9;
   text-transform: uppercase;
 }
-.masthead__brand { text-align: center; }
-.masthead__eyebrow {
+.gsd-masthead__brand { text-align: center; }
+.gsd-masthead__eyebrow {
   display: block;
   font-family: 'JetBrains Mono', monospace;
   font-size: 9px;
@@ -175,33 +154,30 @@ a { color: inherit; text-decoration: none; }
   margin-bottom: 6px;
   opacity: .85;
 }
-.masthead__title {
+.gsd-masthead__title {
   font-family: 'Playfair Display', serif;
-  font-size: clamp(30px, 5vw, 54px);
+  font-size: clamp(30px,5vw,54px);
   font-weight: 900;
   line-height: 1;
   letter-spacing: -.025em;
   color: #fff;
   white-space: nowrap;
 }
-.masthead__title em {
-  color: var(--gold-lt);
-  font-style: normal;
-}
-.masthead__tagline {
+.gsd-masthead__title em { color: var(--gold-lt); font-style: normal; }
+.gsd-masthead__tagline {
   display: block;
   font-size: 11px;
   color: rgba(220,232,248,.5);
   font-style: italic;
   margin-top: 6px;
 }
-.masthead__actions {
+.gsd-masthead__actions {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
   gap: 8px;
 }
-.btn--gold {
+.gsd-btn--gold {
   display: inline-flex;
   align-items: center;
   background: var(--gold);
@@ -215,30 +191,31 @@ a { color: inherit; text-decoration: none; }
   border: none;
   cursor: pointer;
   transition: background .2s;
+  text-decoration: none;
 }
-.btn--gold:hover { background: var(--gold-lt); }
-.masthead__contact {
+.gsd-btn--gold:hover { background: var(--gold-lt); color: var(--ink); }
+.gsd-masthead__contact {
   font-family: 'JetBrains Mono', monospace;
   font-size: 9px;
   color: rgba(220,232,248,.4);
   text-align: right;
   line-height: 1.8;
 }
-@media (max-width: 640px) {
-  .masthead__inner { grid-template-columns: 1fr; justify-items: center; text-align: center; padding: 14px 0 12px; }
-  .masthead__meta, .masthead__actions { display: none; }
+@media (max-width:640px) {
+  .gsd-masthead__inner { grid-template-columns:1fr; justify-items:center; text-align:center; padding:14px 0 12px; }
+  .gsd-masthead__meta,.gsd-masthead__actions { display:none; }
 }
 
 /* ═══════════════════════════════════════════
    NAV
 ═══════════════════════════════════════════ */
-.nav {
+.gsd-nav {
   background: var(--royal-dk);
   border-bottom: 1px solid rgba(74,127,212,0.3);
   position: relative;
   z-index: 90;
 }
-.nav__inner {
+.gsd-nav__inner {
   max-width: var(--max-w);
   margin: 0 auto;
   padding: 0 var(--r-md);
@@ -246,7 +223,7 @@ a { color: inherit; text-decoration: none; }
   align-items: stretch;
   min-height: 40px;
 }
-.nav__links {
+.gsd-nav__links {
   display: flex;
   flex-wrap: nowrap;
   overflow-x: auto;
@@ -254,8 +231,9 @@ a { color: inherit; text-decoration: none; }
   scrollbar-width: none;
   flex: 1;
 }
-.nav__links::-webkit-scrollbar { display: none; }
-.nav__link {
+.gsd-nav__links::-webkit-scrollbar { display: none; }
+.gsd-nav__links a,
+.gsd-nav__links li > a {
   font-family: 'JetBrains Mono', monospace;
   font-size: 10.5px;
   font-weight: 500;
@@ -269,11 +247,14 @@ a { color: inherit; text-decoration: none; }
   white-space: nowrap;
   transition: color .2s, background .2s;
   border-bottom: 2px solid transparent;
+  height: 40px;
 }
-.nav__link:first-child { border-left: 1px solid rgba(74,127,212,.2); }
-.nav__link:hover { color: #fff; background: rgba(74,127,212,.15); }
-.nav__link.is-active { color: var(--gold-lt); border-bottom-color: var(--gold); }
-.nav__rate {
+.gsd-nav__links li:first-child > a { border-left: 1px solid rgba(74,127,212,.2); }
+.gsd-nav__links a:hover,
+.gsd-nav__links li > a:hover { color: #fff; background: rgba(74,127,212,.15); }
+.gsd-nav__links .current-menu-item > a,
+.gsd-nav__links .current_page_item > a { color: var(--gold-lt); border-bottom-color: var(--gold); }
+.gsd-nav__rate {
   font-family: 'JetBrains Mono', monospace;
   font-size: 10.5px;
   color: rgba(200,216,240,.4);
@@ -284,8 +265,8 @@ a { color: inherit; text-decoration: none; }
   flex-shrink: 0;
   white-space: nowrap;
 }
-.nav__rate span { color: var(--gold-lt); font-weight: 600; }
-.nav__toggle {
+.gsd-nav__rate span { color: var(--gold-lt); font-weight: 600; }
+.gsd-nav__toggle {
   display: none;
   background: none;
   border: none;
@@ -295,9 +276,9 @@ a { color: inherit; text-decoration: none; }
   font-size: 18px;
   align-items: center;
 }
-@media (max-width: 768px) {
-  .nav__toggle { display: flex; }
-  .nav__links {
+@media (max-width:768px) {
+  .gsd-nav__toggle { display:flex; }
+  .gsd-nav__links {
     display: none;
     position: absolute;
     top: 100%;
@@ -307,26 +288,26 @@ a { color: inherit; text-decoration: none; }
     z-index: 99;
     border-top: 1px solid rgba(74,127,212,.25);
   }
-  .nav__links.is-open { display: flex; }
-  .nav__link {
-    border-right: none; border-left: none;
+  .gsd-nav__links.is-open { display: flex; }
+  .gsd-nav__links a,
+  .gsd-nav__links li > a {
+    border-right: none; border-left: none !important;
     border-bottom: 1px solid rgba(74,127,212,.15);
     padding: 13px var(--r-md);
-    font-size: 12px;
+    font-size: 12px; height: auto;
   }
-  .nav__link:first-child { border-left: none; }
-  .nav__rate { display: none; }
+  .gsd-nav__rate { display: none; }
 }
 
 /* ═══════════════════════════════════════════
    BREAKING BANNER
 ═══════════════════════════════════════════ */
-.breaking {
+.gsd-breaking {
   background: var(--cobalt);
   border-bottom: 1px solid rgba(74,127,212,.4);
   padding: 8px var(--r-md);
 }
-.breaking__inner {
+.gsd-breaking__inner {
   max-width: var(--max-w);
   margin: 0 auto;
   display: flex;
@@ -334,7 +315,7 @@ a { color: inherit; text-decoration: none; }
   gap: 12px;
   flex-wrap: wrap;
 }
-.breaking__badge {
+.gsd-breaking__badge {
   font-family: 'JetBrains Mono', monospace;
   font-size: 9px;
   font-weight: 700;
@@ -345,15 +326,15 @@ a { color: inherit; text-decoration: none; }
   padding: 3px 9px;
   flex-shrink: 0;
 }
-.breaking__dot {
+.gsd-breaking__dot {
   width: 6px; height: 6px;
   border-radius: 50%;
   background: var(--gold-lt);
-  animation: blink 1.4s infinite;
+  animation: gsd-blink 1.4s infinite;
   flex-shrink: 0;
 }
-@keyframes blink { 0%,100%{opacity:1} 50%{opacity:.15} }
-.breaking__text {
+@keyframes gsd-blink { 0%,100%{opacity:1} 50%{opacity:.15} }
+.gsd-breaking__text {
   font-family: 'JetBrains Mono', monospace;
   font-size: 11px;
   font-weight: 500;
@@ -362,14 +343,14 @@ a { color: inherit; text-decoration: none; }
 }
 
 /* ═══════════════════════════════════════════
-   HERO
+   HERO SECTION
 ═══════════════════════════════════════════ */
-.hero {
+.gsd-hero {
   background: var(--paper);
   border-bottom: 2px solid var(--royal);
   padding: 0 var(--r-md);
 }
-.hero__inner {
+.gsd-hero__inner {
   max-width: var(--max-w);
   margin: 0 auto;
   display: grid;
@@ -377,12 +358,12 @@ a { color: inherit; text-decoration: none; }
   gap: 0;
   padding: clamp(24px,4vw,44px) 0 0;
 }
-.hero__main {
+.gsd-hero__main {
   padding-right: clamp(20px,3vw,40px);
   border-right: 1px solid var(--rule);
   padding-bottom: clamp(20px,3vw,36px);
 }
-.hero__kicker {
+.gsd-hero__kicker {
   display: inline-flex;
   align-items: center;
   gap: 8px;
@@ -397,24 +378,24 @@ a { color: inherit; text-decoration: none; }
   padding: 4px 12px;
   margin-bottom: 16px;
 }
-.hero__headline {
+.gsd-hero__headline {
   font-family: 'Playfair Display', serif;
-  font-size: clamp(22px, 4vw, 38px);
+  font-size: clamp(22px,4vw,38px);
   font-weight: 900;
   line-height: 1.15;
   letter-spacing: -.02em;
   color: var(--ink);
   margin-bottom: 16px;
 }
-.hero__deck {
-  font-size: clamp(14px, 2vw, 15.5px);
+.gsd-hero__deck {
+  font-size: clamp(14px,2vw,15.5px);
   color: var(--muted);
   line-height: 1.75;
   border-left: 3px solid var(--gold);
   padding-left: 16px;
   margin-bottom: 22px;
 }
-.hero__meta {
+.gsd-hero__meta {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -425,8 +406,8 @@ a { color: inherit; text-decoration: none; }
   font-size: 10.5px;
   color: var(--muted);
 }
-.hero__meta strong { color: var(--ink); }
-.hero__read {
+.gsd-hero__meta strong { color: var(--ink); }
+.gsd-hero__read {
   margin-left: auto;
   color: var(--royal);
   font-weight: 700;
@@ -436,12 +417,12 @@ a { color: inherit; text-decoration: none; }
   border-bottom: 1px solid transparent;
   transition: border-color .2s;
 }
-.hero__read:hover { border-bottom-color: var(--royal); }
-.hero__sidebar {
+.gsd-hero__read:hover { border-bottom-color: var(--royal); }
+.gsd-hero__sidebar {
   padding-left: clamp(16px,2.5vw,32px);
   padding-bottom: 24px;
 }
-.sidebar__hd {
+.gsd-sidebar__hd {
   font-family: 'JetBrains Mono', monospace;
   font-size: 9px;
   font-weight: 700;
@@ -452,7 +433,7 @@ a { color: inherit; text-decoration: none; }
   border-bottom: 2px solid var(--royal);
   margin-bottom: 2px;
 }
-.mkt-row {
+.gsd-mkt-row {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -460,31 +441,25 @@ a { color: inherit; text-decoration: none; }
   border-bottom: 1px solid var(--rule);
   gap: 8px;
 }
-.mkt-row:last-child { border-bottom: none; }
-.mkt__name { font-weight: 600; font-size: 13px; line-height: 1.2; }
-.mkt__sub  { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; color: var(--muted); margin-top: 2px; }
-.mkt__val  { text-align: right; flex-shrink: 0; }
-.mkt__price {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 13.5px; font-weight: 500;
-}
-.mkt__chg {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 11px; font-weight: 600; margin-top: 1px;
-}
-.mkt__chg.up { color: var(--up-color); }
-.mkt__chg.dn { color: var(--dn-color); }
-.mkt__chg.nt { color: var(--nt-color); }
-@media (max-width: 900px) {
-  .hero__inner { grid-template-columns: 1fr; }
-  .hero__main { border-right: none; padding-right: 0; }
-  .hero__sidebar { display: none; }
+.gsd-mkt-row:last-child { border-bottom: none; }
+.gsd-mkt__name { font-weight: 600; font-size: 13px; line-height: 1.2; }
+.gsd-mkt__sub  { font-family:'JetBrains Mono',monospace; font-size:9.5px; color:var(--muted); margin-top:2px; }
+.gsd-mkt__val  { text-align: right; flex-shrink: 0; }
+.gsd-mkt__price { font-family:'JetBrains Mono',monospace; font-size:13.5px; font-weight:500; }
+.gsd-mkt__chg  { font-family:'JetBrains Mono',monospace; font-size:11px; font-weight:600; margin-top:1px; }
+.gsd-mkt__chg.up { color: var(--up-color); }
+.gsd-mkt__chg.dn { color: var(--dn-color); }
+.gsd-mkt__chg.nt { color: var(--nt-color); }
+@media (max-width:900px) {
+  .gsd-hero__inner { grid-template-columns:1fr; }
+  .gsd-hero__main  { border-right:none; padding-right:0; }
+  .gsd-hero__sidebar { display:none; }
 }
 
 /* ═══════════════════════════════════════════
    MARKETS RIBBON (mobile)
 ═══════════════════════════════════════════ */
-.mkt-ribbon {
+.gsd-ribbon {
   display: none;
   background: var(--royal-dk);
   overflow-x: auto;
@@ -492,216 +467,85 @@ a { color: inherit; text-decoration: none; }
   scrollbar-width: none;
   border-bottom: 1px solid rgba(74,127,212,.25);
 }
-.mkt-ribbon::-webkit-scrollbar { display: none; }
-.mkt-ribbon__inner { display: flex; width: max-content; min-width: 100%; }
-.mkt-ribbon__item {
-  padding: 12px 20px;
-  border-right: 1px solid rgba(74,127,212,.2);
-  flex-shrink: 0;
-}
-.mkt-ribbon__sym {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 9.5px;
-  color: rgba(200,216,240,.45);
-  text-transform: uppercase;
-  letter-spacing: .1em;
-  margin-bottom: 2px;
-}
-.mkt-ribbon__price {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 14px;
-  font-weight: 500;
-  color: #fff;
-}
-.mkt-ribbon__chg {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 10.5px;
-  font-weight: 600;
-}
-.mkt-ribbon__chg.up { color: #3ecf82; }
-.mkt-ribbon__chg.dn { color: #f07070; }
-.mkt-ribbon__chg.nt { color: rgba(200,216,240,.4); }
-@media (max-width: 900px) { .mkt-ribbon { display: block; } }
+.gsd-ribbon::-webkit-scrollbar { display: none; }
+.gsd-ribbon__inner { display:flex; width:max-content; min-width:100%; }
+.gsd-ribbon__item { padding:12px 20px; border-right:1px solid rgba(74,127,212,.2); flex-shrink:0; }
+.gsd-ribbon__sym { font-family:'JetBrains Mono',monospace; font-size:9.5px; color:rgba(200,216,240,.45); text-transform:uppercase; letter-spacing:.1em; margin-bottom:2px; }
+.gsd-ribbon__price { font-family:'JetBrains Mono',monospace; font-size:14px; font-weight:500; color:#fff; }
+.gsd-ribbon__chg { font-family:'JetBrains Mono',monospace; font-size:10.5px; font-weight:600; }
+.gsd-ribbon__chg.up { color:#3ecf82; }
+.gsd-ribbon__chg.dn { color:#f07070; }
+.gsd-ribbon__chg.nt { color:rgba(200,216,240,.4); }
+@media (max-width:900px) { .gsd-ribbon { display:block; } }
 
 /* ═══════════════════════════════════════════
    SIGNALS PANEL (CRMG)
-   Dark royal blue background — premium feel
 ═══════════════════════════════════════════ */
-.signals {
+.gsd-signals {
   background: linear-gradient(160deg, var(--royal-dkk) 0%, var(--royal-dk) 100%);
   padding: clamp(24px,4vw,40px) var(--r-md);
   border-top: 3px solid var(--cobalt);
 }
-.signals__inner { max-width: var(--max-w); margin: 0 auto; }
-.signals__hd {
-  display: flex;
-  align-items: baseline;
-  flex-wrap: wrap;
-  gap: 12px 20px;
-  margin-bottom: 22px;
-}
-.signals__title {
-  font-family: 'Playfair Display', serif;
-  font-size: clamp(18px,3vw,26px);
-  font-weight: 700;
-  font-style: italic;
-  color: var(--gold-lt);
-}
-.signals__subtitle {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 10px;
-  color: rgba(200,216,240,.35);
-  letter-spacing: .1em;
-  text-transform: uppercase;
-}
-.signals__scroll {
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
-  border: 1px solid rgba(74,127,212,.2);
-  border-radius: 2px;
-}
-.signals__table {
-  width: 100%;
-  border-collapse: collapse;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 12.5px;
-  min-width: 600px;
-}
-.signals__table thead th {
-  text-align: left;
-  font-size: 9px;
-  font-weight: 600;
-  letter-spacing: .18em;
-  text-transform: uppercase;
-  color: rgba(200,216,240,.3);
-  padding: 10px 16px;
-  border-bottom: 1px solid rgba(74,127,212,.25);
-  white-space: nowrap;
-  background: rgba(13,32,96,.4);
-}
-.signals__table tbody tr {
-  border-bottom: 1px solid rgba(74,127,212,.1);
-  transition: background .15s;
-}
-.signals__table tbody tr:hover { background: rgba(74,127,212,.08); }
-.signals__table td {
-  padding: 12px 16px;
-  color: rgba(200,216,240,.75);
-  white-space: nowrap;
-}
-.signals__table td.t-name {
-  font-weight: 600;
-  color: #fff;
-  font-size: 13.5px;
-}
-.badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  padding: 3px 9px;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 9.5px;
-  font-weight: 700;
-  letter-spacing: .06em;
-  text-transform: uppercase;
-  border-radius: 2px;
-}
-.badge--alta   { background: rgba(212,160,23,.18); color: var(--gold-lt);       border: 1px solid rgba(212,160,23,.4); }
-.badge--activa { background: rgba(14,138,74,.15);  color: #3ecf82;              border: 1px solid rgba(14,138,74,.35); }
-.badge--compra { background: rgba(74,127,212,.15);  color: rgba(200,216,240,.7); border: 1px solid rgba(74,127,212,.3); }
-.spread-pill { display: flex; align-items: center; gap: 8px; }
-.spread-track {
-  flex: 1; height: 3px;
-  background: rgba(74,127,212,.2);
-  border-radius: 2px; overflow: hidden;
-  max-width: 72px;
-}
-.spread-fill        { height: 100%; border-radius: 2px; background: var(--gold); }
-.spread-fill.blue   { background: var(--sky-lt); }
-
-/* Mobile cards */
-@media (max-width: 500px) { .signals__scroll{display:none} .signals__cards{display:flex;flex-direction:column;gap:10px} }
-@media (min-width:501px)  { .signals__cards{display:none} }
-.sig-card {
-  background: rgba(74,127,212,.08);
-  border: 1px solid rgba(74,127,212,.2);
-  border-radius: 3px;
-  padding: 14px 16px;
-  display: grid;
-  grid-template-columns: 1fr auto;
-  gap: 8px;
-}
-.sig-card__name { font-family:'JetBrains Mono',monospace; font-size:14px; font-weight:600; color:#fff; }
-.sig-card__row  { display:flex; gap:14px; flex-wrap:wrap; margin-top:6px; }
-.sig-card__kv   { font-family:'JetBrains Mono',monospace; font-size:10px; color:rgba(200,216,240,.4); }
-.sig-card__kv span { color:rgba(200,216,240,.85); font-weight:500; }
-.sig-card__badge { grid-column:2; grid-row:1/3; align-self:start; }
+.gsd-signals__inner { max-width:var(--max-w); margin:0 auto; }
+.gsd-signals__hd { display:flex; align-items:baseline; flex-wrap:wrap; gap:12px 20px; margin-bottom:22px; }
+.gsd-signals__title { font-family:'Playfair Display',serif; font-size:clamp(18px,3vw,26px); font-weight:700; font-style:italic; color:var(--gold-lt); }
+.gsd-signals__subtitle { font-family:'JetBrains Mono',monospace; font-size:10px; color:rgba(200,216,240,.35); letter-spacing:.1em; text-transform:uppercase; }
+.gsd-signals__scroll { overflow-x:auto; -webkit-overflow-scrolling:touch; border:1px solid rgba(74,127,212,.2); border-radius:2px; }
+.gsd-signals__table { width:100%; border-collapse:collapse; font-family:'JetBrains Mono',monospace; font-size:12.5px; min-width:600px; }
+.gsd-signals__table thead th { text-align:left; font-size:9px; font-weight:600; letter-spacing:.18em; text-transform:uppercase; color:rgba(200,216,240,.3); padding:10px 16px; border-bottom:1px solid rgba(74,127,212,.25); white-space:nowrap; background:rgba(13,32,96,.4); }
+.gsd-signals__table tbody tr { border-bottom:1px solid rgba(74,127,212,.1); transition:background .15s; }
+.gsd-signals__table tbody tr:hover { background:rgba(74,127,212,.08); }
+.gsd-signals__table td { padding:12px 16px; color:rgba(200,216,240,.75); white-space:nowrap; }
+.gsd-signals__table td.t-name { font-weight:600; color:#fff; font-size:13.5px; }
+.gsd-badge { display:inline-flex; align-items:center; gap:4px; padding:3px 9px; font-family:'JetBrains Mono',monospace; font-size:9.5px; font-weight:700; letter-spacing:.06em; text-transform:uppercase; border-radius:2px; }
+.gsd-badge--alta   { background:rgba(212,160,23,.18); color:var(--gold-lt); border:1px solid rgba(212,160,23,.4); }
+.gsd-badge--activa { background:rgba(14,138,74,.15);  color:#3ecf82;       border:1px solid rgba(14,138,74,.35); }
+.gsd-badge--compra { background:rgba(74,127,212,.15); color:rgba(200,216,240,.7); border:1px solid rgba(74,127,212,.3); }
+.gsd-spread { display:flex; align-items:center; gap:8px; }
+.gsd-spread__track { flex:1; height:3px; background:rgba(74,127,212,.2); border-radius:2px; overflow:hidden; max-width:72px; }
+.gsd-spread__fill { height:100%; border-radius:2px; background:var(--gold); }
+.gsd-spread__fill.blue { background:var(--sky-lt); }
 
 /* ═══════════════════════════════════════════
    MONEX STRIP
 ═══════════════════════════════════════════ */
-.monex {
+.gsd-monex {
   background: var(--royal);
   padding: clamp(16px,3vw,24px) var(--r-md);
   border-top: 1px solid rgba(74,127,212,.3);
   border-bottom: 1px solid rgba(74,127,212,.3);
-  position: relative;
-  overflow: hidden;
 }
-.monex::after {
-  content: '';
-  position: absolute;
-  right: 0; top: 0; bottom: 0;
-  width: 40%;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,.02));
-  pointer-events: none;
+.gsd-monex__inner { max-width:var(--max-w); margin:0 auto; display:grid; grid-template-columns:auto repeat(5,1fr); gap:clamp(16px,3vw,40px); align-items:center; }
+.gsd-monex__label { font-family:'Playfair Display',serif; font-size:13px; font-weight:700; font-style:italic; color:rgba(220,232,248,.3); letter-spacing:.1em; text-transform:uppercase; border-right:1px solid rgba(74,127,212,.25); padding-right:clamp(16px,3vw,32px); }
+.gsd-monex__lbl { font-family:'JetBrains Mono',monospace; font-size:9px; color:rgba(220,232,248,.35); text-transform:uppercase; letter-spacing:.1em; margin-bottom:3px; }
+.gsd-monex__val { font-family:'JetBrains Mono',monospace; font-size:clamp(14px,2.5vw,17px); font-weight:500; color:#fff; line-height:1.1; }
+.gsd-monex__note { font-family:'JetBrains Mono',monospace; font-size:9.5px; margin-top:2px; }
+.gsd-monex__note.g { color:#3ecf82; }
+.gsd-monex__note.r { color:#f07070; }
+.gsd-monex__note.m { color:rgba(220,232,248,.4); }
+@media (max-width:900px) { .gsd-monex__inner{grid-template-columns:repeat(3,1fr)} .gsd-monex__label{display:none} }
+@media (max-width:500px) { .gsd-monex__inner{grid-template-columns:repeat(2,1fr)} }
+
+/* ═══════════════════════════════════════════
+   STATS BAND
+═══════════════════════════════════════════ */
+.gsd-stats {
+  background: var(--ice);
+  border-top: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+  padding: clamp(18px,3vw,28px) var(--r-md);
 }
-.monex__inner {
-  max-width: var(--max-w);
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: auto repeat(5,1fr);
-  gap: clamp(16px,3vw,40px);
-  align-items: center;
-  position: relative;
-}
-.monex__label {
-  font-family: 'Playfair Display', serif;
-  font-size: 13px;
-  font-weight: 700;
-  font-style: italic;
-  color: rgba(220,232,248,.3);
-  letter-spacing: .1em;
-  text-transform: uppercase;
-  border-right: 1px solid rgba(74,127,212,.25);
-  padding-right: clamp(16px,3vw,32px);
-}
-.monex__stat-lbl {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 9px;
-  color: rgba(220,232,248,.35);
-  text-transform: uppercase;
-  letter-spacing: .1em;
-  margin-bottom: 3px;
-}
-.monex__stat-val {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: clamp(14px,2.5vw,17px);
-  font-weight: 500;
-  color: #fff;
-  line-height: 1.1;
-}
-.monex__stat-note { font-family:'JetBrains Mono',monospace; font-size:9.5px; margin-top:2px; }
-.monex__stat-note.g { color:#3ecf82; }
-.monex__stat-note.r { color:#f07070; }
-.monex__stat-note.m { color:rgba(220,232,248,.4); }
-@media (max-width:900px) { .monex__inner{grid-template-columns:repeat(3,1fr)} .monex__label{display:none} }
-@media (max-width:500px) { .monex__inner{grid-template-columns:repeat(2,1fr)} }
+.gsd-stats__inner { max-width:var(--max-w); margin:0 auto; display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--rule); border:1px solid var(--rule); }
+.gsd-stat-item { background:var(--ice-lt); padding:clamp(16px,2.5vw,24px); text-align:center; }
+.gsd-stat-item__val { font-family:'Playfair Display',serif; font-size:clamp(26px,4vw,42px); font-weight:900; color:var(--royal); line-height:1; margin-bottom:6px; }
+.gsd-stat-item__val em { font-style:normal; color:var(--gold); }
+.gsd-stat-item__lbl { font-family:'JetBrains Mono',monospace; font-size:10px; font-weight:600; letter-spacing:.1em; text-transform:uppercase; color:var(--muted); }
+@media (max-width:640px) { .gsd-stats__inner{grid-template-columns:repeat(2,1fr)} }
 
 /* ═══════════════════════════════════════════
    SECTION HEADER
 ═══════════════════════════════════════════ */
-.section-hd {
+.gsd-section-hd {
   max-width: var(--max-w);
   margin: 0 auto;
   padding: 0 var(--r-md);
@@ -710,848 +554,1018 @@ a { color: inherit; text-decoration: none; }
   gap: 14px;
   height: 46px;
 }
-.section-hd__rule { flex:1; height:1px; background:var(--rule); }
-.section-hd__title {
-  font-family: 'Playfair Display', serif;
-  font-size: 14px;
-  font-weight: 700;
-  font-style: italic;
-  color: var(--royal);
-  white-space: nowrap;
-}
-.section-hd__more {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 10px;
-  color: var(--muted);
-  text-transform: uppercase;
-  letter-spacing: .1em;
-  white-space: nowrap;
-}
-.section-hd__more:hover { color: var(--royal); }
+.gsd-section-hd__rule { flex:1; height:1px; background:var(--rule); }
+.gsd-section-hd__title { font-family:'Playfair Display',serif; font-size:14px; font-weight:700; font-style:italic; color:var(--royal); white-space:nowrap; }
+.gsd-section-hd__more { font-family:'JetBrains Mono',monospace; font-size:10px; color:var(--muted); text-transform:uppercase; letter-spacing:.1em; white-space:nowrap; }
+.gsd-section-hd__more:hover { color:var(--royal); }
 
 /* ═══════════════════════════════════════════
    CONTENT & CARDS
 ═══════════════════════════════════════════ */
-.content { padding: 0 var(--r-md) clamp(24px,4vw,48px); }
-.content__inner { max-width: var(--max-w); margin: 0 auto; }
+.gsd-content { padding: 0 var(--r-md) clamp(24px,4vw,48px); }
+.gsd-content__inner { max-width:var(--max-w); margin:0 auto; }
 
-.layout-feature {
-  display: grid;
-  grid-template-columns: 2fr 1fr;
-  gap: 1px;
-  background: var(--rule);
-  border: 1px solid var(--rule);
-  margin-bottom: 1px;
+.gsd-layout-feature { display:grid; grid-template-columns:2fr 1fr; gap:1px; background:var(--rule); border:1px solid var(--rule); margin-bottom:1px; }
+@media (max-width:768px) { .gsd-layout-feature{grid-template-columns:1fr} }
+
+.gsd-card-feat { background:var(--cream); padding:clamp(20px,3vw,32px); transition:background .2s; }
+.gsd-card-feat:hover { background:var(--paper); }
+.gsd-card__kicker { display:inline-flex; align-items:center; gap:6px; font-family:'JetBrains Mono',monospace; font-size:9.5px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:var(--royal); margin-bottom:12px; }
+.gsd-card__kicker.flash { color:var(--gold); }
+.gsd-card__kicker.recap { color:var(--cobalt); }
+.gsd-card-feat__headline { font-family:'Playfair Display',serif; font-size:clamp(19px,3vw,27px); font-weight:800; line-height:1.2; letter-spacing:-.01em; color:var(--ink); margin-bottom:12px; }
+.gsd-card-feat__headline a:hover { color:var(--royal); }
+.gsd-card-feat__body { font-size:clamp(13px,1.5vw,15px); color:var(--muted); line-height:1.75; margin-bottom:16px; }
+.gsd-card-feat__foot { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:8px; padding-top:14px; border-top:1px solid var(--rule); font-family:'JetBrains Mono',monospace; font-size:10px; color:var(--muted); }
+.gsd-card-feat__foot a { color:var(--royal); font-weight:600; text-transform:uppercase; letter-spacing:.08em; }
+
+.gsd-aside-list { background:var(--cream); display:flex; flex-direction:column; }
+.gsd-aside-item { padding:clamp(14px,2vw,20px); border-bottom:1px solid var(--rule); transition:background .2s; flex:1; display:flex; flex-direction:column; gap:6px; }
+.gsd-aside-item:last-child { border-bottom:none; }
+.gsd-aside-item:hover { background:var(--ice-lt); }
+.gsd-aside-item__kicker { font-family:'JetBrains Mono',monospace; font-size:9px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:var(--gold); }
+.gsd-aside-item__hed { font-family:'Playfair Display',serif; font-size:clamp(13px,2vw,15.5px); font-weight:700; line-height:1.3; color:var(--ink); }
+.gsd-aside-item__hed a:hover { color:var(--royal); }
+.gsd-aside-item__date { font-family:'JetBrains Mono',monospace; font-size:9.5px; color:var(--muted); margin-top:auto; }
+
+.gsd-grid-3 { display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--rule); border:1px solid var(--rule); margin-bottom:1px; }
+@media (max-width:768px) { .gsd-grid-3{grid-template-columns:1fr} }
+@media (min-width:500px) and (max-width:768px) { .gsd-grid-3{grid-template-columns:repeat(2,1fr)} }
+
+.gsd-card-sm { background:var(--cream); padding:clamp(16px,2.5vw,24px); transition:background .2s; }
+.gsd-card-sm:hover { background:var(--paper); }
+.gsd-card-sm__hed { font-family:'Playfair Display',serif; font-size:clamp(15px,2vw,19px); font-weight:700; line-height:1.3; color:var(--ink); margin:10px 0 8px; }
+.gsd-card-sm__hed a:hover { color:var(--royal); }
+.gsd-card-sm__text { font-size:clamp(12px,1.4vw,13.5px); color:var(--muted); line-height:1.65; display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical; overflow:hidden; margin-bottom:12px; }
+.gsd-card-sm__foot { font-family:'JetBrains Mono',monospace; font-size:9.5px; color:var(--muted); display:flex; justify-content:space-between; align-items:center; padding-top:10px; border-top:1px solid var(--rule); }
+.gsd-card-sm__foot a { color:var(--royal); font-weight:600; text-transform:uppercase; letter-spacing:.08em; }
+
+.gsd-layout-bottom { display:grid; grid-template-columns:3fr 2fr; gap:1px; background:var(--rule); border:1px solid var(--rule); margin-top:1px; }
+@media (max-width:640px) { .gsd-layout-bottom{grid-template-columns:1fr} }
+
+.gsd-popular { background:var(--ice); border:1px solid var(--silver-lt); padding:clamp(16px,2.5vw,24px); }
+.gsd-popular__hd { font-family:'JetBrains Mono',monospace; font-size:9.5px; font-weight:700; letter-spacing:.16em; text-transform:uppercase; color:var(--royal); padding-bottom:12px; border-bottom:2px solid var(--royal); margin-bottom:4px; }
+.gsd-popular__item { display:flex; gap:12px; align-items:flex-start; padding:10px 0; border-bottom:1px solid var(--silver-lt); }
+.gsd-popular__item:last-child { border-bottom:none; }
+.gsd-popular__num { font-family:'Playfair Display',serif; font-size:24px; font-weight:900; color:var(--silver-lt); line-height:1; flex-shrink:0; width:28px; }
+.gsd-popular__text { font-size:13px; font-weight:600; color:var(--ink); line-height:1.35; }
+.gsd-popular__text a:hover { color:var(--royal); }
+.gsd-popular__sub { font-family:'JetBrains Mono',monospace; font-size:9.5px; color:var(--muted); margin-top:3px; }
+
+/* ═══════════════════════════════════════════
+   SINGLE POST PAGE
+═══════════════════════════════════════════ */
+.gsd-single { padding: clamp(24px,4vw,48px) var(--r-md); }
+.gsd-single__inner {
+  max-width: 800px;
+  margin: 0 auto;
 }
-@media (max-width:768px) { .layout-feature{grid-template-columns:1fr} }
-
-.card-feat {
-  background: var(--cream);
-  padding: clamp(20px,3vw,32px);
-  transition: background .2s;
-}
-.card-feat:hover { background: var(--paper); }
-
-.card__kicker {
+.gsd-single__back {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 9.5px;
-  font-weight: 700;
-  letter-spacing: .14em;
-  text-transform: uppercase;
-  color: var(--royal);
-  margin-bottom: 12px;
-}
-.card__kicker.flash { color: var(--gold); }
-.card__kicker.recap { color: var(--cobalt); }
-
-.card-feat__headline {
-  font-family: 'Playfair Display', serif;
-  font-size: clamp(19px,3vw,27px);
-  font-weight: 800;
-  line-height: 1.2;
-  letter-spacing: -.01em;
-  color: var(--ink);
-  margin-bottom: 12px;
-}
-.card-feat__headline a:hover { color: var(--royal); }
-.card-feat__body {
-  font-size: clamp(13px,1.5vw,15px);
-  color: var(--muted);
-  line-height: 1.75;
-  margin-bottom: 16px;
-}
-.card-feat__foot {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 8px;
-  padding-top: 14px;
-  border-top: 1px solid var(--rule);
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 10px;
-  color: var(--muted);
-}
-.card-feat__foot a { color: var(--royal); font-weight: 600; text-transform: uppercase; letter-spacing: .08em; }
-.card-feat__foot a:hover { color: var(--cobalt); }
-
-/* ASIDE LIST */
-.aside-list { background: var(--cream); display: flex; flex-direction: column; }
-.aside-item {
-  padding: clamp(14px,2vw,20px);
-  border-bottom: 1px solid var(--rule);
-  transition: background .2s;
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-.aside-item:last-child { border-bottom: none; }
-.aside-item:hover { background: var(--ice-lt); }
-.aside-item__kicker { font-family:'JetBrains Mono',monospace; font-size:9px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:var(--gold); }
-.aside-item__hed { font-family:'Playfair Display',serif; font-size:clamp(13px,2vw,15.5px); font-weight:700; line-height:1.3; color:var(--ink); }
-.aside-item__hed a:hover { color: var(--royal); }
-.aside-item__date { font-family:'JetBrains Mono',monospace; font-size:9.5px; color:var(--muted); margin-top:auto; }
-
-/* 3-COL GRID */
-.grid-3 {
-  display: grid;
-  grid-template-columns: repeat(3,1fr);
-  gap: 1px;
-  background: var(--rule);
-  border: 1px solid var(--rule);
-  margin-bottom: 1px;
-}
-@media (max-width:768px) { .grid-3{grid-template-columns:1fr} }
-@media (min-width:500px) and (max-width:768px) { .grid-3{grid-template-columns:repeat(2,1fr)} }
-
-.card-sm {
-  background: var(--cream);
-  padding: clamp(16px,2.5vw,24px);
-  transition: background .2s;
-}
-.card-sm:hover { background: var(--paper); }
-.card-sm__hed {
-  font-family: 'Playfair Display', serif;
-  font-size: clamp(15px,2vw,19px);
-  font-weight: 700;
-  line-height: 1.3;
-  color: var(--ink);
-  margin: 10px 0 8px;
-}
-.card-sm__hed a:hover { color: var(--royal); }
-.card-sm__text {
-  font-size: clamp(12px,1.4vw,13.5px);
-  color: var(--muted);
-  line-height: 1.65;
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  margin-bottom: 12px;
-}
-.card-sm__foot {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 9.5px;
-  color: var(--muted);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding-top: 10px;
-  border-top: 1px solid var(--rule);
-}
-.card-sm__foot a { color: var(--royal); font-weight: 600; text-transform: uppercase; letter-spacing: .08em; }
-
-/* POPULAR BOX */
-.popular {
-  background: var(--ice);
-  border: 1px solid var(--silver-lt);
-  padding: clamp(16px,2.5vw,24px);
-}
-.popular__hd {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 9.5px;
-  font-weight: 700;
-  letter-spacing: .16em;
-  text-transform: uppercase;
-  color: var(--royal);
-  padding-bottom: 12px;
-  border-bottom: 2px solid var(--royal);
-  margin-bottom: 4px;
-}
-.popular__item {
-  display: flex;
-  gap: 12px;
-  align-items: flex-start;
-  padding: 10px 0;
-  border-bottom: 1px solid var(--silver-lt);
-}
-.popular__item:last-child { border-bottom: none; }
-.popular__num {
-  font-family: 'Playfair Display', serif;
-  font-size: 24px;
-  font-weight: 900;
-  color: var(--silver-lt);
-  line-height: 1;
-  flex-shrink: 0;
-  width: 28px;
-}
-.popular__text { font-size: 13px; font-weight: 600; color: var(--ink); line-height: 1.35; }
-.popular__text a:hover { color: var(--royal); }
-.popular__sub { font-family:'JetBrains Mono',monospace; font-size:9.5px; color:var(--muted); margin-top:3px; }
-
-/* BOTTOM LAYOUT */
-.layout-bottom {
-  display: grid;
-  grid-template-columns: 3fr 2fr;
-  gap: 1px;
-  background: var(--rule);
-  border: 1px solid var(--rule);
-  margin-top: 1px;
-}
-@media (max-width:640px) { .layout-bottom{grid-template-columns:1fr} }
-
-/* ═══════════════════════════════════════════
-   STATS BAND — between content & subscribe
-═══════════════════════════════════════════ */
-.stats-band {
-  background: var(--ice);
-  border-top: 1px solid var(--rule);
-  border-bottom: 1px solid var(--rule);
-  padding: clamp(18px,3vw,28px) var(--r-md);
-}
-.stats-band__inner {
-  max-width: var(--max-w);
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: repeat(4,1fr);
-  gap: 1px;
-  background: var(--rule);
-  border: 1px solid var(--rule);
-}
-.stat-item {
-  background: var(--ice-lt);
-  padding: clamp(16px,2.5vw,24px);
-  text-align: center;
-}
-.stat-item__val {
-  font-family: 'Playfair Display', serif;
-  font-size: clamp(26px,4vw,42px);
-  font-weight: 900;
-  color: var(--royal);
-  line-height: 1;
-  margin-bottom: 6px;
-}
-.stat-item__val em { font-style:normal; color:var(--gold); }
-.stat-item__lbl {
   font-family: 'JetBrains Mono', monospace;
   font-size: 10px;
   font-weight: 600;
   letter-spacing: .1em;
   text-transform: uppercase;
+  color: var(--royal);
+  margin-bottom: 24px;
+  border-bottom: 1px solid transparent;
+  transition: border-color .2s;
+}
+.gsd-single__back:hover { border-bottom-color: var(--royal); }
+.gsd-single__kicker {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--royal);
+  background: var(--ice);
+  border-left: 3px solid var(--royal);
+  padding: 4px 12px;
+  display: inline-flex;
+  margin-bottom: 16px;
+}
+.gsd-single__headline {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(26px,5vw,44px);
+  font-weight: 900;
+  line-height: 1.12;
+  letter-spacing: -.025em;
+  color: var(--ink);
+  margin-bottom: 18px;
+}
+.gsd-single__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 20px;
+  padding: 14px 0;
+  border-top: 2px solid var(--royal);
+  border-bottom: 1px solid var(--rule);
+  margin-bottom: 28px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10.5px;
   color: var(--muted);
 }
-@media (max-width:640px) { .stats-band__inner{grid-template-columns:repeat(2,1fr)} }
+.gsd-single__meta strong { color: var(--ink); }
+.gsd-single__body {
+  font-size: clamp(15px,2vw,17px);
+  line-height: 1.8;
+  color: var(--ink);
+}
+.gsd-single__body p { margin-bottom: 1.4em; }
+.gsd-single__body h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(20px,3vw,26px);
+  font-weight: 800;
+  color: var(--royal);
+  margin: 2em 0 .7em;
+  line-height: 1.25;
+}
+.gsd-single__body h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(17px,2.5vw,21px);
+  font-weight: 700;
+  color: var(--ink);
+  margin: 1.6em 0 .6em;
+}
+.gsd-single__body blockquote {
+  border-left: 3px solid var(--gold);
+  padding: 12px 20px;
+  background: var(--ice-lt);
+  margin: 1.5em 0;
+  font-style: italic;
+  color: var(--muted);
+}
+.gsd-single__body strong { color: var(--ink); font-weight: 700; }
+.gsd-single__body table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12.5px;
+  margin: 1.5em 0;
+  overflow-x: auto;
+  display: block;
+}
+.gsd-single__body table th {
+  background: var(--royal);
+  color: #fff;
+  padding: 10px 14px;
+  text-align: left;
+  font-size: 10px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+.gsd-single__body table td {
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--rule);
+  color: var(--ink);
+}
+.gsd-single__body table tbody tr:hover { background: var(--ice-lt); }
+.gsd-single__body ul,
+.gsd-single__body ol {
+  padding-left: 1.5em;
+  margin-bottom: 1.4em;
+  color: var(--ink);
+}
+.gsd-single__body ul { list-style: disc; }
+.gsd-single__body ol { list-style: decimal; }
+.gsd-single__body li { margin-bottom: .5em; }
+
+.gsd-single__tags {
+  margin-top: 32px;
+  padding-top: 20px;
+  border-top: 1px solid var(--rule);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+.gsd-single__tag-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9.5px;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: .1em;
+}
+.gsd-tag {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--royal);
+  background: var(--ice);
+  border: 1px solid var(--silver-lt);
+  padding: 4px 10px;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  transition: background .2s;
+}
+.gsd-tag:hover { background: var(--ice-lt); color: var(--royal-dk); }
+
+.gsd-single__related {
+  margin-top: 40px;
+}
+.gsd-single__related-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 18px;
+  font-weight: 800;
+  font-style: italic;
+  color: var(--royal);
+  margin-bottom: 16px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid var(--royal);
+}
+
+/* ═══════════════════════════════════════════
+   ARCHIVE / BLOG PAGE
+═══════════════════════════════════════════ */
+.gsd-archive { padding: 0 var(--r-md) clamp(32px,5vw,60px); }
+.gsd-archive__inner { max-width: var(--max-w); margin: 0 auto; }
+.gsd-archive__header {
+  padding: clamp(20px,3vw,36px) 0 clamp(16px,2vw,24px);
+  border-bottom: 2px solid var(--royal);
+  margin-bottom: 24px;
+}
+.gsd-archive__label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 6px;
+}
+.gsd-archive__title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(22px,4vw,36px);
+  font-weight: 900;
+  color: var(--royal);
+}
+.gsd-archive__grid {
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  gap: 1px;
+  background: var(--rule);
+  border: 1px solid var(--rule);
+}
+@media (max-width:768px) { .gsd-archive__grid{grid-template-columns:1fr} }
+@media (min-width:500px) and (max-width:768px) { .gsd-archive__grid{grid-template-columns:repeat(2,1fr)} }
+
+/* PAGINATION */
+.gsd-pagination {
+  margin-top: 32px;
+  display: flex;
+  justify-content: center;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+.gsd-pagination .page-numbers {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 8px 14px;
+  border: 1px solid var(--rule);
+  color: var(--muted);
+  transition: all .2s;
+}
+.gsd-pagination .page-numbers:hover { background: var(--royal); color: #fff; border-color: var(--royal); }
+.gsd-pagination .page-numbers.current { background: var(--royal); color: #fff; border-color: var(--royal); }
 
 /* ═══════════════════════════════════════════
    SUBSCRIBE CTA
 ═══════════════════════════════════════════ */
-.subscribe {
+.gsd-subscribe {
   background: linear-gradient(135deg, var(--royal-dk) 0%, var(--royal) 50%, var(--cobalt) 100%);
   padding: clamp(36px,6vw,64px) var(--r-md);
   text-align: center;
   position: relative;
   overflow: hidden;
 }
-.subscribe::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-  pointer-events: none;
+.gsd-subscribe::before {
+  content:'';
+  position:absolute; inset:0;
+  background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/svg%3E");
+  pointer-events:none;
 }
-.subscribe__inner { max-width: 560px; margin: 0 auto; position: relative; }
-.subscribe__eyebrow {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 10px;
-  letter-spacing: .22em;
-  text-transform: uppercase;
-  color: rgba(220,232,248,.45);
-  margin-bottom: 12px;
-}
-.subscribe__title {
-  font-family: 'Playfair Display', serif;
-  font-size: clamp(22px,4vw,36px);
-  font-weight: 900;
-  color: #fff;
-  margin-bottom: 12px;
-  line-height: 1.2;
-}
-.subscribe__body {
-  font-size: 14px;
-  color: rgba(220,232,248,.65);
-  line-height: 1.75;
-  margin-bottom: 28px;
-}
-.subscribe__form {
-  display: flex;
-  gap: 0;
-  max-width: 440px;
-  margin: 0 auto;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-.subscribe__input {
-  flex: 1;
-  min-width: 200px;
-  padding: 13px 16px;
-  border: 1px solid rgba(74,127,212,.4);
-  background: rgba(255,255,255,.08);
-  color: #fff;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 12px;
-  outline: none;
-  transition: border-color .2s, background .2s;
-}
-.subscribe__input::placeholder { color: rgba(220,232,248,.35); }
-.subscribe__input:focus { border-color: var(--gold-lt); background: rgba(255,255,255,.12); }
-.subscribe__btn {
-  background: var(--gold);
-  color: var(--ink);
-  border: none;
-  padding: 13px 24px;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: .14em;
-  text-transform: uppercase;
-  cursor: pointer;
-  transition: background .2s;
-}
-.subscribe__btn:hover { background: var(--gold-lt); }
+.gsd-subscribe__inner { max-width:560px; margin:0 auto; position:relative; }
+.gsd-subscribe__eyebrow { font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.22em; text-transform:uppercase; color:rgba(220,232,248,.45); margin-bottom:12px; }
+.gsd-subscribe__title { font-family:'Playfair Display',serif; font-size:clamp(22px,4vw,36px); font-weight:900; color:#fff; margin-bottom:12px; line-height:1.2; }
+.gsd-subscribe__body { font-size:14px; color:rgba(220,232,248,.65); line-height:1.75; margin-bottom:28px; }
+.gsd-subscribe__form { display:flex; gap:8px; max-width:440px; margin:0 auto; flex-wrap:wrap; }
+.gsd-subscribe__input { flex:1; min-width:200px; padding:13px 16px; border:1px solid rgba(74,127,212,.4); background:rgba(255,255,255,.08); color:#fff; font-family:'JetBrains Mono',monospace; font-size:12px; outline:none; transition:border-color .2s,background .2s; }
+.gsd-subscribe__input::placeholder { color:rgba(220,232,248,.35); }
+.gsd-subscribe__input:focus { border-color:var(--gold-lt); background:rgba(255,255,255,.12); }
+.gsd-subscribe__btn { background:var(--gold); color:var(--ink); border:none; padding:13px 24px; font-family:'JetBrains Mono',monospace; font-size:10px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; cursor:pointer; transition:background .2s; }
+.gsd-subscribe__btn:hover { background:var(--gold-lt); }
 
 /* ═══════════════════════════════════════════
    FOOTER
 ═══════════════════════════════════════════ */
-footer {
+.gsd-footer {
   background: var(--royal-dkk);
   border-top: 3px solid var(--gold);
   padding: clamp(32px,5vw,52px) var(--r-md) clamp(20px,3vw,32px);
 }
-.footer__grid {
-  max-width: var(--max-w);
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: 2fr repeat(3,1fr);
-  gap: clamp(24px,4vw,48px);
-}
-@media (max-width:768px) { .footer__grid{grid-template-columns:1fr 1fr} }
-@media (max-width:420px) { .footer__grid{grid-template-columns:1fr} }
+.gsd-footer__grid { max-width:var(--max-w); margin:0 auto; display:grid; grid-template-columns:2fr repeat(3,1fr); gap:clamp(24px,4vw,48px); }
+@media (max-width:768px) { .gsd-footer__grid{grid-template-columns:1fr 1fr} }
+@media (max-width:420px) { .gsd-footer__grid{grid-template-columns:1fr} }
+.gsd-footer__brand h4 { font-family:'Playfair Display',serif; font-size:24px; font-weight:900; color:#fff; margin-bottom:10px; }
+.gsd-footer__brand h4 em { font-style:normal; color:var(--gold-lt); }
+.gsd-footer__brand p { font-size:12.5px; color:rgba(200,216,240,.4); line-height:1.75; }
+.gsd-footer__contact { margin-top:16px; font-family:'JetBrains Mono',monospace; font-size:10px; color:rgba(200,216,240,.3); line-height:1.85; }
+.gsd-footer__col-title { font-family:'JetBrains Mono',monospace; font-size:9.5px; font-weight:700; letter-spacing:.16em; text-transform:uppercase; color:var(--gold-lt); margin-bottom:14px; }
+.gsd-footer__links li { margin-bottom:8px; }
+.gsd-footer__links a { font-size:12.5px; color:rgba(200,216,240,.4); transition:color .2s; }
+.gsd-footer__links a:hover { color:var(--gold-lt); }
+.gsd-footer__bottom { max-width:var(--max-w); margin:clamp(20px,3vw,32px) auto 0; padding-top:18px; border-top:1px solid rgba(74,127,212,.15); display:flex; flex-wrap:wrap; justify-content:space-between; gap:8px; font-family:'JetBrains Mono',monospace; font-size:9.5px; color:rgba(200,216,240,.2); }
+.gsd-footer__bottom a { color:rgba(200,216,240,.3); }
+.gsd-footer__disclaimer { font-size:9px; color:rgba(200,216,240,.16); margin-top:14px; line-height:1.6; max-width:var(--max-w); margin-left:auto; margin-right:auto; }
 
-.footer__brand h4 {
+
+/* ── Single post body typography ── */
+.gsd-single__body h2 {
   font-family: 'Playfair Display', serif;
-  font-size: 24px;
-  font-weight: 900;
-  color: #fff;
-  margin-bottom: 10px;
+  font-size: clamp(18px,3vw,24px);
+  font-weight: 800;
+  color: var(--royal);
+  margin: 2em 0 .7em;
+  line-height: 1.25;
 }
-.footer__brand h4 em { font-style:normal; color:var(--gold-lt); }
-.footer__brand p { font-size:12.5px; color:rgba(200,216,240,.4); line-height:1.75; }
-.footer__brand .contact {
-  margin-top: 16px;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 10px;
-  color: rgba(200,216,240,.3);
-  line-height: 1.85;
-}
-.footer__col-title {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 9.5px;
+.gsd-single__body h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(16px,2.5vw,20px);
   font-weight: 700;
-  letter-spacing: .16em;
-  text-transform: uppercase;
-  color: var(--gold-lt);
-  margin-bottom: 14px;
+  color: var(--ink);
+  margin: 1.6em 0 .6em;
 }
-.footer__links { list-style: none; }
-.footer__links li { margin-bottom: 8px; }
-.footer__links a { font-size:12.5px; color:rgba(200,216,240,.4); transition:color .2s; }
-.footer__links a:hover { color:var(--gold-lt); }
-
-.footer__bottom {
-  max-width: var(--max-w);
-  margin: clamp(20px,3vw,32px) auto 0;
-  padding-top: 18px;
-  border-top: 1px solid rgba(74,127,212,.15);
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  gap: 8px;
+.gsd-single__body p {
+  margin-bottom: 1.3em;
+  font-size: clamp(14px,1.8vw,16px);
+  line-height: 1.8;
+  color: var(--ink);
+}
+.gsd-single__body blockquote {
+  border-left: 3px solid var(--gold);
+  padding: 12px 20px;
+  background: var(--ice-lt);
+  margin: 1.5em 0;
+  font-style: italic;
+  color: var(--muted);
+}
+.gsd-single__body table {
+  width: 100%;
+  border-collapse: collapse;
   font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  margin: 1.5em 0;
+  overflow-x: auto;
+  display: block;
+}
+.gsd-single__body table th {
+  background: var(--royal);
+  color: #fff;
+  padding: 9px 13px;
+  text-align: left;
   font-size: 9.5px;
-  color: rgba(200,216,240,.2);
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  white-space: nowrap;
 }
-.footer__bottom a { color:rgba(200,216,240,.3); }
-.footer__disclaimer {
-  font-size: 9px;
-  color: rgba(200,216,240,.16);
-  margin-top: 14px;
-  line-height: 1.6;
-  max-width: var(--max-w);
-  margin-left: auto;
-  margin-right: auto;
+.gsd-single__body table td {
+  padding: 9px 13px;
+  border-bottom: 1px solid var(--rule);
+  color: var(--ink);
+  white-space: nowrap;
 }
+.gsd-single__body table tbody tr:hover { background: var(--ice-lt); }
+.gsd-single__body strong { color: var(--ink); font-weight: 700; }
+
+/* Views */
+#home-view, .gsd-single-view { transition: opacity .2s; }
 </style>
 </head>
 <body>
 
-<!-- ▸ TICKER -->
-<div class="ticker" role="marquee" aria-label="Cotizaciones en tiempo real">
-  <div class="ticker__label">▶ LIVE</div>
+<!-- TICKER -->
+<div class="gsd-ticker" role="marquee" aria-label="Cotizaciones en tiempo real">
+  <div class="gsd-ticker__label">▶ LIVE</div>
   <div style="overflow:hidden;flex:1;display:flex;align-items:center;">
-    <div class="ticker__track">
-      <div class="ticker__item"><span class="sym">S&P 500</span><span>7,365.12</span><span class="up">▲ 1.46%</span></div>
-      <div class="ticker__item"><span class="sym">NASDAQ</span><span>25,838.94</span><span class="up">▲ 2.02%</span></div>
-      <div class="ticker__item"><span class="sym">DOW</span><span>49,910.59</span><span class="up">▲ 1.24%</span></div>
-      <div class="ticker__item"><span class="sym">WTI</span><span>95.69</span><span class="up">▲ 0.64%</span></div>
-      <div class="ticker__item"><span class="sym">GOLD / GLD</span><span>430.96</span><span class="up">▲ 3.03%</span></div>
-      <div class="ticker__item"><span class="sym">VIX</span><span>17.39</span><span class="nt">→ 0.06%</span></div>
-      <div class="ticker__item"><span class="sym">EUR/USD</span><span>1.1750</span><span class="up">▲ 0.03%</span></div>
-      <div class="ticker__item"><span class="sym">₡/USD MONEX</span><span>456.73</span><span class="dn">▼ 5.37% a/a</span></div>
-      <div class="ticker__item"><span class="sym">BNV HOY</span><span>USD 104 MM</span><span class="up">241 ops</span></div>
-      <div class="ticker__item"><span class="sym">CRMG$210531</span><span>★★ 12.03 pb</span><span class="up">Alta Convicción</span></div>
-      <!-- duplicate -->
-      <div class="ticker__item"><span class="sym">S&P 500</span><span>7,365.12</span><span class="up">▲ 1.46%</span></div>
-      <div class="ticker__item"><span class="sym">NASDAQ</span><span>25,838.94</span><span class="up">▲ 2.02%</span></div>
-      <div class="ticker__item"><span class="sym">DOW</span><span>49,910.59</span><span class="up">▲ 1.24%</span></div>
-      <div class="ticker__item"><span class="sym">WTI</span><span>95.69</span><span class="up">▲ 0.64%</span></div>
-      <div class="ticker__item"><span class="sym">GOLD / GLD</span><span>430.96</span><span class="up">▲ 3.03%</span></div>
-      <div class="ticker__item"><span class="sym">VIX</span><span>17.39</span><span class="nt">→ 0.06%</span></div>
-      <div class="ticker__item"><span class="sym">EUR/USD</span><span>1.1750</span><span class="up">▲ 0.03%</span></div>
-      <div class="ticker__item"><span class="sym">₡/USD MONEX</span><span>456.73</span><span class="dn">▼ 5.37% a/a</span></div>
-      <div class="ticker__item"><span class="sym">BNV HOY</span><span>USD 104 MM</span><span class="up">241 ops</span></div>
-      <div class="ticker__item"><span class="sym">CRMG$210531</span><span>★★ 12.03 pb</span><span class="up">Alta Convicción</span></div>
-    </div>
+    <div class="gsd-ticker__track"><div class="gsd-ticker__item"><span class="sym">S&amp;P 500</span><span>7,501.24</span><span class="up">▲ +1.35%</span></div><div class="gsd-ticker__item"><span class="sym">NASDAQ</span><span>26,635.22</span><span class="up">▲ +2.10%</span></div><div class="gsd-ticker__item"><span class="sym">DOW</span><span>50,063.46</span><span class="up">▲ +0.61%</span></div><div class="gsd-ticker__item"><span class="sym">WTI</span><span>100.98</span><span class="dn">▼ -0.04%</span></div><div class="gsd-ticker__item"><span class="sym">GLD</span><span>430.50</span><span class="dn">▼ -0.56%</span></div><div class="gsd-ticker__item"><span class="sym">VIX</span><span>17.87</span><span class="dn">▼ -0.67%</span></div><div class="gsd-ticker__item"><span class="sym">₡/USD MONEX</span><span>457.33</span><span class="up">-5.54% a/a</span></div><div class="gsd-ticker__item"><span class="sym">CRMG$210531</span><span>★★ 11.80pb</span><span class="up">Alta Convicción</span></div><div class="gsd-ticker__item"><span class="sym">S&amp;P 500</span><span>7,501.24</span><span class="up">▲ +1.35%</span></div><div class="gsd-ticker__item"><span class="sym">NASDAQ</span><span>26,635.22</span><span class="up">▲ +2.10%</span></div><div class="gsd-ticker__item"><span class="sym">DOW</span><span>50,063.46</span><span class="up">▲ +0.61%</span></div><div class="gsd-ticker__item"><span class="sym">WTI</span><span>100.98</span><span class="dn">▼ -0.04%</span></div><div class="gsd-ticker__item"><span class="sym">GLD</span><span>430.50</span><span class="dn">▼ -0.56%</span></div><div class="gsd-ticker__item"><span class="sym">VIX</span><span>17.87</span><span class="dn">▼ -0.67%</span></div><div class="gsd-ticker__item"><span class="sym">₡/USD MONEX</span><span>457.33</span><span class="up">-5.54% a/a</span></div><div class="gsd-ticker__item"><span class="sym">CRMG$210531</span><span>★★ 11.80pb</span><span class="up">Alta Convicción</span></div></div>
   </div>
 </div>
 
-<!-- ▸ MASTHEAD -->
-<header class="masthead">
-  <div class="masthead__inner">
-    <div class="masthead__meta">
-      GSD IS &amp; Cía.<br>
-      Jueves, 7 Mayo 2026<br>
-      Edición Diaria · CR
+<!-- MASTHEAD -->
+<header class="gsd-masthead">
+  <div class="gsd-masthead__inner">
+    <div class="gsd-masthead__meta">GSD IS &amp; Cía.<br>Miércoles, 14 Mayo 2026<br>Edición Diaria · CR</div>
+    <div class="gsd-masthead__brand">
+      <a href="#" onclick="showHome();return false;" style="display:block;text-decoration:none;">
+        <span class="gsd-masthead__eyebrow">Inversiones a su medida</span>
+        <div class="gsd-masthead__title">GSD <em>Monitor</em></div>
+        <span class="gsd-masthead__tagline">Análisis bursátil · Costa Rica · Mercados globales</span>
+      </a>
     </div>
-    <div class="masthead__brand">
-      <span class="masthead__eyebrow">Inversiones a su medida</span>
-      <div class="masthead__title">GSD <em>Monitor</em></div>
-      <span class="masthead__tagline">Análisis bursátil · Costa Rica · Mercados globales</span>
-    </div>
-    <div class="masthead__actions">
-      <a href="#" class="btn--gold">Suscribirse</a>
-      <div class="masthead__contact">gsdmar@gmail.com<br>8938-9046</div>
+    <div class="gsd-masthead__actions">
+      <a href="mailto:gsdmar@gmail.com" class="gsd-btn--gold">Suscribirse</a>
+      <div class="gsd-masthead__contact">gsdmar@gmail.com<br>8938-9046</div>
     </div>
   </div>
 </header>
 
-<!-- ▸ NAV -->
-<nav class="nav">
-  <div class="nav__inner">
-    <button class="nav__toggle" id="navToggle" aria-expanded="false" aria-label="Abrir menú">☰</button>
-    <div class="nav__links" id="navLinks">
-      <a href="#" class="nav__link is-active">Inicio</a>
-      <a href="#" class="nav__link">Economía · Finanzas</a>
-      <a href="#" class="nav__link">Mercado Bursátil</a>
-      <a href="#" class="nav__link">MONEX · Divisas</a>
-      <a href="#" class="nav__link">Deuda Soberana</a>
-      <a href="#" class="nav__link">WST Monitor</a>
-      <a href="#" class="nav__link">BNV</a>
-      <a href="#" class="nav__link">BCCR</a>
+<!-- NAV -->
+<nav class="gsd-nav">
+  <div class="gsd-nav__inner">
+    <button class="gsd-nav__toggle" id="gsdNavToggle" aria-expanded="false" aria-label="Abrir menú">☰</button>
+    <div class="gsd-nav__links" id="gsdNavLinks">
+      <a href="#" onclick="showHome();return false;" class="gsd-nav__link is-active">Inicio</a>
+      <a href="#" onclick="filterCat('Flash Matutino');return false;" class="gsd-nav__link">Flash Matutino</a>
+      <a href="#" onclick="filterCat('Crónica Bursátil');return false;" class="gsd-nav__link">Crónica Bursátil</a>
+      <a href="#" onclick="filterCat('Mercado Bursátil');return false;" class="gsd-nav__link">Mercado Bursátil</a>
+      <a href="https://gsandel.com" target="_blank" class="gsd-nav__link">gsandel.com ↗</a>
     </div>
-    <div class="nav__rate">₡/USD <span>456.73</span></div>
+    <div class="gsd-nav__rate">₡/USD <span>457.33</span></div>
   </div>
 </nav>
 
-<!-- ▸ BREAKING -->
-<div class="breaking">
-  <div class="breaking__inner">
-    <div class="breaking__badge">Alerta</div>
-    <div class="breaking__dot"></div>
-    <div class="breaking__text">EE.UU. e Irán negocian acuerdo marco — apertura del Estrecho de Ormuz en 30 días · Combustibles suben ₡151/litro desde hoy en Costa Rica</div>
+<!-- BREAKING BANNER -->
+<div class="gsd-breaking">
+  <div class="gsd-breaking__inner">
+    <div class="gsd-breaking__badge">Alerta</div>
+    <div class="gsd-breaking__dot"></div>
+    <div class="gsd-breaking__text">S&amp;P 500 en nuevo máximo histórico 7,501 — Kevin Warsh asume la Fed mañana viernes · Cumbre Trump-Xi en Beijing hoy · ₡/USD 457.33 (-5.54% a/a)</div>
   </div>
 </div>
+
+<!-- ▸ HOME VIEW -->
+<div id="home-view">
 
 <!-- ▸ HERO -->
-<section class="hero">
-  <div class="hero__inner">
-    <div class="hero__main">
-      <div class="hero__kicker">⚡ Flash Informativo · 7 Mayo 2026</div>
-      <h1 class="hero__headline">S&amp;P 500 y Nasdaq en máximos históricos: AMD detonó la frenética de semiconductores e Irán negocia la paz</h1>
-      <p class="hero__deck">S&amp;P 500 cierra en 7,365 y Nasdaq en 25,839, ambos en nuevos récords impulsados por el trimestre estelar de AMD y el ciclo de inversión en IA. EE.UU. e Irán a un paso de un acuerdo marco. El oro avanza +3.03% (GLD 430.96). Localmente, combustibles +₡151/litro y nueva presidenta el viernes.</p>
-      <div class="hero__meta">
-        <span>Por <strong>Geovanny Ant. Sandí Delgado</strong></span>
+<section class="gsd-hero" id="home-hero">
+  <div class="gsd-hero__inner">
+    <div class="gsd-hero__main">
+      <div class="gsd-hero__kicker flash">⚡ Flash Matutino · 14 de mayo de 2026</div>
+      <h1 class="gsd-hero__headline">Flash Matutino – GSD – 14 de mayo 2026</h1>
+      <p class="gsd-hero__deck">S&P 500 en récord histórico con base frágil. Warsh asume la Fed. BNV 128 MM USD +23.1%. Colón marca nuevo mínimo histórico del dólar. CRMG$210531 Alta Convicción ★★.</p>
+      <div class="gsd-hero__meta">
+        <span>Por <strong>admin</strong></span>
         <span>·</span>
-        <span>7:30 AM · Costa Rica</span>
-        <a href="#" class="hero__read">Leer crónica completa →</a>
+        <span>14 de mayo de 2026</span>
+        <a href="#" onclick="showPost(0);return false;" class="gsd-hero__read">Leer completo →</a>
       </div>
     </div>
-    <div class="hero__sidebar">
-      <div class="sidebar__hd">Mercados — Cierre 6 Mayo</div>
-      <div class="mkt-row">
-        <div><div class="mkt__name">S&amp;P 500</div><div class="mkt__sub">Índice EE.UU.</div></div>
-        <div class="mkt__val"><div class="mkt__price">7,365.12</div><div class="mkt__chg up">▲ +1.46%</div></div>
+    <div class="gsd-hero__sidebar">
+      <div class="gsd-sidebar__hd">Mercados — 14 May 2026</div>
+      
+      <div class="gsd-mkt-row">
+        <div><div class="gsd-mkt__name">S&amp;P 500</div><div class="gsd-mkt__sub">Índice EE.UU.</div></div>
+        <div class="gsd-mkt__val"><div class="gsd-mkt__price">7,501.24</div><div class="gsd-mkt__chg up">▲ +1.35%</div></div>
       </div>
-      <div class="mkt-row">
-        <div><div class="mkt__name">Nasdaq</div><div class="mkt__sub">Compuesto</div></div>
-        <div class="mkt__val"><div class="mkt__price">25,838.94</div><div class="mkt__chg up">▲ +2.02%</div></div>
+      <div class="gsd-mkt-row">
+        <div><div class="gsd-mkt__name">Nasdaq</div><div class="gsd-mkt__sub">Compuesto</div></div>
+        <div class="gsd-mkt__val"><div class="gsd-mkt__price">26,635.22</div><div class="gsd-mkt__chg up">▲ +2.10%</div></div>
       </div>
-      <div class="mkt-row">
-        <div><div class="mkt__name">Dow Jones</div><div class="mkt__sub">Industrial</div></div>
-        <div class="mkt__val"><div class="mkt__price">49,910.59</div><div class="mkt__chg up">▲ +1.24%</div></div>
+      <div class="gsd-mkt-row">
+        <div><div class="gsd-mkt__name">Dow Jones</div><div class="gsd-mkt__sub">Industrial</div></div>
+        <div class="gsd-mkt__val"><div class="gsd-mkt__price">50,063.46</div><div class="gsd-mkt__chg up">▲ +0.61%</div></div>
       </div>
-      <div class="mkt-row">
-        <div><div class="mkt__name">Oro / GLD</div><div class="mkt__sub">ETF SPDR</div></div>
-        <div class="mkt__val"><div class="mkt__price">430.96</div><div class="mkt__chg up">▲ +3.03%</div></div>
+      <div class="gsd-mkt-row">
+        <div><div class="gsd-mkt__name">Oro / GLD</div><div class="gsd-mkt__sub">ETF SPDR</div></div>
+        <div class="gsd-mkt__val"><div class="gsd-mkt__price">430.50</div><div class="gsd-mkt__chg dn">▼ -0.56%</div></div>
       </div>
-      <div class="mkt-row">
-        <div><div class="mkt__name">WTI Crudo</div><div class="mkt__sub">USD/bbl</div></div>
-        <div class="mkt__val"><div class="mkt__price">95.69</div><div class="mkt__chg up">▲ +0.64%</div></div>
+      <div class="gsd-mkt-row">
+        <div><div class="gsd-mkt__name">WTI Crudo</div><div class="gsd-mkt__sub">USD/bbl</div></div>
+        <div class="gsd-mkt__val"><div class="gsd-mkt__price">100.98</div><div class="gsd-mkt__chg dn">▼ -0.04%</div></div>
       </div>
-      <div class="mkt-row">
-        <div><div class="mkt__name">VIX</div><div class="mkt__sub">Volatilidad CBOE</div></div>
-        <div class="mkt__val"><div class="mkt__price">17.39</div><div class="mkt__chg nt">→ +0.06%</div></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ▸ MARKETS RIBBON (mobile) -->
-<div class="mkt-ribbon" role="region" aria-label="Resumen de mercados">
-  <div class="mkt-ribbon__inner">
-    <div class="mkt-ribbon__item"><div class="mkt-ribbon__sym">S&amp;P 500</div><div class="mkt-ribbon__price">7,365.12</div><div class="mkt-ribbon__chg up">▲ 1.46%</div></div>
-    <div class="mkt-ribbon__item"><div class="mkt-ribbon__sym">Nasdaq</div><div class="mkt-ribbon__price">25,838.94</div><div class="mkt-ribbon__chg up">▲ 2.02%</div></div>
-    <div class="mkt-ribbon__item"><div class="mkt-ribbon__sym">Dow</div><div class="mkt-ribbon__price">49,910.59</div><div class="mkt-ribbon__chg up">▲ 1.24%</div></div>
-    <div class="mkt-ribbon__item"><div class="mkt-ribbon__sym">WTI</div><div class="mkt-ribbon__price">95.69</div><div class="mkt-ribbon__chg up">▲ 0.64%</div></div>
-    <div class="mkt-ribbon__item"><div class="mkt-ribbon__sym">GLD</div><div class="mkt-ribbon__price">430.96</div><div class="mkt-ribbon__chg up">▲ 3.03%</div></div>
-    <div class="mkt-ribbon__item"><div class="mkt-ribbon__sym">VIX</div><div class="mkt-ribbon__price">17.39</div><div class="mkt-ribbon__chg nt">→</div></div>
-    <div class="mkt-ribbon__item"><div class="mkt-ribbon__sym">₡/USD</div><div class="mkt-ribbon__price">456.73</div><div class="mkt-ribbon__chg dn">▼ 5.37%</div></div>
-  </div>
-</div>
-
-<!-- ▸ SIGNALS CRMG -->
-<section class="signals">
-  <div class="signals__inner">
-    <div class="signals__hd">
-      <h2 class="signals__title">Señales CRMG</h2>
-      <p class="signals__subtitle">Modelo creadores de mercado BNV · Cierre 6 Mayo 2026</p>
-    </div>
-    <div class="signals__scroll">
-      <table class="signals__table">
-        <thead>
-          <tr><th>Serie</th><th>Moneda</th><th>Vencimiento</th><th>YTM</th><th>YTMaj</th><th>I-Spread</th><th>Precio</th><th>Señal</th></tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td class="t-name">CRMG$210531</td><td>USD $</td><td>21 May 2031</td><td>5.594%</td><td>5.474%</td>
-            <td><div class="spread-pill">+12.03 pb<div class="spread-track"><div class="spread-fill" style="width:82%"></div></div></div></td>
-            <td>99.3300</td><td><span class="badge badge--alta">★★ Alta Convicción</span></td>
-          </tr>
-          <tr>
-            <td class="t-name">CRMG260734</td><td>CRC ₡</td><td>26 Jul 2034</td><td>6.537%</td><td>6.456%</td>
-            <td><div class="spread-pill">+8.14 pb<div class="spread-track"><div class="spread-fill blue" style="width:56%"></div></div></div></td>
-            <td>99.1325</td><td><span class="badge badge--activa">★ Señal Activa</span></td>
-          </tr>
-          <tr>
-            <td class="t-name">CRMG180429</td><td>CRC ₡</td><td>18 Abr 2029</td><td>5.637%</td><td>5.584%</td>
-            <td><div class="spread-pill">+5.33 pb<div class="spread-track"><div class="spread-fill blue" style="width:37%"></div></div></div></td>
-            <td>99.0107</td><td><span class="badge badge--activa">★ Señal Activa</span></td>
-          </tr>
-          <tr>
-            <td class="t-name">CRMG$180533</td><td>USD $</td><td>18 May 2033</td><td>5.714%</td><td>5.685%</td>
-            <td><div class="spread-pill">+2.91 pb<div class="spread-track"><div class="spread-fill" style="width:20%;background:rgba(74,127,212,.5)"></div></div></div></td>
-            <td>99.4000</td><td><span class="badge badge--compra">Compra</span></td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    <!-- Mobile cards -->
-    <div class="signals__cards">
-      <div class="sig-card">
-        <div class="sig-card__name">CRMG$210531</div>
-        <span class="sig-card__badge"><span class="badge badge--alta">★★ Alta</span></span>
-        <div class="sig-card__row">
-          <div class="sig-card__kv">YTM <span>5.594%</span></div>
-          <div class="sig-card__kv">I-Spread <span>+12.03 pb</span></div>
-          <div class="sig-card__kv">Precio <span>99.33</span></div>
-          <div class="sig-card__kv">Venc. <span>May 2031</span></div>
-        </div>
-      </div>
-      <div class="sig-card">
-        <div class="sig-card__name">CRMG260734</div>
-        <span class="sig-card__badge"><span class="badge badge--activa">★ Activa</span></span>
-        <div class="sig-card__row">
-          <div class="sig-card__kv">YTM <span>6.537%</span></div>
-          <div class="sig-card__kv">I-Spread <span>+8.14 pb</span></div>
-          <div class="sig-card__kv">Precio <span>99.13</span></div>
-          <div class="sig-card__kv">Venc. <span>Jul 2034</span></div>
-        </div>
-      </div>
-      <div class="sig-card">
-        <div class="sig-card__name">CRMG180429</div>
-        <span class="sig-card__badge"><span class="badge badge--activa">★ Activa</span></span>
-        <div class="sig-card__row">
-          <div class="sig-card__kv">YTM <span>5.637%</span></div>
-          <div class="sig-card__kv">I-Spread <span>+5.33 pb</span></div>
-          <div class="sig-card__kv">Precio <span>99.01</span></div>
-          <div class="sig-card__kv">Venc. <span>Abr 2029</span></div>
-        </div>
-      </div>
-      <div class="sig-card">
-        <div class="sig-card__name">CRMG$180533</div>
-        <span class="sig-card__badge"><span class="badge badge--compra">Compra</span></span>
-        <div class="sig-card__row">
-          <div class="sig-card__kv">YTM <span>5.714%</span></div>
-          <div class="sig-card__kv">I-Spread <span>+2.91 pb</span></div>
-          <div class="sig-card__kv">Precio <span>99.40</span></div>
-          <div class="sig-card__kv">Venc. <span>May 2033</span></div>
-        </div>
+      <div class="gsd-mkt-row">
+        <div><div class="gsd-mkt__name">VIX</div><div class="gsd-mkt__sub">Volatilidad CBOE</div></div>
+        <div class="gsd-mkt__val"><div class="gsd-mkt__price">17.87</div><div class="gsd-mkt__chg dn">▼ -0.67%</div></div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ▸ MONEX STRIP -->
-<div class="monex">
-  <div class="monex__inner">
-    <div class="monex__label">MONEX</div>
-    <div><div class="monex__stat-lbl">TC Promedio 5 días</div><div class="monex__stat-val">₡458.97</div><div class="monex__stat-note m">por dólar</div></div>
-    <div><div class="monex__stat-lbl">Apreciación a/a</div><div class="monex__stat-val">−5.37%</div><div class="monex__stat-note g">Colón más fuerte</div></div>
-    <div><div class="monex__stat-lbl">Cierre sesión</div><div class="monex__stat-val">₡456.73</div><div class="monex__stat-note m">6 Mayo 2026</div></div>
-    <div><div class="monex__stat-lbl">Volumen 5 días</div><div class="monex__stat-val">USD 181.77M</div><div class="monex__stat-note m">1,066 operaciones</div></div>
-    <div><div class="monex__stat-lbl">Rango semanal</div><div class="monex__stat-val">₡452–464</div><div class="monex__stat-note r">Prom. 2025: ₡506.42</div></div>
+<!-- ▸ RIBBON mobile -->
+<div class="gsd-ribbon" role="region">
+  <div class="gsd-ribbon__inner">
+    <div class="gsd-ribbon__item"><div class="gsd-ribbon__sym">S&amp;P 500</div><div class="gsd-ribbon__price">7,501.24</div><div class="gsd-ribbon__chg up">▲ +1.35%</div></div>
+    <div class="gsd-ribbon__item"><div class="gsd-ribbon__sym">Nasdaq</div><div class="gsd-ribbon__price">26,635.22</div><div class="gsd-ribbon__chg up">▲ +2.10%</div></div>
+    <div class="gsd-ribbon__item"><div class="gsd-ribbon__sym">Dow</div><div class="gsd-ribbon__price">50,063.46</div><div class="gsd-ribbon__chg up">▲ +0.61%</div></div>
+    <div class="gsd-ribbon__item"><div class="gsd-ribbon__sym">WTI</div><div class="gsd-ribbon__price">100.98</div><div class="gsd-ribbon__chg dn">▼ -0.04%</div></div>
+    <div class="gsd-ribbon__item"><div class="gsd-ribbon__sym">GLD</div><div class="gsd-ribbon__price">430.50</div><div class="gsd-ribbon__chg dn">▼ -0.56%</div></div>
+    <div class="gsd-ribbon__item"><div class="gsd-ribbon__sym">₡/USD</div><div class="gsd-ribbon__price">457.33</div></div>
   </div>
 </div>
 
 <!-- ▸ STATS BAND -->
-<div class="stats-band">
-  <div class="stats-band__inner">
-    <div class="stat-item">
-      <div class="stat-item__val">241<em>+</em></div>
-      <div class="stat-item__lbl">Operaciones BNV hoy</div>
-    </div>
-    <div class="stat-item">
-      <div class="stat-item__val"><em>★★</em> 4</div>
-      <div class="stat-item__lbl">Señales CRMG activas</div>
-    </div>
-    <div class="stat-item">
-      <div class="stat-item__val">5.37<em>%</em></div>
-      <div class="stat-item__lbl">Apreciación colón a/a</div>
-    </div>
-    <div class="stat-item">
-      <div class="stat-item__val">25<em>k+</em></div>
-      <div class="stat-item__lbl">Nasdaq — máximo histórico</div>
-    </div>
+<div class="gsd-stats">
+  <div class="gsd-stats__inner">
+    <div class="gsd-stat-item"><div class="gsd-stat-item__val">3<em>+</em></div><div class="gsd-stat-item__lbl">Publicaciones</div></div>
+    <div class="gsd-stat-item"><div class="gsd-stat-item__val">7,501.24</div><div class="gsd-stat-item__lbl">S&amp;P 500 · cierre</div></div>
+    <div class="gsd-stat-item"><div class="gsd-stat-item__val">₡457.33</div><div class="gsd-stat-item__lbl">₡/USD · MONEX hoy</div></div>
+    <div class="gsd-stat-item"><div class="gsd-stat-item__val">-5.54%</div><div class="gsd-stat-item__lbl">Apreciación ₡/USD a/a</div></div>
   </div>
 </div>
 
 <!-- ▸ SECTION HEADER -->
-<div class="section-hd">
-  <div class="section-hd__rule"></div>
-  <span class="section-hd__title">Últimas publicaciones</span>
-  <div class="section-hd__rule"></div>
-  <a href="#" class="section-hd__more">Archivo completo →</a>
+<div class="gsd-section-hd">
+  <div class="gsd-section-hd__rule"></div>
+  <span class="gsd-section-hd__title">Últimas publicaciones</span>
+  <div class="gsd-section-hd__rule"></div>
+  <span class="gsd-section-hd__more">3 artículos</span>
 </div>
 
 <!-- ▸ CONTENT -->
-<div class="content">
-  <div class="content__inner">
-
-    <div class="layout-feature">
-      <div class="card-feat">
-        <div class="card__kicker flash">⚡ Flash Informativo</div>
-        <h2 class="card-feat__headline"><a href="#">S&amp;P 500 y Nasdaq en máximos históricos: AMD detonó la frenética de semiconductores, Irán negocia la paz</a></h2>
-        <p class="card-feat__body">S&amp;P 500 cierra en 7,365 y Nasdaq en 25,839, ambos en nuevos récords. EE.UU. e Irán a un paso de un acuerdo marco que presiona los futuros del petróleo a la baja. El oro avanza +3.03% (GLD 430.96). Localmente, combustibles subieron hasta ₡151/litro desde hoy y mañana Costa Rica estrena nueva presidenta. ROP recupera valor en abril.</p>
-        <div class="card-feat__foot">
-          <span>7 Mayo 2026 · 7:30 AM · GSD IS &amp; Cía.</span>
-          <a href="#">Leer completo →</a>
-        </div>
-      </div>
-      <div class="aside-list">
-        <div class="aside-item">
-          <div class="aside-item__kicker">📊 Crónica Bursátil</div>
-          <h3 class="aside-item__hed"><a href="#">Crónica Bursátil GSD – 6 de mayo, 2026</a></h3>
-          <div class="aside-item__date">7 Mayo 2026</div>
-        </div>
-        <div class="aside-item">
-          <div class="aside-item__kicker">⚡ Flash Matutino</div>
-          <h3 class="aside-item__hed"><a href="#">Flash Matutino GSD – 6 de mayo 2026</a></h3>
-          <div class="aside-item__date">6 Mayo 2026 · 7:30 AM</div>
-        </div>
-        <div class="aside-item">
-          <div class="aside-item__kicker">📊 Crónica Bursátil</div>
-          <h3 class="aside-item__hed"><a href="#">Crónica Bursátil GSD – 5 de mayo 2026</a></h3>
-          <div class="aside-item__date">6 Mayo 2026</div>
-        </div>
-        <div class="aside-item">
-          <div class="aside-item__kicker">📋 Market Recap</div>
-          <h3 class="aside-item__hed"><a href="#">Costa Rica market recap: semana 18, 2026</a></h3>
-          <div class="aside-item__date">4 Mayo 2026</div>
-        </div>
+<div class="gsd-content"><div class="gsd-content__inner">
+  <div class="gsd-layout-feature">
+    
+    <div class="gsd-card-feat" id="card-1">
+      <div class="gsd-card__kicker ">📊 Crónica Bursátil</div>
+      <h2 class="gsd-card-feat__headline"><a href="#" onclick="showPost(1);return false;">Crónica Bursátil – GSD – 13 de mayo 2026</a></h2>
+      <p class="gsd-card-feat__body">PPI sube 6.0% anual. Warsh confirmado en la Fed. S&P 500 en récord histórico con base estrecha. BNV 128 MM USD. CRMG$210531 ★★ Alta Convicción 11.80 pb.</p>
+      <div class="gsd-card-feat__foot">
+        <span>13 de mayo de 2026 · admin</span>
+        <a href="#" onclick="showPost(1);return false;">Leer completo →</a>
       </div>
     </div>
-
-    <div class="grid-3">
-      <div class="card-sm">
-        <div class="card__kicker">📊 Crónica Bursátil</div>
-        <h3 class="card-sm__hed"><a href="#">Crónica Bursátil GSD – 4 de mayo 2026</a></h3>
-        <p class="card-sm__text">Mercados bajo presión: Ormuz define el tono. El Dow Jones cedió 1.13% y el S&amp;P 500 retrocedió 0.41%, mientras el VIX saltó 7.65% ante la escalada en el Estrecho de Ormuz.</p>
-        <div class="card-sm__foot"><span>5 Mayo 2026</span><a href="#">Leer →</a></div>
-      </div>
-      <div class="card-sm">
-        <div class="card__kicker flash">⚡ Flash Matutino</div>
-        <h3 class="card-sm__hed"><a href="#">Flash Matutino, 4 de mayo 2026</a></h3>
-        <p class="card-sm__text">NASDAQ resiste mientras DOW cede 260 puntos. 5 señales CRMG apuntan a compra. CRMG$180533 lidera con +14.49 pb — mayor I-spread de la semana.</p>
-        <div class="card-sm__foot"><span>4 Mayo 2026</span><a href="#">Leer →</a></div>
-      </div>
-      <div class="card-sm">
-        <div class="card__kicker">💱 MONEX · Divisas</div>
-        <h3 class="card-sm__hed"><a href="#">Colón se aprecia 5.37% interanual — análisis MONEX semanal</a></h3>
-        <p class="card-sm__text">El tipo de cambio promedio ponderado en MONEX se ubica en ₡458.97/USD. El colón acumula una apreciación interanual sostenida frente al promedio de 2025 de ₡506.42.</p>
-        <div class="card-sm__foot"><span>Mayo 2026</span><a href="#">Leer →</a></div>
-      </div>
+    <div class="gsd-aside-list">
+      
+    <div class="gsd-aside-item">
+      <div class="gsd-aside-item__kicker">⚡ Flash Matutino</div>
+      <h3 class="gsd-aside-item__hed"><a href="#" onclick="showPost(0);return false;">Flash Matutino – GSD – 14 de mayo 2026</a></h3>
+      <div class="gsd-aside-item__date">14 de mayo de 2026</div>
     </div>
-
-    <div class="layout-bottom">
-      <div class="card-feat">
-        <div class="card__kicker recap">📋 Análisis Semanal</div>
-        <h2 class="card-feat__headline"><a href="#">Semana 18: Geopolítica, resiliencia de mercados y reconfiguración política en Costa Rica</a></h2>
-        <p class="card-feat__body">La semana 18 de 2026 combinó tres fuerzas con incidencia directa sobre la valoración de activos costarricenses: un entorno geopolítico internacional más tenso con el conflicto EE.UU.–Irán, un mercado global todavía resiliente con ganancias corporativas récord (+27.1% en Q1 S&amp;P 500), y una reconfiguración política interna que altera la lectura de gobernabilidad y riesgo regulatorio. El modelo CRMG registró 5 señales activas de compra con los mayores I-spreads del año.</p>
-        <div class="card-feat__foot">
-          <span>4 Mayo 2026 · Informe Estratégico</span>
-          <a href="#">Leer análisis →</a>
-        </div>
-      </div>
-      <div class="popular">
-        <div class="popular__hd">📌 Más leídas esta semana</div>
-        <div class="popular__item">
-          <div class="popular__num">01</div>
-          <div>
-            <div class="popular__text"><a href="#">Flash Informativo — 7 Mayo 2026</a></div>
-            <div class="popular__sub">Flash · 7 Mayo 2026</div>
-          </div>
-        </div>
-        <div class="popular__item">
-          <div class="popular__num">02</div>
-          <div>
-            <div class="popular__text"><a href="#">Market Recap semana 18, 2026</a></div>
-            <div class="popular__sub">Análisis · 4 Mayo 2026</div>
-          </div>
-        </div>
-        <div class="popular__item">
-          <div class="popular__num">03</div>
-          <div>
-            <div class="popular__text"><a href="#">CRMG$210531 — Alta Convicción ★★ 12.03 pb</a></div>
-            <div class="popular__sub">BNV · 6 Mayo 2026</div>
-          </div>
-        </div>
-        <div class="popular__item">
-          <div class="popular__num">04</div>
-          <div>
-            <div class="popular__text"><a href="#">Curva CRC vs USD: análisis de spreads soberanos</a></div>
-            <div class="popular__sub">Deuda soberana · Mayo 2026</div>
-          </div>
-        </div>
-        <div class="popular__item">
-          <div class="popular__num">05</div>
-          <div>
-            <div class="popular__text"><a href="#">WTI cede −6.87% por acuerdo nuclear EE.UU.–Irán</a></div>
-            <div class="popular__sub">Geopolítica · 6 Mayo 2026</div>
-          </div>
-        </div>
-      </div>
+      
+    <div class="gsd-aside-item">
+      <div class="gsd-aside-item__kicker">⚡ Flash Matutino</div>
+      <h3 class="gsd-aside-item__hed"><a href="#" onclick="showPost(2);return false;">Flash Matutino – GSD – 13 de mayo 2026</a></h3>
+      <div class="gsd-aside-item__date">13 de mayo de 2026</div>
     </div>
-
+    </div>
   </div>
+  <div class="gsd-grid-3">
+    
+    <div class="gsd-card-sm">
+      <div class="gsd-card__kicker flash">⚡ Flash Matutino</div>
+      <h3 class="gsd-card-sm__hed"><a href="#" onclick="showPost(0);return false;">Flash Matutino – GSD – 14 de mayo 2026</a></h3>
+      <p class="gsd-card-sm__text">
+● Flash Matutino Inversor CR | GSD IS &amp; Cía.
+Jueves 14 de mayo de 2026 · 7:35 a.m. hora Costa Rica · Apertura NYSE 9:30 a.m. ET · Geovanny Ant. Sandí Delga…</p>
+      <div class="gsd-card-sm__foot">
+        <span>14 de mayo de 2026</span>
+        <a href="#" onclick="showPost(0);return false;">Leer →</a>
+      </div>
+    </div>
+    
+    <div class="gsd-card-sm">
+      <div class="gsd-card__kicker ">📊 Crónica Bursátil</div>
+      <h3 class="gsd-card-sm__hed"><a href="#" onclick="showPost(1);return false;">Crónica Bursátil – GSD – 13 de mayo 2026</a></h3>
+      <p class="gsd-card-sm__text">
+Miércoles, 13 de mayo de 2026 · Edición Diaria · Hora de Costa Rica
+
+Resumen Ejecutivo — El PPI de abril en EE.UU. subió 6.0% interanual —máximo desde diciembr…</p>
+      <div class="gsd-card-sm__foot">
+        <span>13 de mayo de 2026</span>
+        <a href="#" onclick="showPost(1);return false;">Leer →</a>
+      </div>
+    </div>
+    
+    <div class="gsd-card-sm">
+      <div class="gsd-card__kicker flash">⚡ Flash Matutino</div>
+      <h3 class="gsd-card-sm__hed"><a href="#" onclick="showPost(2);return false;">Flash Matutino – GSD – 13 de mayo 2026</a></h3>
+      <p class="gsd-card-sm__text">
+13 de mayo de 2026 · 7:30 AM hora Costa Rica · GSD IS &amp; Cía.
+
+IPC de abril confirmó la presión inflacionaria: el Dow cede -0.37% y el WTI cierra en $102.64…</p>
+      <div class="gsd-card-sm__foot">
+        <span>13 de mayo de 2026</span>
+        <a href="#" onclick="showPost(2);return false;">Leer →</a>
+      </div>
+    </div>
+  </div>
+  <div class="gsd-layout-bottom">
+    
+    <div class="gsd-card-feat" id="card-2">
+      <div class="gsd-card__kicker flash">⚡ Flash Matutino</div>
+      <h2 class="gsd-card-feat__headline"><a href="#" onclick="showPost(2);return false;">Flash Matutino – GSD – 13 de mayo 2026</a></h2>
+      <p class="gsd-card-feat__body">IPC acelera por inflación energética. Dow -0.37%, WTI $102.64. BNV 110 MM USD. CRMG260734 y CRMG$210531 en ★★ Alta Convicción. Cumbre Trump-Xi mañana.</p>
+      <div class="gsd-card-feat__foot">
+        <span>13 de mayo de 2026 · admin</span>
+        <a href="#" onclick="showPost(2);return false;">Leer completo →</a>
+      </div>
+    </div>
+    <div class="gsd-popular">
+      <div class="gsd-popular__hd">📌 Más recientes</div>
+      
+      <div class="gsd-popular__item">
+        <div class="gsd-popular__num">01</div>
+        <div>
+          <div class="gsd-popular__text"><a href="#" onclick="showPost(0);return false;">Flash Matutino – GSD – 14 de mayo 2026</a></div>
+          <div class="gsd-popular__sub">Flash Matutino · 14 de mayo de 2026</div>
+        </div>
+      </div>
+
+      <div class="gsd-popular__item">
+        <div class="gsd-popular__num">02</div>
+        <div>
+          <div class="gsd-popular__text"><a href="#" onclick="showPost(1);return false;">Crónica Bursátil – GSD – 13 de mayo 2026</a></div>
+          <div class="gsd-popular__sub">Crónica Bursátil · 13 de mayo de 2026</div>
+        </div>
+      </div>
+
+      <div class="gsd-popular__item">
+        <div class="gsd-popular__num">03</div>
+        <div>
+          <div class="gsd-popular__text"><a href="#" onclick="showPost(2);return false;">Flash Matutino – GSD – 13 de mayo 2026</a></div>
+          <div class="gsd-popular__sub">Flash Matutino · 13 de mayo de 2026</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div></div>
+
 </div>
 
-<!-- ▸ SUBSCRIBE -->
-<section class="subscribe">
-  <div class="subscribe__inner">
-    <div class="subscribe__eyebrow">Newsletter diario</div>
-    <h2 class="subscribe__title">Reciba la crónica bursátil cada mañana</h2>
-    <p class="subscribe__body">Análisis diario de mercados, señales CRMG, tipo de cambio MONEX y panorama internacional — directo a su correo antes de la apertura del NYSE.</p>
-    <div class="subscribe__form">
-      <input class="subscribe__input" type="email" placeholder="correo@empresa.com" autocomplete="email">
-      <button class="subscribe__btn">Suscribirse →</button>
+<!-- ▸ SINGLE POST VIEWS -->
+
+    <div id="single-0" class="gsd-single-view" style="display:none;">
+      <div class="gsd-single"><div class="gsd-single__inner">
+        <a href="#" onclick="showHome();return false;" class="gsd-single__back">← Volver al inicio</a>
+        <div class="gsd-single__kicker flash">⚡ Flash Matutino</div>
+        <h1 class="gsd-single__headline">Flash Matutino – GSD – 14 de mayo 2026</h1>
+        <p class="gsd-hero__deck" style="margin-bottom:20px;">S&P 500 en récord histórico con base frágil. Warsh asume la Fed. BNV 128 MM USD +23.1%. Colón marca nuevo mínimo histórico del dólar. CRMG$210531 Alta Convicción ★★.</p>
+        <div class="gsd-single__meta">
+          <span>Por <strong>admin</strong></span>
+          <span>·</span>
+          <span>14 de mayo de 2026</span>
+          <span>·</span>
+          <a href="#" style="color:var(--royal);font-weight:600;">Flash Matutino</a>
+        </div>
+        <div class="gsd-single__body"><p><strong>● Flash Matutino Inversor CR | GSD IS &amp; Cía.</strong><br>
+<em>Jueves 14 de mayo de 2026 · 7:35 a.m. hora Costa Rica · Apertura NYSE 9:30 a.m. ET · Geovanny Ant. Sandí Delgado</em></p>
+<p><strong>Nuevo máximo del S&amp;P 500 con base frágil: Kevin Warsh asume la Fed mañana viernes ante inflación de 4 años y Estrecho de Ormuz cerrado desde hace 10 semanas</strong></p>
+<p><strong>Resumen Ejecutivo —</strong> El S&amp;P 500 cerró el miércoles en 7,444 (+0.58%) con un nuevo máximo histórico, pero dos tercios de sus componentes cayeron: el alza la sostuvieron exclusivamente semiconductores (Nvidia, Micron). El Nasdaq avanzó 1.20%; el Dow retrocedió 0.14%. <strong>Kevin Warsh fue confirmado como Presidente de la Fed</strong> (voto 54-45, el más ajustado de la historia) y toma el cargo el viernes: Goldman Sachs y JPMorgan eliminaron recortes de tasas para 2026; el UST 10Y alcanzó su máximo de 2026 en 4.33%. La <strong>Cumbre Trump-Xi</strong> continúa hoy con acuerdos sobre IA y aranceles pero sin compromiso chino de presionar a Irán para reabrir Ormuz. En Costa Rica, la BNV registró <strong>128 MM USD (+23.1% vs. sesión de hace 7 días)</strong> y el colón marcó un nuevo mínimo histórico del dólar (TC PP ₡457.64, -5.54% a/a).</p>
+<h2>🌐 A. Mercados Globales — Cierre miércoles 13 de mayo de 2026</h2>
+<h3>S&amp;P 500 en récord histórico: rally ultra-concentrado en semiconductores</h3>
+<p>El S&amp;P 500 cerró en 7,444 puntos (+0.58%) alcanzando un nuevo máximo histórico, aunque la amplitud del mercado fue notablemente débil: 2 de cada 3 componentes del índice cerraron en negativo. Nvidia (NVDA) y Micron (MU) concentraron prácticamente toda la ganancia del día, junto con el ETF de semiconductores SOX. El Nasdaq Compuesto avanzó 1.20% también en récord histórico, mientras el Dow Jones retrocedió 0.14% por la presión de sectores sensibles a tasas. Cisco (CSCO) reportó resultados récord tras el cierre y sube con fuerza en pre-mercado; Cerebras Systems (CBRS) debuta hoy en el Nasdaq con demanda 20x superior a la oferta.</p>
+<p>✔ <strong>Oportunidad:</strong> Rotación táctica hacia semis y AI hardware si AMAT confirma resultados esta noche; el sector extendería el ciclo alcista.<br>
+⚠ <strong>Riesgo:</strong> Concentración extrema: 2 acciones sostienen el índice. Cualquier tropiezo en NVDA o MU puede provocar corrección aguda.<br>
+⟶ <strong>Probabilidad Moderada 55%</strong> de que la amplitud mejore si Retail Sales de hoy sorprende al alza.</p>
+<h3>Kevin Warsh asume la Fed: mercado de bonos le advierte que no recortará</h3>
+<p>El Senado confirmó a Kevin Warsh como Presidente de la Fed con 54 votos vs. 45, el margen más estrecho en la historia de la institución. Warsh, que promovió «cambio de régimen» en la política monetaria y aboga por tasas más bajas, enfrenta inmediatamente el PPI de abril —el más alto en cuatro años— y un CPI por encima de las previsiones. El UST 10Y subió al máximo de 2026 (4.33%); Goldman Sachs y JPMorgan eliminaron sus proyecciones de recorte para todo 2026; Nomura eleva la probabilidad de un alza en junio a 20% (vs. cero hace un mes). Jerome Powell concluye su mandato el viernes.</p>
+<p>✔ <strong>Oportunidad:</strong> Si Warsh logra anclar expectativas y la inflación cede, la reacción del mercado podría ser positiva para activos de riesgo y USD.<br>
+⚠ <strong>Riesgo:</strong> El bono 10Y sobre 4.50% señalaría un repricing estructural de la inflación; sectores sensibles a tasas bajo presión.<br>
+⟶ <strong>Probabilidad Alta 70%</strong> de que el 10Y permanezca elevado y no haya recortes en 2026.</p>
+<h3>Mercados asiáticos bajo presión; Europa diverge</h3>
+<p>Esta mañana: Nikkei 225 -0.98%, Shanghai Composite -1.52% (tensión Taipei-Beijing, restricción de tierras raras), FTSE 100 +0.46%, DAX +1.38% (expansión fiscal alemana). El yen se deprecia frente al dólar ante el diferencial de tasas. Los futuros del S&amp;P 500 apuntan al alza impulsados por el blowout de Cisco; sin embargo, el dato de Retail Sales de EE.UU. (8:30 a.m. ET) es el catalizador inmediato.</p>
+<h2>⚡ B. Factor Dominante — Cumbre Trump-Xi · Irán · Estrecho de Ormuz</h2>
+<p>La Cumbre Trump-Xi continúa hoy en su segundo día con Jensen Huang (Nvidia), Tim Cook (Apple) y Elon Musk en la delegación. Los temas sobre la mesa son exportaciones de chips de IA, pedidos de aeronaves y aranceles. El Estrecho de Ormuz lleva más de 10 semanas cerrado por la Guerra de Irán; la IEA alerta que los inventarios globales se reducen a ritmo récord.</p>
+<p>⟶ <strong>Probabilidad Alta 75%</strong> de que Ormuz permanezca cerrado hasta al menos julio; el WTI se mantiene sobre USD 98-102 en ese escenario.</p>
+<h2>🇨🇷 C. Economía Costa Rica — Mercado Local</h2>
+<h3>Bolsa Nacional de Valores: sesión sólida — 128 MM USD, +23.1% vs. semana anterior</h3>
+<p>La sesión del miércoles 13 de mayo registró un volumen total de <strong>128 MM USD en 250 operaciones</strong>, superando en 23.1% el volumen de la misma sesión hace 7 días (104 MM USD / 241 ops).</p>
+<table>
+<thead><tr><th>Mercado</th><th>Vol. MM USD</th><th>%</th><th>#Ops</th><th>Vol. Previo 7d</th></tr></thead>
+<tbody>
+<tr><td>Mercado de Liquidez</td><td>24</td><td>18.8%</td><td>32</td><td>7</td></tr>
+<tr><td>Mercado Primario</td><td>2</td><td>1.6%</td><td>2</td><td>7</td></tr>
+<tr><td>Mercado Secundario</td><td>44</td><td>34.4%</td><td>68</td><td>38</td></tr>
+<tr><td>Reportos Tripartitos</td><td>57</td><td>44.5%</td><td>148</td><td>51</td></tr>
+<tr><td><strong>TOTAL MERCADO</strong></td><td><strong>128</strong></td><td><strong>100%</strong></td><td><strong>250</strong></td><td><strong>104</strong></td></tr>
+</tbody>
+</table>
+<h3>Señales CRMG — Creadores de Mercado</h3>
+<table>
+<thead><tr><th>Serie</th><th>Moneda</th><th>Vencimiento</th><th>YTMaj %</th><th>I-spread / Señal</th></tr></thead>
+<tbody>
+<tr><td>CRMG$210531</td><td>USD</td><td>21-may-2031</td><td>5.46%</td><td>11.80 pb ★★ Alta Convicción</td></tr>
+<tr><td>CRMG260734</td><td>CRC</td><td>26-jul-2034</td><td>6.35%</td><td>9.95 pb ★ Señal Activa</td></tr>
+<tr><td>CRMG180429</td><td>CRC</td><td>18-abr-2029</td><td>5.56%</td><td>7.66 pb ★ Señal Activa</td></tr>
+<tr><td>CRMG191033</td><td>CRC</td><td>19-oct-2033</td><td>6.27%</td><td>5.35 pb ★ Señal Activa</td></tr>
+<tr><td>CRMG240430</td><td>CRC</td><td>24-abr-2030</td><td>5.79%</td><td>3.80 pb Compra Técnica</td></tr>
+<tr><td>CRMG$180533</td><td>USD</td><td>18-may-2033</td><td>5.66%</td><td>3.29 pb Compra Técnica</td></tr>
+</tbody>
+</table>
+<p><em>★★ I-spread &gt;10 pb = Alta Convicción · ★ 5–10 pb = Señal Activa · Fuente: metodología GSD IS &amp; Cía.</em></p>
+<h3>MONEX — Tipo de Cambio: el colón marca nuevo mínimo histórico del dólar</h3>
+<table>
+<thead><tr><th>Variable</th><th>Últ. 5 Días</th><th>Mes Actual</th><th>Chg %a/a</th><th>Chg %Mes</th></tr></thead>
+<tbody>
+<tr><td>TC PP (₡/USD)</td><td>457.64</td><td>459.02</td><td>-5.54%</td><td>-0.30%</td></tr>
+<tr><td># Operaciones</td><td>1,143</td><td>1,590</td><td>-31.55%</td><td>+105.6%</td></tr>
+<tr><td>Volumen (MM USD)</td><td>286.2</td><td>342.9</td><td>-17.47%</td><td>+120.6%</td></tr>
+<tr><td>Cierre PP (₡)</td><td>456.44</td><td>456.74</td><td>-2.78%</td><td>-0.07%</td></tr>
+</tbody>
+</table>
+<h2>📊 Tabla de Indicadores Clave — Cierre 13-may-2026</h2>
+<table>
+<thead><tr><th>Indicador</th><th>Nivel / Cierre</th><th>Var %</th><th>Señal</th></tr></thead>
+<tbody>
+<tr><td>S&amp;P 500</td><td>7,444.3</td><td>▲ +0.58%</td><td>✓ Máx. histórico</td></tr>
+<tr><td>Nasdaq Comp.</td><td>26,402.3</td><td>▲ +1.20%</td><td>✓ Máx. histórico</td></tr>
+<tr><td>Dow Jones Ind.</td><td>49,693.2</td><td>▼ -0.14%</td><td>→ Neutral</td></tr>
+<tr><td>VIX</td><td>17.87</td><td>▼ -0.67%</td><td>✓ Contenido</td></tr>
+<tr><td>WTI (USD/bbl)</td><td>100.98</td><td>▼ -0.04%</td><td>⚠ Ormuz cerrado</td></tr>
+<tr><td>Oro GLD</td><td>430.5</td><td>▼ -0.56%</td><td>→ Corrección</td></tr>
+<tr><td>EUR/USD</td><td>1.1712</td><td>▲ +0.02%</td><td>→ Dólar débil</td></tr>
+<tr><td>UST 10Y (%)</td><td>4.33%</td><td>▲ máx. 2026</td><td>⚠ Fed Warsh</td></tr>
+<tr><td>MONEX ₡ PP 5d</td><td>457.64</td><td>-5.54% a/a</td><td>✓ Colón aprecia</td></tr>
+<tr><td>BNV Total</td><td>128 MM USD</td><td>▲ +23.1% vs. 7d</td><td>✓ Sesión sólida</td></tr>
+</tbody>
+</table>
+<p><em>Crónica preparada con información pública del mercado local e internacional. No constituye recomendación directa de compra o venta; solo señales técnicas relevantes. Fuentes: BNV, BCCR/MONEX, Bloomberg, GuruFocus. GSD IS &amp; Cía · gsandel.com · Jueves 14 de mayo de 2026.</em></p></div>
+        <div style="margin-top:28px;padding:14px 18px;background:var(--ice);border-left:3px solid var(--gold);font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);line-height:1.7;">
+          ⚠ Aviso legal: Esta publicación es informativa y no constituye recomendación de compra o venta de valores. GSD IS &amp; Cía no está sujeta a supervisión de SUGEVAL.
+        </div>
+        <div style="display:flex;justify-content:space-between;margin-top:28px;padding-top:20px;border-top:1px solid var(--rule);">
+          <span></span><a href="#" onclick="showPost(1);return false;" style="font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;color:var(--royal);letter-spacing:.08em;text-transform:uppercase;">Siguiente →</a>
+        </div>
+      </div></div>
     </div>
+
+    <div id="single-1" class="gsd-single-view" style="display:none;">
+      <div class="gsd-single"><div class="gsd-single__inner">
+        <a href="#" onclick="showHome();return false;" class="gsd-single__back">← Volver al inicio</a>
+        <div class="gsd-single__kicker ">📊 Crónica Bursátil</div>
+        <h1 class="gsd-single__headline">Crónica Bursátil – GSD – 13 de mayo 2026</h1>
+        <p class="gsd-hero__deck" style="margin-bottom:20px;">PPI sube 6.0% anual. Warsh confirmado en la Fed. S&P 500 en récord histórico con base estrecha. BNV 128 MM USD. CRMG$210531 ★★ Alta Convicción 11.80 pb.</p>
+        <div class="gsd-single__meta">
+          <span>Por <strong>admin</strong></span>
+          <span>·</span>
+          <span>13 de mayo de 2026</span>
+          <span>·</span>
+          <a href="#" style="color:var(--royal);font-weight:600;">Crónica Bursátil</a>
+        </div>
+        <div class="gsd-single__body"><p><em>Miércoles, 13 de mayo de 2026 · Edición Diaria · Hora de Costa Rica</em></p>
+<p><strong>Resumen Ejecutivo —</strong> El PPI de abril en EE.UU. subió 6.0% interanual —máximo desde diciembre de 2022— y Kevin Warsh fue confirmado como presidente de la Reserva Federal (54-45 en el Senado), inaugurando el dilema más complicado en una década: inflación ascendente versus presión política por recortes de tasas. Trump aterrizó en Beijing con Jensen Huang de Nvidia, poniendo la apertura del mercado chino de chips AI sobre la mesa de negociación. El S&amp;P 500 cerró en 7,444 (+0.58%) alcanzando un nuevo máximo histórico, aunque el Dow cedió 0.14% y el VIX retrocedió a 17.87. El mercado bursátil costarricense totalizó $128 MM (+23.1% vs. la sesión de hace 7 días). El modelo CRMG mantiene dos señales de Alta Convicción ★★: CRMG$210531 USD (+11.80 pb) y CRMG260734 CRC en el umbral ★★ (+9.95 pb). El colón continúa apreciado 5.5% interanual en MONEX con TC PP de cierre en ¢456.44/USD.</p>
+<h2>A. Panorama Internacional</h2>
+<h3>⚠ Alerta Geopolítica · Eje Irán–Arabia Saudita y Cumbre Trump-Xi en Beijing</h3>
+<p>Reuters confirmó que Arabia Saudita lanzó ataques encubiertos contra Irán, añadiendo una nueva capa de riesgo sobre el Golfo Pérsico en momentos en que el Estrecho de Ormuz aún no normaliza el flujo de crudo. Simultáneamente, Trump aterrizó en Beijing acompañado de Jensen Huang (Nvidia), Elon Musk, Sanjay Mehrotra (Micron) y Cristiano Amon (Qualcomm). La jornada en WTI cerró prácticamente plana ($100.98, -0.04%), sugiriendo que el mercado de crudo aguarda el resultado de Beijing.</p>
+<p>El PPI de abril fue el evento macro dominante: subió 1.4% mensual contra un estimado de 0.5%, elevando la variación interanual al <strong>6.0%</strong>, el registro más alto desde diciembre de 2022. La energía mayorista avanzó casi 8% en el mes. Warsh inicia su mandato con esa presión inflacionaria sobre su escritorio y un presidente que exige recortes. La confirmación del Senado (54-45) fue lo suficientemente estrecha para comunicar al mercado que la independencia de la Fed seguirá siendo el debate de fondo.</p>
+<p>El S&amp;P 500 alcanzó un nuevo máximo histórico en 7,444 (+0.58%) mientras dos tercios de sus componentes cerraron en rojo. El Nasdaq Compuesto avanzó 1.20% hasta 26,402 impulsado exclusivamente por semiconductores. El Dow Jones retrocedió 0.14% a 49,693. Los bonos del Tesoro a 30 años rindieron 5.0% por primera vez desde 2007. <strong>Cisco</strong> fue el evento corporativo del día: sus acciones ganaron hasta 18.5% en el afterhours tras elevar el objetivo de pedidos AI de $5B a $9B.</p>
+<table>
+<thead><tr><th>Indicador</th><th>Cierre</th><th>Anterior</th><th>Var. 1D</th><th>Señal</th></tr></thead>
+<tbody>
+<tr><td>S&amp;P 500</td><td>7,444.25</td><td>7,400.96</td><td>▲ +0.58%</td><td>Récord / estrecho</td></tr>
+<tr><td>Dow Jones Industrial</td><td>49,693.20</td><td>49,760.56</td><td>▼ -0.14%</td><td>Neutro</td></tr>
+<tr><td>Nasdaq Compuesto</td><td>26,402.34</td><td>26,088.20</td><td>▲ +1.20%</td><td>Chips AI lideran</td></tr>
+<tr><td>VIX</td><td>17.87</td><td>17.99</td><td>▼ -0.67%</td><td>Contención</td></tr>
+<tr><td>Oro / GLD ETF</td><td>430.50</td><td>432.93</td><td>▼ -0.56%</td><td>Refugio activo</td></tr>
+<tr><td>WTI Crudo (USD/bbl)</td><td>100.98</td><td>101.02</td><td>▼ -0.04%</td><td>Pausa — espera</td></tr>
+<tr><td>EUR/USD</td><td>1.1710</td><td>1.1710</td><td>▶ +0.02%</td><td>Neutro</td></tr>
+<tr><td>UST 10 años (yield)</td><td>4.33%</td><td>—</td><td>▲ PPI impulsa</td><td>Alza sostenida</td></tr>
+</tbody>
+</table>
+<h2>B. Costa Rica — Bolsa Nacional de Valores</h2>
+<p>El mercado bursátil costarricense cerró la sesión del 13 de mayo con un volumen total de <strong>$128 millones en 250 operaciones</strong>, registrando una expansión del 23.1% respecto a los $104 millones de la sesión equivalente de hace siete días. La rotación más notable fue hacia los reportos tripartitos ($57 MM, 44.5%), desplazando al mercado secundario ($44 MM, 34.4%). La liquidez institucional aceleró a $24 MM, casi cuadruplicando los $7 MM de la sesión comparativa.</p>
+<table>
+<thead><tr><th>Mercado</th><th>Vol. Hoy (MM$)</th><th>Peso %</th><th>Vol. Prev. 7d</th><th>Var.</th></tr></thead>
+<tbody>
+<tr><td>Liquidez</td><td>24</td><td>18.8%</td><td>7</td><td>+242.9%</td></tr>
+<tr><td>Primario</td><td>2</td><td>1.6%</td><td>7</td><td>-71.4%</td></tr>
+<tr><td>Secundario</td><td>44</td><td>34.4%</td><td>38</td><td>+15.8%</td></tr>
+<tr><td>Reportos</td><td>57</td><td>44.5%</td><td>51</td><td>+11.8%</td></tr>
+<tr><td><strong>TOTAL</strong></td><td><strong>128</strong></td><td><strong>100%</strong></td><td><strong>104</strong></td><td><strong>+23.1%</strong></td></tr>
+</tbody>
+</table>
+<h2>C. Deuda Soberana: Señales CRMG y Curva</h2>
+<p>El modelo CRMG cierra el 13 de mayo con seis series en señal de Compra. <strong>CRMG$210531 (USD)</strong> lidera con I-spread de +11.80 pb ★★ Alta Convicción. <strong>CRMG260734 CRC</strong> presenta +9.95 pb, justo por debajo del umbral de Alta Convicción.</p>
+<table>
+<thead><tr><th>Serie / Moneda</th><th>Vencimiento</th><th>YTMaj</th><th>I-Spread (pb)</th><th>Señal</th></tr></thead>
+<tbody>
+<tr><td>CRMG260734 · CRC</td><td>26-jul-2034</td><td>6.35%</td><td>+9.95</td><td>★ Activa</td></tr>
+<tr><td>CRMG180429 · CRC</td><td>18-abr-2029</td><td>5.56%</td><td>+7.66</td><td>★ Activa</td></tr>
+<tr><td>CRMG191033 · CRC</td><td>19-oct-2033</td><td>6.27%</td><td>+5.35</td><td>★ Activa</td></tr>
+<tr><td>CRMG240430 · CRC</td><td>24-abr-2030</td><td>5.79%</td><td>+3.80</td><td>Compra Técnica</td></tr>
+<tr><td><strong>CRMG$210531 · USD</strong></td><td>21-may-2031</td><td>5.46%</td><td>+11.80</td><td>★★ Alta Conv.</td></tr>
+<tr><td>CRMG$180533 · USD</td><td>18-may-2033</td><td>5.66%</td><td>+3.29</td><td>Compra Técnica</td></tr>
+</tbody>
+</table>
+<h2>D. Costa Rica — Mercado de Divisas MONEX</h2>
+<p>El tipo de cambio promedio ponderado (PP) en MONEX cerró el 13 de mayo en <strong>¢456.44/USD</strong>, con apreciación interanual del <strong>-5.5%</strong>. El volumen de los últimos cinco días fue de $286 millones en 1,143 operaciones. La apreciación del colón amortigua parcialmente el alza del WTI sobre la factura energética importada.</p>
+<table>
+<thead><tr><th>Variable</th><th>Últ. 5 Días</th><th>Mes Actual</th><th>Chg %a/a</th></tr></thead>
+<tbody>
+<tr><td>TC PP (¢/USD)</td><td>457.64</td><td>459.02</td><td>-5.5%</td></tr>
+<tr><td>N° Operaciones</td><td>1,143</td><td>1,590</td><td>-31.5%</td></tr>
+<tr><td>Volumen (USD MM)</td><td>286.2</td><td>342.9</td><td>-17.5%</td></tr>
+<tr><td>Cierre PP (¢)</td><td>456.44</td><td>456.74</td><td>-2.8%</td></tr>
+</tbody>
+</table>
+<p><em>Crónica preparada con información pública del mercado local e internacional. No constituye recomendación directa de compra o venta. Fuentes: BNV, BCCR/MONEX, Bloomberg. GSD IS &amp; Cía · gsandel.com · Miércoles 13 de mayo de 2026.</em></p></div>
+        <div style="margin-top:28px;padding:14px 18px;background:var(--ice);border-left:3px solid var(--gold);font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);line-height:1.7;">
+          ⚠ Aviso legal: Esta publicación es informativa y no constituye recomendación de compra o venta de valores. GSD IS &amp; Cía no está sujeta a supervisión de SUGEVAL.
+        </div>
+        <div style="display:flex;justify-content:space-between;margin-top:28px;padding-top:20px;border-top:1px solid var(--rule);">
+          <a href="#" onclick="showPost(0);return false;" style="font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;color:var(--royal);letter-spacing:.08em;text-transform:uppercase;">← Anterior</a><span></span><a href="#" onclick="showPost(2);return false;" style="font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;color:var(--royal);letter-spacing:.08em;text-transform:uppercase;">Siguiente →</a>
+        </div>
+      </div></div>
+    </div>
+
+    <div id="single-2" class="gsd-single-view" style="display:none;">
+      <div class="gsd-single"><div class="gsd-single__inner">
+        <a href="#" onclick="showHome();return false;" class="gsd-single__back">← Volver al inicio</a>
+        <div class="gsd-single__kicker flash">⚡ Flash Matutino</div>
+        <h1 class="gsd-single__headline">Flash Matutino – GSD – 13 de mayo 2026</h1>
+        <p class="gsd-hero__deck" style="margin-bottom:20px;">IPC acelera por inflación energética. Dow -0.37%, WTI $102.64. BNV 110 MM USD. CRMG260734 y CRMG$210531 en ★★ Alta Convicción. Cumbre Trump-Xi mañana.</p>
+        <div class="gsd-single__meta">
+          <span>Por <strong>admin</strong></span>
+          <span>·</span>
+          <span>13 de mayo de 2026</span>
+          <span>·</span>
+          <a href="#" style="color:var(--royal);font-weight:600;">Flash Matutino</a>
+        </div>
+        <div class="gsd-single__body"><p><em>13 de mayo de 2026 · 7:30 AM hora Costa Rica · GSD IS &amp; Cía.</em></p>
+<p><strong>IPC de abril confirmó la presión inflacionaria: el Dow cede -0.37% y el WTI cierra en $102.64 — la cumbre Trump-Xi mañana en Beijing define el tono del mercado</strong></p>
+<p><strong>Resumen Ejecutivo —</strong> El IPC de EE.UU. de abril aceleró, impulsado por la gasolina ante la guerra con Irán; el Dow cayó -0.37%, S&amp;P -0.11%, mientras el WTI cerró en $102.64 (+0.45%). La tregua Irán sigue en «soporte vital» (Reuters). El oro cedió a $429.44 (-0.81%) pero mantiene niveles elevados. El mercado local registró 110 MM USD en la BNV el martes, con dos series en Alta Convicción ★★: CRMG260734 (CRC, +10.87 pb) y CRMG$210531 (USD, +10.42 pb). Hoy toda la atención apunta a la cumbre Trump-Xi en Beijing el jueves 14.</p>
+<h2>A. Panorama Internacional</h2>
+<h3>⚠ Alerta Geopolítica — Tregua Irán en Soporte Vital · IPC Confirma Inflación</h3>
+<p>El IPC de EE.UU. de abril publicado el martes aceleró más de lo esperado, impulsado por los precios de la gasolina derivados del conflicto con Irán. El WTI cerró el martes en <strong>$102.64</strong>, acumulando su cuarto día consecutivo al alza. La tregua continúa siendo «frágil» (Reuters); Irán rechazó la propuesta de Washington y la posición negociadora de ambos lados permanece entrabada. En paralelo, la nominación de Kevin Warsh a la Fed —percibido como hawkish— avanzó en el Senado, añadiendo presión alcista a las tasas de largo plazo.</p>
+<p>⟶ <strong>Probabilidad 75%</strong> — inflación importada se afianza si el WTI no cede de $95.</p>
+<h3>Mercados Accionarios y Volatilidad</h3>
+<p>El martes los mercados acusaron el dato de IPC: el Dow cedió 185 puntos (-0.37%) a 49,575, el S&amp;P 500 retrocedió levemente a 7,392.59 (-0.11%), y el Nasdaq logró un marginal +0.08% apoyado por semiconductores. El VIX subió a 18.27 (+1.56%), señal de que la cobertura de opciones se incrementó ante la incertidumbre inflacionaria. El mercado aguarda señales del encuentro Trump-Xi previsto para el <strong>jueves 14 de mayo en Beijing</strong>; un acuerdo comercial ampliaría el apetito por riesgo.</p>
+<table>
+<thead><tr><th>Indicador</th><th>Cierre Martes</th><th>Var.</th><th>Var. %</th><th>Señal</th></tr></thead>
+<tbody>
+<tr><td>Dow Jones</td><td>49,575</td><td>▼ -185.54</td><td>▼ -0.37%</td><td>▼ Baja</td></tr>
+<tr><td>S&amp;P 500</td><td>7,392.59</td><td>▼ -8.37</td><td>▼ -0.11%</td><td>▼ Leve</td></tr>
+<tr><td>Nasdaq Comp.</td><td>26,108</td><td>▲ +19.93</td><td>▲ +0.08%</td><td>▲ Neutral</td></tr>
+<tr><td>VIX</td><td>18.27</td><td>▲ +0.28</td><td>▲ +1.56%</td><td>▲ Alerta</td></tr>
+<tr><td>Oro / GLD</td><td>$429.44</td><td>-$3.49</td><td>▼ -0.81%</td><td>▼ Pausa</td></tr>
+<tr><td>WTI (spot)</td><td>$102.64</td><td>+$0.46</td><td>▲ +0.45%</td><td>▲ Presión</td></tr>
+<tr><td>EUR/USD</td><td>1.1709</td><td>▼ -0.0028</td><td>▼ -0.24%</td><td>▼ Estable</td></tr>
+</tbody>
+</table>
+<h2>B. Costa Rica — Bolsa Nacional de Valores</h2>
+<p>La sesión del martes 12 de mayo registró un volumen de <strong>110 MM USD</strong>, retrocediendo un 21.4% frente a los 140 MM de la sesión equivalente de la semana previa. El mercado secundario mantuvo el liderazgo con 59 MM USD (53.64%, 63 operaciones), seguido de los reportos tripartitos con 33 MM (30.00%, 100 operaciones).</p>
+<table>
+<thead><tr><th>Mercado</th><th>Vol.</th><th>Peso %</th><th>Vol. Previo</th><th>#Ops</th></tr></thead>
+<tbody>
+<tr><td>Liquidez</td><td>15 MM</td><td>13.64%</td><td>7 MM</td><td>26</td></tr>
+<tr><td>Primario</td><td>2 MM</td><td>1.82%</td><td>10 MM</td><td>2</td></tr>
+<tr><td>Secundario</td><td>59 MM</td><td>53.64%</td><td>79 MM</td><td>63</td></tr>
+<tr><td>Reportos</td><td>33 MM</td><td>30.00%</td><td>42 MM</td><td>100</td></tr>
+<tr><td><strong>TOTAL</strong></td><td><strong>110 MM</strong></td><td><strong>100%</strong></td><td><strong>140 MM</strong></td><td><strong>191</strong></td></tr>
+</tbody>
+</table>
+<h2>C. Deuda Soberana — Señales CRMG</h2>
+<p>El martes el modelo registra <strong>dos emisiones en Alta Convicción ★★</strong>: la <strong>CRMG260734</strong> (CRC, vencimiento julio 2034, I-spread +10.87 pb) y la <strong>CRMG$210531</strong> (USD, mayo 2031, I-spread +10.42 pb). Otras dos series —CRMG180429 y CRMG191033— se ubican en Señal Activa ★.</p>
+<table>
+<thead><tr><th>Serie CRC</th><th>Vencimiento</th><th>YTMaj %</th><th>I-Spread (pb)</th><th>Señal</th></tr></thead>
+<tbody>
+<tr><td>CRMG180429</td><td>18/04/2029</td><td>5.5622%</td><td>+7.68</td><td>★ Activa</td></tr>
+<tr><td>CRMG240430</td><td>24/04/2030</td><td>5.7904%</td><td>+3.66</td><td>Compra</td></tr>
+<tr><td>CRMG191033</td><td>19/10/2033</td><td>6.2757%</td><td>+5.13</td><td>★ Activa</td></tr>
+<tr><td><strong>CRMG260734</strong></td><td>26/07/2034</td><td>6.3513%</td><td>+10.87</td><td>★★ Alta Conv.</td></tr>
+</tbody>
+</table>
+<table>
+<thead><tr><th>Serie USD</th><th>Vencimiento</th><th>YTMaj %</th><th>I-Spread (pb)</th><th>Señal</th></tr></thead>
+<tbody>
+<tr><td><strong>CRMG$210531</strong></td><td>21/05/2031</td><td>5.4648%</td><td>+10.42</td><td>★★ Alta Conv.</td></tr>
+<tr><td>CRMG$180533</td><td>18/05/2033</td><td>5.6786%</td><td>+3.44</td><td>Compra</td></tr>
+</tbody>
+</table>
+<h2>D. Costa Rica — Mercado de Divisas MONEX</h2>
+<p>El tipo de cambio promedio ponderado cerró en <strong>¢459.53</strong> (últimos 5 días) con una apreciación interanual del colón del <strong>5.50%</strong>. La banda de operación de la semana se mantuvo entre ¢450 y ¢464. La apreciación del colón amortigua parcialmente el alza del WTI sobre la factura energética importada.</p>
+<table>
+<thead><tr><th>Variable</th><th>Últ. 5 Días</th><th>Mes Actual</th><th>Chg %a/a</th></tr></thead>
+<tbody>
+<tr><td>TC PP (¢/USD)</td><td>459.53</td><td>459.26</td><td>▼ -5.50%</td></tr>
+<tr><td># Operaciones</td><td>1,081</td><td>1,371</td><td>▼ -31.8%</td></tr>
+<tr><td>Volumen (USD MM)</td><td>257.27</td><td>300.65</td><td>▼ -17.7%</td></tr>
+<tr><td>Cierre PP (¢)</td><td>457.34</td><td>457.34</td><td>▼ -2.6%</td></tr>
+</tbody>
+</table>
+<p><em>Crónica preparada con información pública del mercado local e internacional. No constituye recomendación directa de compra o venta. Fuentes: BNV, BCCR/MONEX, Bloomberg. GSD IS &amp; Cía · gsandel.com · Martes 13 de mayo de 2026.</em></p></div>
+        <div style="margin-top:28px;padding:14px 18px;background:var(--ice);border-left:3px solid var(--gold);font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);line-height:1.7;">
+          ⚠ Aviso legal: Esta publicación es informativa y no constituye recomendación de compra o venta de valores. GSD IS &amp; Cía no está sujeta a supervisión de SUGEVAL.
+        </div>
+        <div style="display:flex;justify-content:space-between;margin-top:28px;padding-top:20px;border-top:1px solid var(--rule);">
+          <a href="#" onclick="showPost(1);return false;" style="font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;color:var(--royal);letter-spacing:.08em;text-transform:uppercase;">← Anterior</a><span></span>
+        </div>
+      </div></div>
+    </div>
+
+<!-- ▸ SUBSCRIBE CTA -->
+<section class="gsd-subscribe" id="suscripcion">
+  <div class="gsd-subscribe__inner">
+    <div class="gsd-subscribe__eyebrow">Newsletter diario</div>
+    <h2 class="gsd-subscribe__title">Reciba la crónica bursátil cada mañana</h2>
+    <p class="gsd-subscribe__body">Análisis diario de mercados, señales CRMG, tipo de cambio MONEX y panorama internacional — directo a su correo antes de la apertura del NYSE.</p>
+    <div class="gsd-subscribe__form">
+      <input class="gsd-subscribe__input" type="email" id="gsdEmailInput" placeholder="correo@empresa.com" autocomplete="email">
+      <button class="gsd-subscribe__btn" onclick="gsdSubscribe()">Suscribirse →</button>
+    </div>
+    <p id="gsdSubscribeMsg" style="margin-top:12px;font-family:'JetBrains Mono',monospace;font-size:11px;color:rgba(220,232,248,.7);display:none;"></p>
   </div>
 </section>
 
-<!-- ▸ FOOTER -->
-<footer>
-  <div class="footer__grid">
-    <div class="footer__brand">
+<!-- FOOTER -->
+<footer class="gsd-footer">
+  <div class="gsd-footer__grid">
+    <div class="gsd-footer__brand">
       <h4>GSD <em>Monitor</em></h4>
       <p>Análisis bursátil diario para inversores costarricenses. Señales CRMG, mercado BNV, divisas MONEX y panorama internacional desde Costa Rica.</p>
-      <div class="contact">GSD IS &amp; Cía · gsdmar@gmail.com<br>Tel. 8938-9046 · gsandel.com</div>
+      <div class="gsd-footer__contact">GSD IS &amp; Cía · gsdmar@gmail.com<br>Tel. 8938-9046 · gsandel.com</div>
     </div>
     <div>
-      <div class="footer__col-title">Secciones</div>
-      <ul class="footer__links">
-        <li><a href="#">Economía · Finanzas</a></li>
-        <li><a href="#">Mercado Bursátil</a></li>
-        <li><a href="#">MONEX · Divisas</a></li>
-        <li><a href="#">Deuda Soberana</a></li>
-        <li><a href="#">WST Monitor</a></li>
+      <div class="gsd-footer__col-title">Publicaciones</div>
+      <ul class="gsd-footer__links">
+        <li><a href="#" onclick="showPost(0);return false;">Flash Matutino – 14 Mayo</a></li>
+        <li><a href="#" onclick="showPost(1);return false;">Crónica Bursátil – 13 Mayo</a></li>
+        <li><a href="#" onclick="showPost(2);return false;">Flash Matutino – 13 Mayo</a></li>
       </ul>
     </div>
     <div>
-      <div class="footer__col-title">Recursos</div>
-      <ul class="footer__links">
-        <li><a href="#">BCCR</a></li>
-        <li><a href="#">Bolsa Nacional de Valores</a></li>
-        <li><a href="#">Mercados Financieros Int.</a></li>
-        <li><a href="#">Bloomberg</a></li>
-        <li><a href="#">Archivo completo</a></li>
+      <div class="gsd-footer__col-title">Recursos</div>
+      <ul class="gsd-footer__links">
+        <li><a href="https://www.bccr.fi.cr" target="_blank" rel="noopener">BCCR</a></li>
+        <li><a href="https://www.bolsacr.com" target="_blank" rel="noopener">BNV</a></li>
+        <li><a href="https://www.bloomberg.com" target="_blank" rel="noopener">Bloomberg</a></li>
+        <li><a href="https://gsandel.com" target="_blank" rel="noopener">gsandel.com</a></li>
       </ul>
     </div>
     <div>
-      <div class="footer__col-title">Publicaciones</div>
-      <ul class="footer__links">
-        <li><a href="#">Crónica Bursátil</a></li>
-        <li><a href="#">Flash Matutino</a></li>
-        <li><a href="#">Flash Informativo</a></li>
-        <li><a href="#">Market Recap</a></li>
-        <li><a href="#">Señales CRMG</a></li>
+      <div class="gsd-footer__col-title">Contacto</div>
+      <ul class="gsd-footer__links">
+        <li><a href="mailto:gsdmar@gmail.com">gsdmar@gmail.com</a></li>
+        <li><a href="tel:+50689389046">8938-9046</a></li>
+        <li><a href="https://gsandel.com" target="_blank">gsandel.com ↗</a></li>
       </ul>
     </div>
   </div>
-  <div class="footer__bottom">
+  <div class="gsd-footer__bottom">
     <span>© 2026 GSD IS &amp; Cía · Geovanny Ant. Sandí Delgado · <a href="https://gsandel.com">gsandel.com</a></span>
     <span>Inversiones a su medida · Costa Rica · Datos: Bloomberg · BCCR · BNV</span>
   </div>
-  <p class="footer__disclaimer">
-    Las crónicas publicadas en este sitio son preparadas con información pública del mercado local e internacional. No constituyen recomendación directa de compra o venta de valores; únicamente señales técnicas de referencia. GSD IS &amp; Cía no está sujeta a supervisión de SUGEVAL. El inversionista es responsable de sus propias decisiones de inversión. Fuentes: BCCR / MONEX, Bolsa Nacional de Valores, Bloomberg Terminal, Reuters, Morningstar.
+  <p class="gsd-footer__disclaimer">
+    Las crónicas publicadas son preparadas con información pública del mercado local e internacional. No constituyen recomendación directa de compra o venta de valores. GSD IS &amp; Cía no está sujeta a supervisión de SUGEVAL. El inversionista es responsable de sus propias decisiones de inversión.
   </p>
 </footer>
 
 <script>
-  const toggle = document.getElementById('navToggle');
-  const links  = document.getElementById('navLinks');
+// ── Navigation state ──────────────────────────────────────────────
+function showHome() {
+  document.getElementById('home-view').style.display = 'block';
+  document.querySelectorAll('.gsd-single-view').forEach(el => el.style.display = 'none');
+  window.scrollTo({top: 0, behavior: 'smooth'});
+  document.title = 'GSD Monitor — Inversiones a su medida';
+}
+
+function showPost(idx) {
+  document.getElementById('home-view').style.display = 'none';
+  document.querySelectorAll('.gsd-single-view').forEach(el => el.style.display = 'none');
+  const target = document.getElementById('single-' + idx);
+  if (target) {
+    target.style.display = 'block';
+    window.scrollTo({top: 0, behavior: 'smooth'});
+    const title = target.querySelector('h1');
+    if (title) document.title = title.textContent + ' — GSD Monitor';
+  }
+}
+
+function filterCat(cat) {
+  showHome();
+}
+
+// ── Mobile nav ───────────────────────────────────────────────────
+const toggle = document.getElementById('gsdNavToggle');
+const links  = document.getElementById('gsdNavLinks');
+if (toggle && links) {
   toggle.addEventListener('click', () => {
     const open = links.classList.toggle('is-open');
     toggle.setAttribute('aria-expanded', String(open));
+    toggle.textContent = open ? '✕' : '☰';
   });
-  links.querySelectorAll('a').forEach(a =>
-    a.addEventListener('click', () => {
-      links.classList.remove('is-open');
-      toggle.setAttribute('aria-expanded','false');
-    })
-  );
+  links.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+    links.classList.remove('is-open');
+    toggle.setAttribute('aria-expanded', 'false');
+    toggle.textContent = '☰';
+  }));
+}
+
+// ── Subscribe ────────────────────────────────────────────────────
+window.gsdSubscribe = function() {
+  const input = document.getElementById('gsdEmailInput');
+  const msg   = document.getElementById('gsdSubscribeMsg');
+  if (!input || !msg) return;
+  const email = input.value.trim();
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    msg.textContent = '⚠ Por favor ingrese un correo válido.';
+    msg.style.display = 'block'; msg.style.color = '#f07070'; return;
+  }
+  msg.textContent = '✅ Gracias — le confirmaremos su suscripción por correo.';
+  msg.style.display = 'block'; msg.style.color = 'rgba(220,232,248,.8)';
+  input.value = '';
+};
+
+// ── Ticker shadow on scroll ──────────────────────────────────────
+window.addEventListener('scroll', () => {
+  const t = document.querySelector('.gsd-ticker');
+  if (t) t.style.boxShadow = window.scrollY > 10 ? '0 2px 12px rgba(8,23,61,.5)' : 'none';
+}, {passive: true});
 </script>
 </body>
 </html>
