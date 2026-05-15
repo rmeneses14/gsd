@@ -884,79 +884,27 @@ ul { list-style: none; }
 .gsd-footer__disclaimer { font-size:9px; color:rgba(200,216,240,.16); margin-top:14px; line-height:1.6; max-width:var(--max-w); margin-left:auto; margin-right:auto; }
 
 
-/* ── Single post body typography ── */
-.gsd-single__body h2 {
-  font-family: 'Playfair Display', serif;
-  font-size: clamp(18px,3vw,24px);
-  font-weight: 800;
-  color: var(--royal);
-  margin: 2em 0 .7em;
-  line-height: 1.25;
-}
-.gsd-single__body h3 {
-  font-family: 'Playfair Display', serif;
-  font-size: clamp(16px,2.5vw,20px);
-  font-weight: 700;
-  color: var(--ink);
-  margin: 1.6em 0 .6em;
-}
-.gsd-single__body p {
-  margin-bottom: 1.3em;
-  font-size: clamp(14px,1.8vw,16px);
-  line-height: 1.8;
-  color: var(--ink);
-}
-.gsd-single__body blockquote {
-  border-left: 3px solid var(--gold);
-  padding: 12px 20px;
-  background: var(--ice-lt);
-  margin: 1.5em 0;
-  font-style: italic;
-  color: var(--muted);
-}
-.gsd-single__body table {
-  width: 100%;
-  border-collapse: collapse;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 12px;
-  margin: 1.5em 0;
-  overflow-x: auto;
-  display: block;
-}
-.gsd-single__body table th {
-  background: var(--royal);
-  color: #fff;
-  padding: 9px 13px;
-  text-align: left;
-  font-size: 9.5px;
-  letter-spacing: .1em;
-  text-transform: uppercase;
-  white-space: nowrap;
-}
-.gsd-single__body table td {
-  padding: 9px 13px;
-  border-bottom: 1px solid var(--rule);
-  color: var(--ink);
-  white-space: nowrap;
-}
-.gsd-single__body table tbody tr:hover { background: var(--ice-lt); }
-.gsd-single__body strong { color: var(--ink); font-weight: 700; }
+.gsd-single__body h2 { font-family:'Playfair Display',serif; font-size:clamp(18px,3vw,24px); font-weight:800; color:var(--royal); margin:2em 0 .7em; line-height:1.25; }
+.gsd-single__body h3 { font-family:'Playfair Display',serif; font-size:clamp(16px,2.5vw,20px); font-weight:700; color:var(--ink); margin:1.6em 0 .6em; }
+.gsd-single__body p { margin-bottom:1.3em; font-size:clamp(14px,1.8vw,16px); line-height:1.8; color:var(--ink); }
+.gsd-single__body blockquote { border-left:3px solid var(--gold); padding:12px 20px; background:var(--ice-lt); margin:1.5em 0; font-style:italic; color:var(--muted); }
+.gsd-single__body table { width:100%; border-collapse:collapse; font-family:'JetBrains Mono',monospace; font-size:12px; margin:1.5em 0; overflow-x:auto; display:block; }
+.gsd-single__body table th { background:var(--royal); color:#fff; padding:9px 13px; text-align:left; font-size:9.5px; letter-spacing:.1em; text-transform:uppercase; white-space:nowrap; }
+.gsd-single__body table td { padding:9px 13px; border-bottom:1px solid var(--rule); color:var(--ink); white-space:nowrap; }
+.gsd-single__body table tbody tr:hover { background:var(--ice-lt); }
+.gsd-single__body strong { color:var(--ink); font-weight:700; }
 
-/* Views */
-#home-view, .gsd-single-view { transition: opacity .2s; }
 </style>
 </head>
 <body>
 
-<!-- TICKER -->
 <div class="gsd-ticker" role="marquee" aria-label="Cotizaciones en tiempo real">
   <div class="gsd-ticker__label">▶ LIVE</div>
   <div style="overflow:hidden;flex:1;display:flex;align-items:center;">
-    <div class="gsd-ticker__track"><div class="gsd-ticker__item"><span class="sym">S&amp;P 500</span><span>7,501.24</span><span class="up">▲ +1.35%</span></div><div class="gsd-ticker__item"><span class="sym">NASDAQ</span><span>26,635.22</span><span class="up">▲ +2.10%</span></div><div class="gsd-ticker__item"><span class="sym">DOW</span><span>50,063.46</span><span class="up">▲ +0.61%</span></div><div class="gsd-ticker__item"><span class="sym">WTI</span><span>100.98</span><span class="dn">▼ -0.04%</span></div><div class="gsd-ticker__item"><span class="sym">GLD</span><span>430.50</span><span class="dn">▼ -0.56%</span></div><div class="gsd-ticker__item"><span class="sym">VIX</span><span>17.87</span><span class="dn">▼ -0.67%</span></div><div class="gsd-ticker__item"><span class="sym">₡/USD MONEX</span><span>457.33</span><span class="up">-5.54% a/a</span></div><div class="gsd-ticker__item"><span class="sym">CRMG$210531</span><span>★★ 11.80pb</span><span class="up">Alta Convicción</span></div><div class="gsd-ticker__item"><span class="sym">S&amp;P 500</span><span>7,501.24</span><span class="up">▲ +1.35%</span></div><div class="gsd-ticker__item"><span class="sym">NASDAQ</span><span>26,635.22</span><span class="up">▲ +2.10%</span></div><div class="gsd-ticker__item"><span class="sym">DOW</span><span>50,063.46</span><span class="up">▲ +0.61%</span></div><div class="gsd-ticker__item"><span class="sym">WTI</span><span>100.98</span><span class="dn">▼ -0.04%</span></div><div class="gsd-ticker__item"><span class="sym">GLD</span><span>430.50</span><span class="dn">▼ -0.56%</span></div><div class="gsd-ticker__item"><span class="sym">VIX</span><span>17.87</span><span class="dn">▼ -0.67%</span></div><div class="gsd-ticker__item"><span class="sym">₡/USD MONEX</span><span>457.33</span><span class="up">-5.54% a/a</span></div><div class="gsd-ticker__item"><span class="sym">CRMG$210531</span><span>★★ 11.80pb</span><span class="up">Alta Convicción</span></div></div>
+    <div class="gsd-ticker__track"><div class="gsd-ticker__item"><span class="sym">S&P 500</span><span>7,501.24</span><span class="up">▲ +1.35%</span></div><div class="gsd-ticker__item"><span class="sym">NASDAQ</span><span>26,635.22</span><span class="up">▲ +2.10%</span></div><div class="gsd-ticker__item"><span class="sym">DOW</span><span>50,063.46</span><span class="up">▲ +0.61%</span></div><div class="gsd-ticker__item"><span class="sym">WTI</span><span>100.98</span><span class="dn">▼ -0.04%</span></div><div class="gsd-ticker__item"><span class="sym">GLD</span><span>430.50</span><span class="dn">▼ -0.56%</span></div><div class="gsd-ticker__item"><span class="sym">VIX</span><span>17.87</span><span class="dn">▼ -0.67%</span></div><div class="gsd-ticker__item"><span class="sym">₡/USD MONEX</span><span>457.33</span><span class="up">-5.54% a/a</span></div><div class="gsd-ticker__item"><span class="sym">CRMG$210531</span><span>★★ 11.80pb</span><span class="up">Alta Convicción</span></div><div class="gsd-ticker__item"><span class="sym">S&P 500</span><span>7,501.24</span><span class="up">▲ +1.35%</span></div><div class="gsd-ticker__item"><span class="sym">NASDAQ</span><span>26,635.22</span><span class="up">▲ +2.10%</span></div><div class="gsd-ticker__item"><span class="sym">DOW</span><span>50,063.46</span><span class="up">▲ +0.61%</span></div><div class="gsd-ticker__item"><span class="sym">WTI</span><span>100.98</span><span class="dn">▼ -0.04%</span></div><div class="gsd-ticker__item"><span class="sym">GLD</span><span>430.50</span><span class="dn">▼ -0.56%</span></div><div class="gsd-ticker__item"><span class="sym">VIX</span><span>17.87</span><span class="dn">▼ -0.67%</span></div><div class="gsd-ticker__item"><span class="sym">₡/USD MONEX</span><span>457.33</span><span class="up">-5.54% a/a</span></div><div class="gsd-ticker__item"><span class="sym">CRMG$210531</span><span>★★ 11.80pb</span><span class="up">Alta Convicción</span></div></div>
   </div>
 </div>
 
-<!-- MASTHEAD -->
 <header class="gsd-masthead">
   <div class="gsd-masthead__inner">
     <div class="gsd-masthead__meta">GSD IS &amp; Cía.<br>Miércoles, 14 Mayo 2026<br>Edición Diaria · CR</div>
@@ -974,82 +922,50 @@ ul { list-style: none; }
   </div>
 </header>
 
-<!-- NAV -->
 <nav class="gsd-nav">
   <div class="gsd-nav__inner">
     <button class="gsd-nav__toggle" id="gsdNavToggle" aria-expanded="false" aria-label="Abrir menú">☰</button>
     <div class="gsd-nav__links" id="gsdNavLinks">
-      <a href="#" onclick="showHome();return false;" class="gsd-nav__link is-active">Inicio</a>
-      <a href="#" onclick="filterCat('Flash Matutino');return false;" class="gsd-nav__link">Flash Matutino</a>
-      <a href="#" onclick="filterCat('Crónica Bursátil');return false;" class="gsd-nav__link">Crónica Bursátil</a>
-      <a href="#" onclick="filterCat('Mercado Bursátil');return false;" class="gsd-nav__link">Mercado Bursátil</a>
-      <a href="https://gsandel.com" target="_blank" class="gsd-nav__link">gsandel.com ↗</a>
+      <a href="#" onclick="showHome();return false;" class="gsd-nav__link is-active" id="nav-inicio">Inicio</a>
+      <a href="#" onclick="filterCat('Flash Matutino');return false;" class="gsd-nav__link" id="nav-flash">Flash Matutino</a>
+      <a href="#" onclick="filterCat('Crónica Bursátil');return false;" class="gsd-nav__link" id="nav-cronica">Crónica Bursátil</a>
+      <a href="#" onclick="filterCat('Mercado Bursátil');return false;" class="gsd-nav__link" id="nav-mercado">Mercado Bursátil</a>
     </div>
     <div class="gsd-nav__rate">₡/USD <span>457.33</span></div>
   </div>
 </nav>
 
-<!-- BREAKING BANNER -->
 <div class="gsd-breaking">
   <div class="gsd-breaking__inner">
     <div class="gsd-breaking__badge">Alerta</div>
     <div class="gsd-breaking__dot"></div>
-    <div class="gsd-breaking__text">S&amp;P 500 en nuevo máximo histórico 7,501 — Kevin Warsh asume la Fed mañana viernes · Cumbre Trump-Xi en Beijing hoy · ₡/USD 457.33 (-5.54% a/a)</div>
+    <div class="gsd-breaking__text">S&amp;P 500 en nuevo máximo histórico 7,501 — Kevin Warsh asume la Fed mañana viernes · Cumbre Trump-Xi en Beijing · ₡/USD 457.33 (-5.54% a/a)</div>
   </div>
 </div>
 
-<!-- ▸ HOME VIEW -->
 <div id="home-view">
-
-<!-- ▸ HERO -->
-<section class="gsd-hero" id="home-hero">
+<section class="gsd-hero">
   <div class="gsd-hero__inner">
     <div class="gsd-hero__main">
       <div class="gsd-hero__kicker flash">⚡ Flash Matutino · 14 de mayo de 2026</div>
       <h1 class="gsd-hero__headline">Flash Matutino – GSD – 14 de mayo 2026</h1>
       <p class="gsd-hero__deck">S&P 500 en récord histórico con base frágil. Warsh asume la Fed. BNV 128 MM USD +23.1%. Colón marca nuevo mínimo histórico del dólar. CRMG$210531 Alta Convicción ★★.</p>
       <div class="gsd-hero__meta">
-        <span>Por <strong>admin</strong></span>
-        <span>·</span>
+        <span>Por <strong>admin</strong></span><span>·</span>
         <span>14 de mayo de 2026</span>
         <a href="#" onclick="showPost(0);return false;" class="gsd-hero__read">Leer completo →</a>
       </div>
     </div>
     <div class="gsd-hero__sidebar">
       <div class="gsd-sidebar__hd">Mercados — 14 May 2026</div>
-      
-      <div class="gsd-mkt-row">
-        <div><div class="gsd-mkt__name">S&amp;P 500</div><div class="gsd-mkt__sub">Índice EE.UU.</div></div>
-        <div class="gsd-mkt__val"><div class="gsd-mkt__price">7,501.24</div><div class="gsd-mkt__chg up">▲ +1.35%</div></div>
-      </div>
-      <div class="gsd-mkt-row">
-        <div><div class="gsd-mkt__name">Nasdaq</div><div class="gsd-mkt__sub">Compuesto</div></div>
-        <div class="gsd-mkt__val"><div class="gsd-mkt__price">26,635.22</div><div class="gsd-mkt__chg up">▲ +2.10%</div></div>
-      </div>
-      <div class="gsd-mkt-row">
-        <div><div class="gsd-mkt__name">Dow Jones</div><div class="gsd-mkt__sub">Industrial</div></div>
-        <div class="gsd-mkt__val"><div class="gsd-mkt__price">50,063.46</div><div class="gsd-mkt__chg up">▲ +0.61%</div></div>
-      </div>
-      <div class="gsd-mkt-row">
-        <div><div class="gsd-mkt__name">Oro / GLD</div><div class="gsd-mkt__sub">ETF SPDR</div></div>
-        <div class="gsd-mkt__val"><div class="gsd-mkt__price">430.50</div><div class="gsd-mkt__chg dn">▼ -0.56%</div></div>
-      </div>
-      <div class="gsd-mkt-row">
-        <div><div class="gsd-mkt__name">WTI Crudo</div><div class="gsd-mkt__sub">USD/bbl</div></div>
-        <div class="gsd-mkt__val"><div class="gsd-mkt__price">100.98</div><div class="gsd-mkt__chg dn">▼ -0.04%</div></div>
-      </div>
-      <div class="gsd-mkt-row">
-        <div><div class="gsd-mkt__name">VIX</div><div class="gsd-mkt__sub">Volatilidad CBOE</div></div>
-        <div class="gsd-mkt__val"><div class="gsd-mkt__price">17.87</div><div class="gsd-mkt__chg dn">▼ -0.67%</div></div>
-      </div>
+      <div class="gsd-mkt-row"><div><div class="gsd-mkt__name">S&P 500</div><div class="gsd-mkt__sub">Índice EE.UU.</div></div><div class="gsd-mkt__val"><div class="gsd-mkt__price">7,501.24</div><div class="gsd-mkt__chg up">▲ +1.35%</div></div></div><div class="gsd-mkt-row"><div><div class="gsd-mkt__name">Nasdaq</div><div class="gsd-mkt__sub">Compuesto</div></div><div class="gsd-mkt__val"><div class="gsd-mkt__price">26,635.22</div><div class="gsd-mkt__chg up">▲ +2.10%</div></div></div><div class="gsd-mkt-row"><div><div class="gsd-mkt__name">Dow Jones</div><div class="gsd-mkt__sub">Industrial</div></div><div class="gsd-mkt__val"><div class="gsd-mkt__price">50,063.46</div><div class="gsd-mkt__chg up">▲ +0.61%</div></div></div><div class="gsd-mkt-row"><div><div class="gsd-mkt__name">Oro / GLD</div><div class="gsd-mkt__sub">ETF SPDR</div></div><div class="gsd-mkt__val"><div class="gsd-mkt__price">430.50</div><div class="gsd-mkt__chg dn">▼ -0.56%</div></div></div><div class="gsd-mkt-row"><div><div class="gsd-mkt__name">WTI Crudo</div><div class="gsd-mkt__sub">USD/bbl</div></div><div class="gsd-mkt__val"><div class="gsd-mkt__price">100.98</div><div class="gsd-mkt__chg dn">▼ -0.04%</div></div></div><div class="gsd-mkt-row"><div><div class="gsd-mkt__name">VIX</div><div class="gsd-mkt__sub">Volatilidad CBOE</div></div><div class="gsd-mkt__val"><div class="gsd-mkt__price">17.87</div><div class="gsd-mkt__chg dn">▼ -0.67%</div></div></div>
     </div>
   </div>
 </section>
 
-<!-- ▸ RIBBON mobile -->
 <div class="gsd-ribbon" role="region">
   <div class="gsd-ribbon__inner">
-    <div class="gsd-ribbon__item"><div class="gsd-ribbon__sym">S&amp;P 500</div><div class="gsd-ribbon__price">7,501.24</div><div class="gsd-ribbon__chg up">▲ +1.35%</div></div>
+    <div class="gsd-ribbon__item"><div class="gsd-ribbon__sym">S&P 500</div><div class="gsd-ribbon__price">7,501.24</div><div class="gsd-ribbon__chg up">▲ +1.35%</div></div>
     <div class="gsd-ribbon__item"><div class="gsd-ribbon__sym">Nasdaq</div><div class="gsd-ribbon__price">26,635.22</div><div class="gsd-ribbon__chg up">▲ +2.10%</div></div>
     <div class="gsd-ribbon__item"><div class="gsd-ribbon__sym">Dow</div><div class="gsd-ribbon__price">50,063.46</div><div class="gsd-ribbon__chg up">▲ +0.61%</div></div>
     <div class="gsd-ribbon__item"><div class="gsd-ribbon__sym">WTI</div><div class="gsd-ribbon__price">100.98</div><div class="gsd-ribbon__chg dn">▼ -0.04%</div></div>
@@ -1058,17 +974,15 @@ ul { list-style: none; }
   </div>
 </div>
 
-<!-- ▸ STATS BAND -->
 <div class="gsd-stats">
   <div class="gsd-stats__inner">
     <div class="gsd-stat-item"><div class="gsd-stat-item__val">3<em>+</em></div><div class="gsd-stat-item__lbl">Publicaciones</div></div>
-    <div class="gsd-stat-item"><div class="gsd-stat-item__val">7,501.24</div><div class="gsd-stat-item__lbl">S&amp;P 500 · cierre</div></div>
+    <div class="gsd-stat-item"><div class="gsd-stat-item__val">7,501.24</div><div class="gsd-stat-item__lbl">S&P 500 · cierre</div></div>
     <div class="gsd-stat-item"><div class="gsd-stat-item__val">₡457.33</div><div class="gsd-stat-item__lbl">₡/USD · MONEX hoy</div></div>
     <div class="gsd-stat-item"><div class="gsd-stat-item__val">-5.54%</div><div class="gsd-stat-item__lbl">Apreciación ₡/USD a/a</div></div>
   </div>
 </div>
 
-<!-- ▸ SECTION HEADER -->
 <div class="gsd-section-hd">
   <div class="gsd-section-hd__rule"></div>
   <span class="gsd-section-hd__title">Últimas publicaciones</span>
@@ -1076,28 +990,21 @@ ul { list-style: none; }
   <span class="gsd-section-hd__more">3 artículos</span>
 </div>
 
-<!-- ▸ CONTENT -->
 <div class="gsd-content"><div class="gsd-content__inner">
   <div class="gsd-layout-feature">
-    
-    <div class="gsd-card-feat" id="card-1">
+    <div class="gsd-card-feat">
       <div class="gsd-card__kicker ">📊 Crónica Bursátil</div>
       <h2 class="gsd-card-feat__headline"><a href="#" onclick="showPost(1);return false;">Crónica Bursátil – GSD – 13 de mayo 2026</a></h2>
       <p class="gsd-card-feat__body">PPI sube 6.0% anual. Warsh confirmado en la Fed. S&P 500 en récord histórico con base estrecha. BNV 128 MM USD. CRMG$210531 ★★ Alta Convicción 11.80 pb.</p>
-      <div class="gsd-card-feat__foot">
-        <span>13 de mayo de 2026 · admin</span>
-        <a href="#" onclick="showPost(1);return false;">Leer completo →</a>
-      </div>
+      <div class="gsd-card-feat__foot"><span>13 de mayo de 2026 · admin</span><a href="#" onclick="showPost(1);return false;">Leer completo →</a></div>
     </div>
     <div class="gsd-aside-list">
-      
-    <div class="gsd-aside-item">
+      <div class="gsd-aside-item">
       <div class="gsd-aside-item__kicker">⚡ Flash Matutino</div>
       <h3 class="gsd-aside-item__hed"><a href="#" onclick="showPost(0);return false;">Flash Matutino – GSD – 14 de mayo 2026</a></h3>
       <div class="gsd-aside-item__date">14 de mayo de 2026</div>
     </div>
-      
-    <div class="gsd-aside-item">
+      <div class="gsd-aside-item">
       <div class="gsd-aside-item__kicker">⚡ Flash Matutino</div>
       <h3 class="gsd-aside-item__hed"><a href="#" onclick="showPost(2);return false;">Flash Matutino – GSD – 13 de mayo 2026</a></h3>
       <div class="gsd-aside-item__date">13 de mayo de 2026</div>
@@ -1105,19 +1012,14 @@ ul { list-style: none; }
     </div>
   </div>
   <div class="gsd-grid-3">
-    
     <div class="gsd-card-sm">
       <div class="gsd-card__kicker flash">⚡ Flash Matutino</div>
       <h3 class="gsd-card-sm__hed"><a href="#" onclick="showPost(0);return false;">Flash Matutino – GSD – 14 de mayo 2026</a></h3>
       <p class="gsd-card-sm__text">
 ● Flash Matutino Inversor CR | GSD IS &amp; Cía.
 Jueves 14 de mayo de 2026 · 7:35 a.m. hora Costa Rica · Apertura NYSE 9:30 a.m. ET · Geovanny Ant. Sandí Delga…</p>
-      <div class="gsd-card-sm__foot">
-        <span>14 de mayo de 2026</span>
-        <a href="#" onclick="showPost(0);return false;">Leer →</a>
-      </div>
+      <div class="gsd-card-sm__foot"><span>14 de mayo de 2026</span><a href="#" onclick="showPost(0);return false;">Leer →</a></div>
     </div>
-    
     <div class="gsd-card-sm">
       <div class="gsd-card__kicker ">📊 Crónica Bursátil</div>
       <h3 class="gsd-card-sm__hed"><a href="#" onclick="showPost(1);return false;">Crónica Bursátil – GSD – 13 de mayo 2026</a></h3>
@@ -1125,12 +1027,8 @@ Jueves 14 de mayo de 2026 · 7:35 a.m. hora Costa Rica · Apertura NYSE 9:30 a.m
 Miércoles, 13 de mayo de 2026 · Edición Diaria · Hora de Costa Rica
 
 Resumen Ejecutivo — El PPI de abril en EE.UU. subió 6.0% interanual —máximo desde diciembr…</p>
-      <div class="gsd-card-sm__foot">
-        <span>13 de mayo de 2026</span>
-        <a href="#" onclick="showPost(1);return false;">Leer →</a>
-      </div>
+      <div class="gsd-card-sm__foot"><span>13 de mayo de 2026</span><a href="#" onclick="showPost(1);return false;">Leer →</a></div>
     </div>
-    
     <div class="gsd-card-sm">
       <div class="gsd-card__kicker flash">⚡ Flash Matutino</div>
       <h3 class="gsd-card-sm__hed"><a href="#" onclick="showPost(2);return false;">Flash Matutino – GSD – 13 de mayo 2026</a></h3>
@@ -1138,26 +1036,18 @@ Resumen Ejecutivo — El PPI de abril en EE.UU. subió 6.0% interanual —máxim
 13 de mayo de 2026 · 7:30 AM hora Costa Rica · GSD IS &amp; Cía.
 
 IPC de abril confirmó la presión inflacionaria: el Dow cede -0.37% y el WTI cierra en $102.64…</p>
-      <div class="gsd-card-sm__foot">
-        <span>13 de mayo de 2026</span>
-        <a href="#" onclick="showPost(2);return false;">Leer →</a>
-      </div>
+      <div class="gsd-card-sm__foot"><span>13 de mayo de 2026</span><a href="#" onclick="showPost(2);return false;">Leer →</a></div>
     </div>
   </div>
   <div class="gsd-layout-bottom">
-    
-    <div class="gsd-card-feat" id="card-2">
+    <div class="gsd-card-feat">
       <div class="gsd-card__kicker flash">⚡ Flash Matutino</div>
       <h2 class="gsd-card-feat__headline"><a href="#" onclick="showPost(2);return false;">Flash Matutino – GSD – 13 de mayo 2026</a></h2>
       <p class="gsd-card-feat__body">IPC acelera por inflación energética. Dow -0.37%, WTI $102.64. BNV 110 MM USD. CRMG260734 y CRMG$210531 en ★★ Alta Convicción. Cumbre Trump-Xi mañana.</p>
-      <div class="gsd-card-feat__foot">
-        <span>13 de mayo de 2026 · admin</span>
-        <a href="#" onclick="showPost(2);return false;">Leer completo →</a>
-      </div>
+      <div class="gsd-card-feat__foot"><span>13 de mayo de 2026 · admin</span><a href="#" onclick="showPost(2);return false;">Leer completo →</a></div>
     </div>
     <div class="gsd-popular">
       <div class="gsd-popular__hd">📌 Más recientes</div>
-      
       <div class="gsd-popular__item">
         <div class="gsd-popular__num">01</div>
         <div>
@@ -1165,7 +1055,6 @@ IPC de abril confirmó la presión inflacionaria: el Dow cede -0.37% y el WTI ci
           <div class="gsd-popular__sub">Flash Matutino · 14 de mayo de 2026</div>
         </div>
       </div>
-
       <div class="gsd-popular__item">
         <div class="gsd-popular__num">02</div>
         <div>
@@ -1173,7 +1062,6 @@ IPC de abril confirmó la presión inflacionaria: el Dow cede -0.37% y el WTI ci
           <div class="gsd-popular__sub">Crónica Bursátil · 13 de mayo de 2026</div>
         </div>
       </div>
-
       <div class="gsd-popular__item">
         <div class="gsd-popular__num">03</div>
         <div>
@@ -1184,25 +1072,20 @@ IPC de abril confirmó la presión inflacionaria: el Dow cede -0.37% y el WTI ci
     </div>
   </div>
 </div></div>
-
 </div>
 
-<!-- ▸ SINGLE POST VIEWS -->
-
-    <div id="single-0" class="gsd-single-view" style="display:none;">
-      <div class="gsd-single"><div class="gsd-single__inner">
-        <a href="#" onclick="showHome();return false;" class="gsd-single__back">← Volver al inicio</a>
-        <div class="gsd-single__kicker flash">⚡ Flash Matutino</div>
-        <h1 class="gsd-single__headline">Flash Matutino – GSD – 14 de mayo 2026</h1>
-        <p class="gsd-hero__deck" style="margin-bottom:20px;">S&P 500 en récord histórico con base frágil. Warsh asume la Fed. BNV 128 MM USD +23.1%. Colón marca nuevo mínimo histórico del dólar. CRMG$210531 Alta Convicción ★★.</p>
-        <div class="gsd-single__meta">
-          <span>Por <strong>admin</strong></span>
-          <span>·</span>
-          <span>14 de mayo de 2026</span>
-          <span>·</span>
-          <a href="#" style="color:var(--royal);font-weight:600;">Flash Matutino</a>
-        </div>
-        <div class="gsd-single__body"><p><strong>● Flash Matutino Inversor CR | GSD IS &amp; Cía.</strong><br>
+<div id="single-0" class="gsd-single-view" style="display:none;">
+  <div class="gsd-single"><div class="gsd-single__inner">
+    <a href="#" onclick="showHome();return false;" class="gsd-single__back">← Volver al inicio</a>
+    <div class="gsd-single__kicker flash">⚡ Flash Matutino</div>
+    <h1 class="gsd-single__headline">Flash Matutino – GSD – 14 de mayo 2026</h1>
+    <p class="gsd-hero__deck" style="margin-bottom:20px;">S&P 500 en récord histórico con base frágil. Warsh asume la Fed. BNV 128 MM USD +23.1%. Colón marca nuevo mínimo histórico del dólar. CRMG$210531 Alta Convicción ★★.</p>
+    <div class="gsd-single__meta">
+      <span>Por <strong>admin</strong></span><span>·</span>
+      <span>14 de mayo de 2026</span><span>·</span>
+      <a href="#" onclick="filterCat('Flash Matutino');return false;" style="color:var(--royal);font-weight:600;">Flash Matutino</a>
+    </div>
+    <div class="gsd-single__body"><p><strong>● Flash Matutino Inversor CR | GSD IS &amp; Cía.</strong><br>
 <em>Jueves 14 de mayo de 2026 · 7:35 a.m. hora Costa Rica · Apertura NYSE 9:30 a.m. ET · Geovanny Ant. Sandí Delgado</em></p>
 <p><strong>Nuevo máximo del S&amp;P 500 con base frágil: Kevin Warsh asume la Fed mañana viernes ante inflación de 4 años y Estrecho de Ormuz cerrado desde hace 10 semanas</strong></p>
 <p><strong>Resumen Ejecutivo —</strong> El S&amp;P 500 cerró el miércoles en 7,444 (+0.58%) con un nuevo máximo histórico, pero dos tercios de sus componentes cayeron: el alza la sostuvieron exclusivamente semiconductores (Nvidia, Micron). El Nasdaq avanzó 1.20%; el Dow retrocedió 0.14%. <strong>Kevin Warsh fue confirmado como Presidente de la Fed</strong> (voto 54-45, el más ajustado de la historia) y toma el cargo el viernes: Goldman Sachs y JPMorgan eliminaron recortes de tasas para 2026; el UST 10Y alcanzó su máximo de 2026 en 4.33%. La <strong>Cumbre Trump-Xi</strong> continúa hoy con acuerdos sobre IA y aranceles pero sin compromiso chino de presionar a Irán para reabrir Ormuz. En Costa Rica, la BNV registró <strong>128 MM USD (+23.1% vs. sesión de hace 7 días)</strong> y el colón marcó un nuevo mínimo histórico del dólar (TC PP ₡457.64, -5.54% a/a).</p>
@@ -1275,29 +1158,26 @@ IPC de abril confirmó la presión inflacionaria: el Dow cede -0.37% y el WTI ci
 </tbody>
 </table>
 <p><em>Crónica preparada con información pública del mercado local e internacional. No constituye recomendación directa de compra o venta; solo señales técnicas relevantes. Fuentes: BNV, BCCR/MONEX, Bloomberg, GuruFocus. GSD IS &amp; Cía · gsandel.com · Jueves 14 de mayo de 2026.</em></p></div>
-        <div style="margin-top:28px;padding:14px 18px;background:var(--ice);border-left:3px solid var(--gold);font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);line-height:1.7;">
-          ⚠ Aviso legal: Esta publicación es informativa y no constituye recomendación de compra o venta de valores. GSD IS &amp; Cía no está sujeta a supervisión de SUGEVAL.
-        </div>
-        <div style="display:flex;justify-content:space-between;margin-top:28px;padding-top:20px;border-top:1px solid var(--rule);">
-          <span></span><a href="#" onclick="showPost(1);return false;" style="font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;color:var(--royal);letter-spacing:.08em;text-transform:uppercase;">Siguiente →</a>
-        </div>
-      </div></div>
+    <div style="margin-top:28px;padding:14px 18px;background:var(--ice);border-left:3px solid var(--gold);font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);line-height:1.7;">
+      ⚠ Aviso legal: Esta publicación es informativa y no constituye recomendación de compra o venta de valores. GSD IS &amp; Cía no está sujeta a supervisión de SUGEVAL.
     </div>
-
-    <div id="single-1" class="gsd-single-view" style="display:none;">
-      <div class="gsd-single"><div class="gsd-single__inner">
-        <a href="#" onclick="showHome();return false;" class="gsd-single__back">← Volver al inicio</a>
-        <div class="gsd-single__kicker ">📊 Crónica Bursátil</div>
-        <h1 class="gsd-single__headline">Crónica Bursátil – GSD – 13 de mayo 2026</h1>
-        <p class="gsd-hero__deck" style="margin-bottom:20px;">PPI sube 6.0% anual. Warsh confirmado en la Fed. S&P 500 en récord histórico con base estrecha. BNV 128 MM USD. CRMG$210531 ★★ Alta Convicción 11.80 pb.</p>
-        <div class="gsd-single__meta">
-          <span>Por <strong>admin</strong></span>
-          <span>·</span>
-          <span>13 de mayo de 2026</span>
-          <span>·</span>
-          <a href="#" style="color:var(--royal);font-weight:600;">Crónica Bursátil</a>
-        </div>
-        <div class="gsd-single__body"><p><em>Miércoles, 13 de mayo de 2026 · Edición Diaria · Hora de Costa Rica</em></p>
+    <div style="display:flex;justify-content:space-between;margin-top:28px;padding-top:20px;border-top:1px solid var(--rule);">
+      <span></span><a href="#" onclick="showPost(1);return false;" style="font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;color:var(--royal);letter-spacing:.08em;text-transform:uppercase;">Siguiente →</a>
+    </div>
+  </div></div>
+</div>
+<div id="single-1" class="gsd-single-view" style="display:none;">
+  <div class="gsd-single"><div class="gsd-single__inner">
+    <a href="#" onclick="showHome();return false;" class="gsd-single__back">← Volver al inicio</a>
+    <div class="gsd-single__kicker ">📊 Crónica Bursátil</div>
+    <h1 class="gsd-single__headline">Crónica Bursátil – GSD – 13 de mayo 2026</h1>
+    <p class="gsd-hero__deck" style="margin-bottom:20px;">PPI sube 6.0% anual. Warsh confirmado en la Fed. S&P 500 en récord histórico con base estrecha. BNV 128 MM USD. CRMG$210531 ★★ Alta Convicción 11.80 pb.</p>
+    <div class="gsd-single__meta">
+      <span>Por <strong>admin</strong></span><span>·</span>
+      <span>13 de mayo de 2026</span><span>·</span>
+      <a href="#" onclick="filterCat('Crónica Bursátil');return false;" style="color:var(--royal);font-weight:600;">Crónica Bursátil</a>
+    </div>
+    <div class="gsd-single__body"><p><em>Miércoles, 13 de mayo de 2026 · Edición Diaria · Hora de Costa Rica</em></p>
 <p><strong>Resumen Ejecutivo —</strong> El PPI de abril en EE.UU. subió 6.0% interanual —máximo desde diciembre de 2022— y Kevin Warsh fue confirmado como presidente de la Reserva Federal (54-45 en el Senado), inaugurando el dilema más complicado en una década: inflación ascendente versus presión política por recortes de tasas. Trump aterrizó en Beijing con Jensen Huang de Nvidia, poniendo la apertura del mercado chino de chips AI sobre la mesa de negociación. El S&amp;P 500 cerró en 7,444 (+0.58%) alcanzando un nuevo máximo histórico, aunque el Dow cedió 0.14% y el VIX retrocedió a 17.87. El mercado bursátil costarricense totalizó $128 MM (+23.1% vs. la sesión de hace 7 días). El modelo CRMG mantiene dos señales de Alta Convicción ★★: CRMG$210531 USD (+11.80 pb) y CRMG260734 CRC en el umbral ★★ (+9.95 pb). El colón continúa apreciado 5.5% interanual en MONEX con TC PP de cierre en ¢456.44/USD.</p>
 <h2>A. Panorama Internacional</h2>
 <h3>⚠ Alerta Geopolítica · Eje Irán–Arabia Saudita y Cumbre Trump-Xi en Beijing</h3>
@@ -1354,29 +1234,26 @@ IPC de abril confirmó la presión inflacionaria: el Dow cede -0.37% y el WTI ci
 </tbody>
 </table>
 <p><em>Crónica preparada con información pública del mercado local e internacional. No constituye recomendación directa de compra o venta. Fuentes: BNV, BCCR/MONEX, Bloomberg. GSD IS &amp; Cía · gsandel.com · Miércoles 13 de mayo de 2026.</em></p></div>
-        <div style="margin-top:28px;padding:14px 18px;background:var(--ice);border-left:3px solid var(--gold);font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);line-height:1.7;">
-          ⚠ Aviso legal: Esta publicación es informativa y no constituye recomendación de compra o venta de valores. GSD IS &amp; Cía no está sujeta a supervisión de SUGEVAL.
-        </div>
-        <div style="display:flex;justify-content:space-between;margin-top:28px;padding-top:20px;border-top:1px solid var(--rule);">
-          <a href="#" onclick="showPost(0);return false;" style="font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;color:var(--royal);letter-spacing:.08em;text-transform:uppercase;">← Anterior</a><span></span><a href="#" onclick="showPost(2);return false;" style="font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;color:var(--royal);letter-spacing:.08em;text-transform:uppercase;">Siguiente →</a>
-        </div>
-      </div></div>
+    <div style="margin-top:28px;padding:14px 18px;background:var(--ice);border-left:3px solid var(--gold);font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);line-height:1.7;">
+      ⚠ Aviso legal: Esta publicación es informativa y no constituye recomendación de compra o venta de valores. GSD IS &amp; Cía no está sujeta a supervisión de SUGEVAL.
     </div>
-
-    <div id="single-2" class="gsd-single-view" style="display:none;">
-      <div class="gsd-single"><div class="gsd-single__inner">
-        <a href="#" onclick="showHome();return false;" class="gsd-single__back">← Volver al inicio</a>
-        <div class="gsd-single__kicker flash">⚡ Flash Matutino</div>
-        <h1 class="gsd-single__headline">Flash Matutino – GSD – 13 de mayo 2026</h1>
-        <p class="gsd-hero__deck" style="margin-bottom:20px;">IPC acelera por inflación energética. Dow -0.37%, WTI $102.64. BNV 110 MM USD. CRMG260734 y CRMG$210531 en ★★ Alta Convicción. Cumbre Trump-Xi mañana.</p>
-        <div class="gsd-single__meta">
-          <span>Por <strong>admin</strong></span>
-          <span>·</span>
-          <span>13 de mayo de 2026</span>
-          <span>·</span>
-          <a href="#" style="color:var(--royal);font-weight:600;">Flash Matutino</a>
-        </div>
-        <div class="gsd-single__body"><p><em>13 de mayo de 2026 · 7:30 AM hora Costa Rica · GSD IS &amp; Cía.</em></p>
+    <div style="display:flex;justify-content:space-between;margin-top:28px;padding-top:20px;border-top:1px solid var(--rule);">
+      <a href="#" onclick="showPost(0);return false;" style="font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;color:var(--royal);letter-spacing:.08em;text-transform:uppercase;">← Anterior</a><span></span><a href="#" onclick="showPost(2);return false;" style="font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;color:var(--royal);letter-spacing:.08em;text-transform:uppercase;">Siguiente →</a>
+    </div>
+  </div></div>
+</div>
+<div id="single-2" class="gsd-single-view" style="display:none;">
+  <div class="gsd-single"><div class="gsd-single__inner">
+    <a href="#" onclick="showHome();return false;" class="gsd-single__back">← Volver al inicio</a>
+    <div class="gsd-single__kicker flash">⚡ Flash Matutino</div>
+    <h1 class="gsd-single__headline">Flash Matutino – GSD – 13 de mayo 2026</h1>
+    <p class="gsd-hero__deck" style="margin-bottom:20px;">IPC acelera por inflación energética. Dow -0.37%, WTI $102.64. BNV 110 MM USD. CRMG260734 y CRMG$210531 en ★★ Alta Convicción. Cumbre Trump-Xi mañana.</p>
+    <div class="gsd-single__meta">
+      <span>Por <strong>admin</strong></span><span>·</span>
+      <span>13 de mayo de 2026</span><span>·</span>
+      <a href="#" onclick="filterCat('Flash Matutino');return false;" style="color:var(--royal);font-weight:600;">Flash Matutino</a>
+    </div>
+    <div class="gsd-single__body"><p><em>13 de mayo de 2026 · 7:30 AM hora Costa Rica · GSD IS &amp; Cía.</em></p>
 <p><strong>IPC de abril confirmó la presión inflacionaria: el Dow cede -0.37% y el WTI cierra en $102.64 — la cumbre Trump-Xi mañana en Beijing define el tono del mercado</strong></p>
 <p><strong>Resumen Ejecutivo —</strong> El IPC de EE.UU. de abril aceleró, impulsado por la gasolina ante la guerra con Irán; el Dow cayó -0.37%, S&amp;P -0.11%, mientras el WTI cerró en $102.64 (+0.45%). La tregua Irán sigue en «soporte vital» (Reuters). El oro cedió a $429.44 (-0.81%) pero mantiene niveles elevados. El mercado local registró 110 MM USD en la BNV el martes, con dos series en Alta Convicción ★★: CRMG260734 (CRC, +10.87 pb) y CRMG$210531 (USD, +10.42 pb). Hoy toda la atención apunta a la cumbre Trump-Xi en Beijing el jueves 14.</p>
 <h2>A. Panorama Internacional</h2>
@@ -1439,35 +1316,33 @@ IPC de abril confirmó la presión inflacionaria: el Dow cede -0.37% y el WTI ci
 </tbody>
 </table>
 <p><em>Crónica preparada con información pública del mercado local e internacional. No constituye recomendación directa de compra o venta. Fuentes: BNV, BCCR/MONEX, Bloomberg. GSD IS &amp; Cía · gsandel.com · Martes 13 de mayo de 2026.</em></p></div>
-        <div style="margin-top:28px;padding:14px 18px;background:var(--ice);border-left:3px solid var(--gold);font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);line-height:1.7;">
-          ⚠ Aviso legal: Esta publicación es informativa y no constituye recomendación de compra o venta de valores. GSD IS &amp; Cía no está sujeta a supervisión de SUGEVAL.
-        </div>
-        <div style="display:flex;justify-content:space-between;margin-top:28px;padding-top:20px;border-top:1px solid var(--rule);">
-          <a href="#" onclick="showPost(1);return false;" style="font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;color:var(--royal);letter-spacing:.08em;text-transform:uppercase;">← Anterior</a><span></span>
-        </div>
-      </div></div>
+    <div style="margin-top:28px;padding:14px 18px;background:var(--ice);border-left:3px solid var(--gold);font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);line-height:1.7;">
+      ⚠ Aviso legal: Esta publicación es informativa y no constituye recomendación de compra o venta de valores. GSD IS &amp; Cía no está sujeta a supervisión de SUGEVAL.
     </div>
+    <div style="display:flex;justify-content:space-between;margin-top:28px;padding-top:20px;border-top:1px solid var(--rule);">
+      <a href="#" onclick="showPost(1);return false;" style="font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;color:var(--royal);letter-spacing:.08em;text-transform:uppercase;">← Anterior</a><span></span>
+    </div>
+  </div></div>
+</div>
 
-<!-- ▸ SUBSCRIBE CTA -->
 <section class="gsd-subscribe" id="suscripcion">
   <div class="gsd-subscribe__inner">
     <div class="gsd-subscribe__eyebrow">Newsletter diario</div>
     <h2 class="gsd-subscribe__title">Reciba la crónica bursátil cada mañana</h2>
     <p class="gsd-subscribe__body">Análisis diario de mercados, señales CRMG, tipo de cambio MONEX y panorama internacional — directo a su correo antes de la apertura del NYSE.</p>
     <div class="gsd-subscribe__form">
-      <input class="gsd-subscribe__input" type="email" id="gsdEmailInput" placeholder="correo@empresa.com" autocomplete="email">
+      <input class="gsd-subscribe__input" type="email" id="gsdEmailInput" placeholder="correo@empresa.com">
       <button class="gsd-subscribe__btn" onclick="gsdSubscribe()">Suscribirse →</button>
     </div>
     <p id="gsdSubscribeMsg" style="margin-top:12px;font-family:'JetBrains Mono',monospace;font-size:11px;color:rgba(220,232,248,.7);display:none;"></p>
   </div>
 </section>
 
-<!-- FOOTER -->
 <footer class="gsd-footer">
   <div class="gsd-footer__grid">
     <div class="gsd-footer__brand">
       <h4>GSD <em>Monitor</em></h4>
-      <p>Análisis bursátil diario para inversores costarricenses. Señales CRMG, mercado BNV, divisas MONEX y panorama internacional desde Costa Rica.</p>
+      <p>Análisis bursátil diario para inversores costarricenses. Señales CRMG, mercado BNV, divisas MONEX y panorama internacional.</p>
       <div class="gsd-footer__contact">GSD IS &amp; Cía · gsdmar@gmail.com<br>Tel. 8938-9046 · gsandel.com</div>
     </div>
     <div>
@@ -1479,93 +1354,140 @@ IPC de abril confirmó la presión inflacionaria: el Dow cede -0.37% y el WTI ci
       </ul>
     </div>
     <div>
+      <div class="gsd-footer__col-title">Categorías</div>
+      <ul class="gsd-footer__links">
+        <li><a href="#" onclick="filterCat('Flash Matutino');return false;">Flash Matutino</a></li>
+        <li><a href="#" onclick="filterCat('Crónica Bursátil');return false;">Crónica Bursátil</a></li>
+        <li><a href="#" onclick="filterCat('Mercado Bursátil');return false;">Mercado Bursátil</a></li>
+      </ul>
+    </div>
+    <div>
       <div class="gsd-footer__col-title">Recursos</div>
       <ul class="gsd-footer__links">
         <li><a href="https://www.bccr.fi.cr" target="_blank" rel="noopener">BCCR</a></li>
         <li><a href="https://www.bolsacr.com" target="_blank" rel="noopener">BNV</a></li>
         <li><a href="https://www.bloomberg.com" target="_blank" rel="noopener">Bloomberg</a></li>
-        <li><a href="https://gsandel.com" target="_blank" rel="noopener">gsandel.com</a></li>
-      </ul>
-    </div>
-    <div>
-      <div class="gsd-footer__col-title">Contacto</div>
-      <ul class="gsd-footer__links">
-        <li><a href="mailto:gsdmar@gmail.com">gsdmar@gmail.com</a></li>
-        <li><a href="tel:+50689389046">8938-9046</a></li>
-        <li><a href="https://gsandel.com" target="_blank">gsandel.com ↗</a></li>
+        <li><a href="mailto:gsdmar@gmail.com">Contacto</a></li>
       </ul>
     </div>
   </div>
   <div class="gsd-footer__bottom">
-    <span>© 2026 GSD IS &amp; Cía · Geovanny Ant. Sandí Delgado · <a href="https://gsandel.com">gsandel.com</a></span>
+    <span>© 2026 GSD IS &amp; Cía · Geovanny Ant. Sandí Delgado</span>
     <span>Inversiones a su medida · Costa Rica · Datos: Bloomberg · BCCR · BNV</span>
   </div>
-  <p class="gsd-footer__disclaimer">
-    Las crónicas publicadas son preparadas con información pública del mercado local e internacional. No constituyen recomendación directa de compra o venta de valores. GSD IS &amp; Cía no está sujeta a supervisión de SUGEVAL. El inversionista es responsable de sus propias decisiones de inversión.
-  </p>
+  <p class="gsd-footer__disclaimer">Las crónicas publicadas son preparadas con información pública del mercado local e internacional. No constituyen recomendación directa de compra o venta de valores. GSD IS &amp; Cía no está sujeta a supervisión de SUGEVAL.</p>
 </footer>
 
 <script>
-// ── Navigation state ──────────────────────────────────────────────
+var POSTS = [
+  {idx:0,title:"Flash Matutino – GSD – 14 de mayo 2026",cats:["Flash Matutino","Mercado Burs\u00e1til"],date:"14 de mayo de 2026",subtitle:"S&P 500 en r\u00e9cord hist\u00f3rico con base fr\u00e1gil. Warsh asume la Fed. BNV 128 MM USD.",icon:"\u26a1",label:"Flash Matutino",cls:"flash"},
+  {idx:1,title:"Cr\u00f3nica Burs\u00e1til – GSD – 13 de mayo 2026",cats:["Cr\u00f3nica Burs\u00e1til","Mercado Burs\u00e1til"],date:"13 de mayo de 2026",subtitle:"PPI sube 6.0% anual. Warsh confirmado. S&P 500 en r\u00e9cord hist\u00f3rico.",icon:"\ud83d\udcca",label:"Cr\u00f3nica Burs\u00e1til",cls:""},
+  {idx:2,title:"Flash Matutino – GSD – 13 de mayo 2026",cats:["Flash Matutino","Mercado Burs\u00e1til"],date:"13 de mayo de 2026",subtitle:"IPC acelera por inflaci\u00f3n energ\u00e9tica. Dow -0.37%. BNV 110 MM USD.",icon:"\u26a1",label:"Flash Matutino",cls:"flash"}
+];
+
+function setActiveNav(id) {
+  document.querySelectorAll('.gsd-nav__link').forEach(function(el){el.classList.remove('is-active');});
+  var el = document.getElementById(id);
+  if (el) el.classList.add('is-active');
+}
+
 function showHome() {
   document.getElementById('home-view').style.display = 'block';
-  document.querySelectorAll('.gsd-single-view').forEach(el => el.style.display = 'none');
-  window.scrollTo({top: 0, behavior: 'smooth'});
+  document.querySelectorAll('.gsd-single-view').forEach(function(el){el.style.display='none';});
+  var av = document.getElementById('archive-view');
+  if (av) av.style.display = 'none';
+  setActiveNav('nav-inicio');
+  window.scrollTo({top:0,behavior:'smooth'});
   document.title = 'GSD Monitor — Inversiones a su medida';
 }
 
 function showPost(idx) {
   document.getElementById('home-view').style.display = 'none';
-  document.querySelectorAll('.gsd-single-view').forEach(el => el.style.display = 'none');
-  const target = document.getElementById('single-' + idx);
+  document.querySelectorAll('.gsd-single-view').forEach(function(el){el.style.display='none';});
+  var av = document.getElementById('archive-view');
+  if (av) av.style.display = 'none';
+  setActiveNav('');
+  var target = document.getElementById('single-' + idx);
   if (target) {
     target.style.display = 'block';
-    window.scrollTo({top: 0, behavior: 'smooth'});
-    const title = target.querySelector('h1');
-    if (title) document.title = title.textContent + ' — GSD Monitor';
+    window.scrollTo({top:0,behavior:'smooth'});
+    var h1 = target.querySelector('h1');
+    if (h1) document.title = h1.textContent + ' — GSD Monitor';
   }
 }
 
 function filterCat(cat) {
-  showHome();
+  var navMap = {'Flash Matutino':'nav-flash','Cr\u00f3nica Burs\u00e1til':'nav-cronica','Mercado Burs\u00e1til':'nav-mercado'};
+  setActiveNav(navMap[cat] || 'nav-inicio');
+  document.getElementById('home-view').style.display = 'none';
+  document.querySelectorAll('.gsd-single-view').forEach(function(el){el.style.display='none';});
+  var av = document.getElementById('archive-view');
+  if (!av) {
+    av = document.createElement('div');
+    av.id = 'archive-view';
+    document.querySelector('.gsd-subscribe').parentNode.insertBefore(av, document.querySelector('.gsd-subscribe'));
+  }
+  var filtered = POSTS.filter(function(p){return p.cats.indexOf(cat) !== -1;});
+  var cards = filtered.map(function(p){
+    return '<div style="background:var(--cream);padding:24px;border-bottom:1px solid var(--rule);">'+
+      '<div class="gsd-card__kicker '+p.cls+'">'+p.icon+' '+p.label+'</div>'+
+      '<h3 class="gsd-card-sm__hed" style="margin:10px 0 8px;"><a href="#" onclick="showPost('+p.idx+');return false;">'+p.title+'</a></h3>'+
+      '<p class="gsd-card-sm__text" style="margin-bottom:12px;">'+p.subtitle+'</p>'+
+      '<div class="gsd-card-sm__foot"><span>'+p.date+'</span><a href="#" onclick="showPost('+p.idx+');return false;">Leer →</a></div>'+
+      '</div>';
+  }).join('');
+  av.innerHTML =
+    '<div style="max-width:var(--max-w);margin:0 auto;padding:0 var(--r-md) 48px;">'+
+    '<div style="padding:32px 0 20px;border-bottom:2px solid var(--royal);margin-bottom:24px;">'+
+    '<div style="font-family:JetBrains Mono,monospace;font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:6px;">Categor\u00eda</div>'+
+    '<h1 style="font-family:Playfair Display,serif;font-size:clamp(22px,4vw,36px);font-weight:900;color:var(--royal);">'+cat+'</h1>'+
+    '<p style="font-size:13px;color:var(--muted);margin-top:8px;">'+filtered.length+' publicaci'+(filtered.length===1?'\u00f3n':'ones')+' encontradas</p>'+
+    '</div>'+
+    '<div style="border:1px solid var(--rule);">'+(cards||'<div style="padding:48px;text-align:center;font-family:JetBrains Mono,monospace;color:var(--muted);">No hay publicaciones en esta categor\u00eda.</div>')+'</div>'+
+    '</div>';
+  av.style.display = 'block';
+  window.scrollTo({top:0,behavior:'smooth'});
+  document.title = cat + ' — GSD Monitor';
 }
 
-// ── Mobile nav ───────────────────────────────────────────────────
-const toggle = document.getElementById('gsdNavToggle');
-const links  = document.getElementById('gsdNavLinks');
-if (toggle && links) {
-  toggle.addEventListener('click', () => {
-    const open = links.classList.toggle('is-open');
+// Mobile nav
+var toggle = document.getElementById('gsdNavToggle');
+var navLinks = document.getElementById('gsdNavLinks');
+if (toggle && navLinks) {
+  toggle.addEventListener('click', function() {
+    var open = navLinks.classList.toggle('is-open');
     toggle.setAttribute('aria-expanded', String(open));
-    toggle.textContent = open ? '✕' : '☰';
+    toggle.textContent = open ? '\u2715' : '\u2630';
   });
-  links.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
-    links.classList.remove('is-open');
-    toggle.setAttribute('aria-expanded', 'false');
-    toggle.textContent = '☰';
-  }));
+  navLinks.querySelectorAll('a').forEach(function(a){
+    a.addEventListener('click', function(){
+      navLinks.classList.remove('is-open');
+      toggle.setAttribute('aria-expanded','false');
+      toggle.textContent = '\u2630';
+    });
+  });
 }
 
-// ── Subscribe ────────────────────────────────────────────────────
+// Subscribe
 window.gsdSubscribe = function() {
-  const input = document.getElementById('gsdEmailInput');
-  const msg   = document.getElementById('gsdSubscribeMsg');
+  var input = document.getElementById('gsdEmailInput');
+  var msg = document.getElementById('gsdSubscribeMsg');
   if (!input || !msg) return;
-  const email = input.value.trim();
+  var email = input.value.trim();
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-    msg.textContent = '⚠ Por favor ingrese un correo válido.';
+    msg.textContent = '\u26a0 Por favor ingrese un correo v\u00e1lido.';
     msg.style.display = 'block'; msg.style.color = '#f07070'; return;
   }
-  msg.textContent = '✅ Gracias — le confirmaremos su suscripción por correo.';
+  msg.textContent = '\u2705 Gracias — le confirmaremos su suscripci\u00f3n por correo.';
   msg.style.display = 'block'; msg.style.color = 'rgba(220,232,248,.8)';
   input.value = '';
 };
 
-// ── Ticker shadow on scroll ──────────────────────────────────────
-window.addEventListener('scroll', () => {
-  const t = document.querySelector('.gsd-ticker');
+// Ticker shadow
+window.addEventListener('scroll', function() {
+  var t = document.querySelector('.gsd-ticker');
   if (t) t.style.boxShadow = window.scrollY > 10 ? '0 2px 12px rgba(8,23,61,.5)' : 'none';
-}, {passive: true});
+}, {passive:true});
 </script>
 </body>
 </html>
